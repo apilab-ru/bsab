@@ -1,0 +1,61 @@
+.MapListItem {
+  box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 8px;
+  border-radius: 4px;
+  background: #fff;
+  color: #000000de;
+  flex: 1;
+  margin: 4px;
+  display: flex;
+  text-align: left;
+
+  .album {
+    width: 100px;
+    height: 100px;
+  }
+
+  .row + .row {
+    margin-left: 8px;
+  }
+
+  .difficult + .difficult {
+    margin-left: 4px;
+  }
+
+  .difficult {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--color-primary-inverted);
+    background: #1f1f21;
+    border-radius: 100px;
+    height: 18px;
+    vertical-align: bottom;
+    min-width: 26px;
+    line-height: 18px;
+    padding: 1px 6px 2px 8px;
+
+    b {
+      font-weight: 500;
+      margin-right: 4px;
+    }
+
+    &.-easy {
+      background: #1268a1;
+    }
+
+    &.-hard {
+      background: #bd5500;
+    }
+
+    &.-expert {
+      background: #b52a1c;
+    }
+
+    &.-expertPlus {
+      background: #454088;
+    }
+  }
+}
