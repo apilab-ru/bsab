@@ -25,10 +25,8 @@ export async function canvasPreview(
   //const pixelRatio = window.devicePixelRatio
   const pixelRatio = 1;
 
-  const size = Math.min(crop.width, MAX_SIZE);
-
-  canvas.width = Math.floor(crop.width * scaleX * pixelRatio)
-  canvas.height = Math.floor(crop.height * scaleY * pixelRatio)
+  canvas.width = Math.floor(crop.width * scaleX * pixelRatio);
+  canvas.height = Math.floor(crop.height * scaleY * pixelRatio);
 
   ctx.scale(pixelRatio, pixelRatio)
   ctx.imageSmoothingQuality = 'high'
