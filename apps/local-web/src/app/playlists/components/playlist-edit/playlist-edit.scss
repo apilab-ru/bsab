@@ -1,0 +1,42 @@
+.playlistEdit {
+  max-width: 0;
+  overflow: auto;
+  transition: 0.3s;
+  width: 100%;
+  margin-left: 0;
+  padding-top: 80px;
+
+  &.-has-content {
+    max-width: 600px;
+    margin-left: 40px;
+  }
+
+  .line {
+
+    &.-top {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    & + .line {
+      margin-top: 12px;
+    }
+  }
+
+  .image-details {
+    margin-top: -3px;
+    display: flex;
+    max-width: 512px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .replace-file {
+    display: block;
+    cursor: pointer;
+
+    &__input {
+      display: none;
+    }
+  }
+}

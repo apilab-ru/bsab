@@ -4,7 +4,10 @@
   "projects": {
     "api-interfaces": "libs/api-interfaces",
     "local-api": "apps/local-api",
+    "local-web": "apps/local-web",
+    "local-web-e2e": "apps/local-web-e2e",
     "maps-api": "apps/maps-api",
+    "ui-kit": "libs/ui-kit",
     "web": "apps/web",
     "web-e2e": "apps/web-e2e"
   }

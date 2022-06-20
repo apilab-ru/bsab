@@ -1,0 +1,48 @@
+.playlistContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  overflow: auto;
+
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 16px;
+    padding-bottom: 100px;
+    padding-top: 80px;
+  }
+
+  &__item {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.25s;
+    border-radius: 8px;
+    overflow: hidden;
+
+    &.-opened {
+      border-color: #3f51b5;
+    }
+
+    &:hover {
+      border-color: #3f51b5;
+    }
+  }
+
+  &__item-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    background: #ffffffd1;
+    white-space: nowrap;
+  }
+
+  &__item-image {
+    width: 200px;
+    height: 200px;
+    display: block;
+  }
+
+}

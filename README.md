@@ -47,6 +47,10 @@ Run `nx g @nrwl/react:lib my-lib` to generate a library.
 
 Libraries are shareable across libraries and applications. They can be imported from `@bsab/mylib`.
 
+## Generate storybook
+Run `nx generate storybook-configuration project`
+https://nx.dev/packages/react/generators/storybook-configuration
+
 ## Development server
 
 Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.

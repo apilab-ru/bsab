@@ -1,0 +1,11 @@
+.mapsList {
+  padding-top: 80px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 8px;
+}

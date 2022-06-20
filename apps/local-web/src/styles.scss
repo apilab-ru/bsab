@@ -1,0 +1,13 @@
+html {
+ font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 8px;
+  height: calc(100vh - 16px);
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
