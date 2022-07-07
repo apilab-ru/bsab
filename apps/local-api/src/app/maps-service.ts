@@ -1,13 +1,12 @@
 import { MAP_MODE_CONVERT, MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetail } from "./map";
 import { environment } from "../environments/environment";
-import { Difficulty, DIFFICULTY_MAP } from "@bsab/api/map/difficulty";
+import { DIFFICULTY_MAP } from "@bsab/api/map/difficulty";
 import { IMap, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
-
+import * as JSZip from 'jszip';
 const fs = require('fs');
+const crypto = require('crypto')
 
 const INFO_FILE = 'Info.dat';
-
-let index = 0;
 
 export class MapsService {
   private lastChange: string;
@@ -25,42 +24,87 @@ export class MapsService {
     return this.cache.map(({ rav, ...item }) => item);
   }
 
+  async installPreparedMaps(withDelete = false): Promise<number> {
+    const list = await fs.promises.readdir(environment.installPath);
+
+    if (!list) {
+      return 0;
+    }
+
+    return Promise.all(
+      list.map(file => fs.promises.readFile(environment.installPath + '/' + file)
+        .then(data => JSZip.loadAsync(data))
+        .then(async zip => {
+          const name = file.replace('.zip', '');
+          const dir = environment.levelsPath + '/' + name;
+          await fs.promises.mkdir(dir);
+
+          return Promise.all(Object.entries(zip.files).map(([fileName, fileData]) => {
+            // @ts-ignore
+            return fileData!.async('nodebuffer').then(content => fs.promises.writeFile(
+              dir + '/' + fileName,
+              content
+            ))
+          })).then(() => file)
+        }).then((file) => {
+          console.log('xxx file complete', file);
+
+          if (withDelete) {
+            return fs.promises.unlink(environment.installPath + '/' + file);
+          }
+        }).catch(error => {
+          console.error('error with', error);
+        })
+      )
+    ).then(() => list.length);
+  }
+
+  private readMapFiles(path: string, fileNames: string[]): Promise<{ name: string, data: string }[]> {
+    return Promise.all(
+      fileNames.map(name => fs.promises.readFile(path + name) as string)
+    ).then(contents => {
+      return fileNames.map((name, index) => ({
+        name,
+        data: contents[index],
+      }))
+    });
+  }
+
+  private readMapDifficultInfo(content: string): MapDifficultDetail {
+    const { _notes: notes } = JSON.parse(content) as RavMapDifficultDetail;
+    const times = notes.length
+      ? notes[notes.length - 1]._time
+      : 0;
+
+    return {
+      notesTotal: notes.length,
+      times,
+    }
+  }
+
   private async loadMap(id: string): Promise<MapCache> {
     const file = await fs.promises.readFile(environment.levelsPath + id + '/' + INFO_FILE);
     const { ctime } = await fs.promises.stat(environment.levelsPath + id + '/' + INFO_FILE);
     const rav: MapRav = JSON.parse(file);
 
     const files = rav._difficultyBeatmapSets.flatMap(group => {
-      return group._difficultyBeatmaps.map(item => fs.promises
-        .readFile(environment.levelsPath + id + '/' + item._beatmapFilename)
-        .then(file => {
-          const { _notes: notes } = (JSON.parse(file) as RavMapDifficultDetail);
-          const times = notes.length
-            ? notes[notes.length - 1]._time
-            : 0;
-          return {
-            data: {
-              notesTotal: notes.length,
-              times,
-            },
-            name: item._beatmapFilename
-          } as { name: string, data: MapDifficultDetail }
-        })
-        .catch((error) => {
-          console.error('cant read', error);
-          return null;
-        })
-      )
-    }).filter(item => !!item);
+      return group._difficultyBeatmaps.map(item => item._beatmapFilename);
+    });
 
-    const mapDifficultData = (await Promise.all(files))
-      .reduce((obj, item) => {
-        if (item) {
-          obj[item.name] = item.data;
-        }
+    const filesMap = await this.readMapFiles(environment.levelsPath + id + '/', files)
+      .catch(error => {
+        console.error('error read', error);
+        return [];
+      });
 
-        return obj;
-      }, {});
+    const hash = this.makeHash(file, filesMap.map(({ data }) => data));
+
+    const mapDifficultData: Record<string, MapDifficultDetail> = {};
+    filesMap.forEach((item) => {
+      if (item) {
+        mapDifficultData[item.name] = this.readMapDifficultInfo(item.data);
+      }
+    });
 
     const difficultMap = this.convertDifficultMap(rav._difficultyBeatmapSets);
     const mods = difficultMap.map(item => item.mode);
@@ -110,7 +154,14 @@ export class MapsService {
       difsDetails,
       mods,
       duration,
+      hash,
     }
+  }
+
+  private makeHash(file: string, files: string[]): string {
+    return crypto.createHash("sha1")
+      .update(file + files.join(''), "utf8")
+      .digest("hex").toUpperCase()
   }
 
   private getSongFile(id: string, file: string): string {

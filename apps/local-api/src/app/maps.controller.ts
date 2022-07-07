@@ -10,4 +10,10 @@ export class MapsController {
     res.send({ maps });
   }
 
+  async installPreparedMap(withDelete = true): Promise<void> {
+    return this.mapsService.installPreparedMaps(withDelete).then(count => {
+      console.log('xxx complete files', count);
+    })
+  }
+
 }
