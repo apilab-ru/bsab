@@ -6,7 +6,11 @@ class Router {
     const params = Object.fromEntries(urlSearchParams.entries()) as Record<string, QueryValue>;
 
     for (const key in newParams) {
-      params[key] = newParams[key];
+      if (newParams[key]) {
+        params[key] = newParams[key];
+      } else {
+        delete params[key];
+      }
     }
 
     let query = '';

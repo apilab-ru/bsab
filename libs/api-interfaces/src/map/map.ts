@@ -14,6 +14,8 @@ export interface IMap {
   difsDetails: MapDiffiDetail[];
   mods: MapMode[];
 
+  hash?: string;
+
   duration: number;
   difficultMap: MapDifficultList[];
 }

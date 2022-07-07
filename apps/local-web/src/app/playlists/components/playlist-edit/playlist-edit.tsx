@@ -6,11 +6,19 @@ import ReactCrop, { centerCrop, Crop, makeAspectCrop } from 'react-image-crop';
 import React from "react";
 import { TextField } from "@mui/material";
 import { canvasPreview } from "@bsab/api/utils/canvas-preview";
+import { IMap } from "@bsab/api/map/map";
+import { MapListItem } from "@bsab/ui-kit/map-list-item";
 
 interface PlaylistEditProps {
   close: () => void;
   playlist: Playlist | undefined;
   save: (playlist: Playlist) => void;
+  maps: IMap[];
+}
+
+interface SongItem {
+  song: Song;
+  map: IMap;
 }
 
 const initialState = {
@@ -18,7 +26,7 @@ const initialState = {
   crop: undefined as Crop | undefined,
   image: undefined as string | undefined,
   playlistTitle: undefined as string | undefined,
-  songs: [] as Song[],
+  songs: [] as SongItem[],
 }
 
 export class PlaylistEdit extends React.Component<PlaylistEditProps> {
@@ -32,8 +40,16 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
       this.state = {
         ...initialState,
         ...props.playlist,
+        songs: this.getSongs(props.playlist),
       }
     }
+  }
+
+  getSongs(playlist: Playlist): SongItem[] {
+    return playlist.songs.map(song => ({
+      song,
+      map: this.getMapData(song.hash)
+    })).filter(item => !!item.map) as SongItem[];
   }
 
   getHostClass = () => 'playlistEdit ' + (this.props.playlist ? '-has-content' : '');
@@ -110,8 +126,13 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
     if (this.props.playlist && this.props.playlist?.id !== prevState.id) {
       this.setState({
         ...this.props.playlist,
+        songs: this.getSongs(this.props.playlist),
       })
     }
+  }
+
+  getMapData(hash: string): IMap | undefined {
+    return this.props.maps?.find(item => item.hash === hash);
   }
 
   render() {
@@ -158,8 +179,12 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
           </div>
 
           <div className="line">
-            { this.state.songs.map(song =>
-              <div> { JSON.stringify(song) } </div>
+            { this.state.songs.map((item, index) =>
+              <MapListItem
+                key={ 'song-item-' + index }
+                item={ item.map }
+                click={ () => {} }
+              />
             )}
           </div>
         </form>

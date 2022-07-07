@@ -6,6 +6,7 @@ import React from "react";
 /* eslint-disable-next-line */
 export interface MapsListProps {
   list: IMap[];
+  open: (id: string) => void;
 }
 
 // coverFilename
@@ -17,8 +18,9 @@ export function MapsList(props: MapsListProps) {
         <MapListItem
           key={ item.id }
           item={ item }
+          click={ () => props.open(item.id) }
         />
-      )}
+      ) }
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DataStatus } from "../../models/status";
 import { IMap } from "@bsab/api/map/map";
+import { Payload } from "../../models/payload";
 
 const MAPS_INIT_STATE = {
   list: [] as IMap[],
+  openedId: null as null | string,
   stats: DataStatus.empty as DataStatus,
 };
 
@@ -25,9 +27,12 @@ const mapsSlice = createSlice({
     completeLoading(state, { payload }): void {
       state.list = payload;
       state.stats = DataStatus.done;
+    },
+    open(state, { payload }: Payload<string | null>): void {
+      state.openedId = payload;
     }
   },
 })
 
-export const { load, set, completeLoading } = mapsSlice.actions;
+export const { load, set, completeLoading, open } = mapsSlice.actions;
 export const mapsReducer = mapsSlice.reducer;

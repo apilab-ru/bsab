@@ -6,8 +6,7 @@ import { PlaylistEdit } from "../playlist-edit/playlist-edit";
 import styles from './playlist-page.module.scss';
 import { RootState } from "../../../store/store";
 import { Playlist } from "@bsab/api/local/playlist";
-
-
+import { MapsState } from "../../../store/maps/store";
 
 interface QueryParams {
   openedId: string;
@@ -15,6 +14,7 @@ interface QueryParams {
 
 export function PlaylistPage() {
   let { list, openedId } = useSelector<RootState, PlaylistsState>((state) => state.playlists);
+  let { list: maps } = useSelector<RootState, MapsState>((state) => state.maps);
   const playlist: Playlist = list.find(item => item.id === openedId)!;
 
   const dispatch = useDispatch();
@@ -44,6 +44,7 @@ export function PlaylistPage() {
         openPlaylist={ openPlaylist }
       />
       <PlaylistEdit
+        maps= { maps }
         close={ closePlaylist }
         playlist={ playlist }
         save={ savePlaylist }
