@@ -1,16 +1,19 @@
 {
+  "name": "local-api",
   "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
   "sourceRoot": "apps/local-api/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/local-api",
         "main": "apps/local-api/src/main.ts",
         "tsConfig": "apps/local-api/tsconfig.app.json",
-        "assets": ["apps/local-api/src/assets"]
+        "assets": ["apps/local-api/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
@@ -41,7 +44,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/local-api"],
+      "outputs": ["{workspaceRoot}/coverage/apps/local-api"],
       "options": {
         "jestConfig": "apps/local-api/jest.config.ts",
         "passWithNoTests": true
