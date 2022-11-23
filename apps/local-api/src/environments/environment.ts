@@ -1,4 +1,4 @@
-const gamePath = 'S:\\Steam\\steamapps\\common\\Beat Saber\\';
+const gamePath = 'S:\\Games\\Steam\\steamapps\\common\\Beat Saber\\';
 const port = 3333;
 const portHttps = 3433;
 

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as https from 'https';
-import { MapsController } from './app/maps.controller';
+import { MapsController } from './app/map/maps.controller';
 import { ProxyController } from "./app/proxy.controller";
 import { environment } from "./environments/environment";
 import { PlaylistController } from "./app/playlist.controller";

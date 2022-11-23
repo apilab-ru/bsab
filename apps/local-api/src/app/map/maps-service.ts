@@ -1,8 +1,9 @@
-import { MAP_MODE_CONVERT, MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetail } from "./map";
-import { environment } from "../environments/environment";
+import { MAP_MODE_CONVERT, MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetailV2 } from "./map";
+import { environment } from "../../environments/environment";
 import { DIFFICULTY_MAP } from "@bsab/api/map/difficulty";
 import { IMap, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
 import * as JSZip from 'jszip';
+import { readMapDifficultDetail } from './map-parser';
 const fs = require('fs');
 const crypto = require('crypto')
 
@@ -70,18 +71,6 @@ export class MapsService {
     });
   }
 
-  private readMapDifficultInfo(content: string): MapDifficultDetail {
-    const { _notes: notes } = JSON.parse(content) as RavMapDifficultDetail;
-    const times = notes.length
-      ? notes[notes.length - 1]._time
-      : 0;
-
-    return {
-      notesTotal: notes.length,
-      times,
-    }
-  }
-
   private async loadMap(id: string): Promise<MapCache> {
     const file = await fs.promises.readFile(environment.levelsPath + id + '/' + INFO_FILE);
     const { ctime } = await fs.promises.stat(environment.levelsPath + id + '/' + INFO_FILE);
@@ -102,7 +91,11 @@ export class MapsService {
     const mapDifficultData: Record<string, MapDifficultDetail> = {};
     filesMap.forEach((item) => {
       if (item) {
-        mapDifficultData[item.name] = this.readMapDifficultInfo(item.data);
+        try {
+          mapDifficultData[item.name] = readMapDifficultDetail(item.data);
+        } catch (e) {
+          console.error('cant read', id, e);
+        }
       }
     });
 
@@ -129,7 +122,7 @@ export class MapsService {
           console.error(
             'not found',
             item.file,
-            mapDifficultData,
+            // mapDifficultData,
             id,
           );
         }
