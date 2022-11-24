@@ -1,11 +1,11 @@
 import React, { FormEvent } from 'react';
 import './Filter.scss';
-import FilterDropdown from "../FilterDropdown/FilterDropdown";
-import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from "../../interfaces/filter";
+import FilterDropdown from '../FilterDropdown/FilterDropdown';
+import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from '../../interfaces/filter';
 import Popover from '@mui/material/Popover';
-import { FILTER_ITEMS, FILTER_ITEMS_MAP } from "../../models/filter-items";
+import { FILTER_ITEMS, FILTER_ITEMS_MAP } from '../../models/filter-items';
 import FilterChip from '../FilterChip/FilterChip';
-import { FilterKey } from "../../api";
+import { FilterKey } from '../../api';
 
 interface FilterProps {
    values: SearchValue[];
@@ -61,8 +61,8 @@ class Filter extends React.Component<FilterProps> {
       this.setState({ isShowDropdown: false, anchorEl: null })
    }
 
-   onChangeGroup = (group: FilterKey | null) => {
-      this.handleSelectGroup(group);
+   onChangeGroup = (group: FilterKey | null, isNegative?: boolean) => {
+      this.handleSelectGroup(group, isNegative);
    }
 
    onChangeValue = (value: string | null, isNot = false) => {
@@ -114,7 +114,11 @@ class Filter extends React.Component<FilterProps> {
       this.props.onDeleteValue(index);
    }
 
-   private handleSelectValue(value: string | null, group: FilterKey | null, isNot = false): void {
+   private handleSelectValue(
+     value: string | null,
+     group: FilterKey | null,
+     isNot = false
+   ): void {
       const item = FILTER_ITEMS_MAP[group!];
 
       if (!item) {
@@ -143,7 +147,7 @@ class Filter extends React.Component<FilterProps> {
       this.close();
    }
 
-   private handleSelectGroup(group: FilterKey | null): void {
+   private handleSelectGroup(group: FilterKey | null, isNegative?: boolean): void {
       if (!group) {
          return this.setState({ group });
       }
@@ -167,6 +171,10 @@ class Filter extends React.Component<FilterProps> {
       if (item.type === FilterItemType.write) {
          const value = this.state.filterText;
          this.handleSelectValue(value, group);
+      }
+
+      if (item.type === FilterItemType.boolean) {
+        this.handleSelectValue(isNegative ? 'false' : 'true', group);
       }
    }
 

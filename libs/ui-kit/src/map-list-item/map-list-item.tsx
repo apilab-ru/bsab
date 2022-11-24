@@ -7,6 +7,7 @@ import { MapDiffiDetail } from '@bsab/api/map/map';
 interface MapListItemProps {
   item: IMapItem;
   click?: () => void;
+  className?: string;
 }
 
 const DIFFICULT_MAP: Record<string, string> = {
@@ -17,7 +18,7 @@ const DIFFICULT_MAP: Record<string, string> = {
   'normal': 'Normal',
 };
 
-export const MapListItem: FC<MapListItemProps> = ({ item, click }) => {
+export const MapListItem: FC<MapListItemProps> = ({ item, click, className }) => {
   const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd HH:mm')
   const round = (nps: number) => Math.round(nps * 100) / 100
   const makeName = (item: IMapItem) => item.songName
@@ -25,7 +26,7 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click }) => {
     + (item.songAuthorName ? ' / ' + item.songAuthorName : '');
 
   return (
-    <div className="MapListItem" title={ item.id } onClick={ click }>
+    <div className={'MapListItem ' + className} title={ item.id } onClick={ click }>
       <div className="color"></div>
       <div className="row">
         <img className="album" src={ item.coverURL }/>

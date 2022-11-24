@@ -1,10 +1,11 @@
 import { FilterKey } from "../api";
 
-export type FilterItem = ListFilterItem | WriteFilterItem;
+export type FilterItem = ListFilterItem | WriteFilterItem | BooleanFilterItem;
 
 export enum FilterItemType {
   list = 'list',
   write = 'write',
+  boolean = 'boolean',
 }
 
 interface BaseFilterItem {
@@ -23,6 +24,10 @@ interface ListFilterItem extends BaseFilterItem {
 
 interface WriteFilterItem extends BaseFilterItem {
   type: FilterItemType.write;
+}
+
+interface BooleanFilterItem extends BaseFilterItem {
+  type: FilterItemType.boolean;
 }
 
 export interface FilterItemValue {

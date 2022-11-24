@@ -6,10 +6,11 @@ import { IMapItem, MapListItem } from '@bsab/ui-kit/map-list-item';
 
 interface MapsListProps {
   list: IMapItem[];
+  showed: string[];
   handleClick: (itemId: string) => void;
 }
 
-const MapsList: FC<MapsListProps> = ({ list, handleClick }) => {
+const MapsList: FC<MapsListProps> = ({ list, handleClick, showed }) => {
   const rows = chunk(list, 2);
 
   return (
@@ -17,7 +18,12 @@ const MapsList: FC<MapsListProps> = ({ list, handleClick }) => {
       { rows.map(row =>
         <div className="row" key={ row[0].id }>
           { row.map(item =>
-            <MapListItem item={ item } key={ item.id } click={ () => handleClick(item.id) }/>
+            <MapListItem
+              className={ showed.includes(item.id) ? '-showed' : '' }
+              item={ item }
+              key={ item.id }
+              click={ () => handleClick(item.id) }
+            />
           ) }
         </div>
       ) }

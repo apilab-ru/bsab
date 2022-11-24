@@ -10,5 +10,10 @@
   .MapListItem {
     cursor: pointer;
     flex: 1;
+
+    &.-showed {
+      opacity: 0.5;
+      background: var(--color-secondary-opposite);
+    }
   }
 }

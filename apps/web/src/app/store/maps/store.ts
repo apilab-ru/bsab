@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { FilterState } from "../filter/store";
 import { Tag } from "../../api";
 import { IMap } from '@bsab/api/map/map';
+import { mapsApiService } from '../../services/maps-api-service';
 
 const initialState = {
   list: [] as IMap[],
   isLoading: false,
   tags: [] as Tag[],
+  showed: [] as string[],
   openedId: null as string | null,
 };
 
@@ -25,7 +27,7 @@ export const mapsSlice = createSlice({
       state.isLoading = true;
     },
 
-    set: (state, { payload }: { payload: SetPayload }) => {
+    setList: (state, { payload }: { payload: SetPayload }) => {
       if (payload.isMerge) {
         state.list = [
           // @ts-ignore
@@ -41,9 +43,14 @@ export const mapsSlice = createSlice({
 
     setOpened: (state, { payload }: { payload: string | null }) => {
       state.openedId = payload;
-    }
+    },
+
+    addToShowed: (state, { payload }: { payload: string }) => {
+      state.showed.push(payload);
+      mapsApiService.markAsShowed(payload);
+    },
   }
 });
 
-export const { load, set, setOpened } = mapsSlice.actions;
+export const { load, setList, setOpened, addToShowed } = mapsSlice.actions;
 export const mapsReducer = mapsSlice.reducer;

@@ -1,4 +1,4 @@
-export enum Difficulty {
+/*export enum Difficulty {
   expertPlus = 'ExpertPlus',
   expert = 'Expert',
   hard = 'Hard',
@@ -23,7 +23,7 @@ export interface MapStat {
   upvotes: number;
   downvotes: number;
   score: number;
-}
+}*/
 
 /*export interface Map {
   id: string;
@@ -58,6 +58,7 @@ export enum FilterKey {
   npsTo = 'npsTo',
   search = 'search',
   tags = 'tags',
+  showed = 'showed'
 }
 
 export interface FilterRequest {
@@ -67,6 +68,7 @@ export interface FilterRequest {
   npsFrom?: string;
   npsTo?: string;
   dateFrom?: string;
+  showed?: boolean;
 }
 
 export interface Tag {

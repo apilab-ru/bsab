@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import './FilterDropdown.scss';
-import { FilterItem, FilterItemValue } from "../../interfaces/filter";
+import { FilterItem, FilterItemType, FilterItemValue } from '../../interfaces/filter';
 import NgIf from '../NgIf/NgIf';
 import { Button } from '@mui/material';
 import { FilterKey } from "../../api";
 
 interface FilterDropdownProps {
-  onChangeGroup: (group: FilterKey | null) => void;
+  onChangeGroup: (group: FilterKey | null, isNegative?: boolean) => void;
   items: FilterItem[];
   focusGroup: string | null;
   group: string | null;
@@ -19,26 +19,29 @@ interface FilterDropdownProps {
 
 interface listItemsProps<T> {
   onChange: (value: T, isNegative?: boolean) => void;
-  items: FilterItemValue[];
+  items: FilterItemValue[] | FilterItem[];
   selected: string | null;
   withNegative?: boolean;
 }
 
 const ListItems: FC<listItemsProps<any>> = ({ items, selected, onChange, withNegative }) => {
+
+  const hasNegative = (item: Partial<FilterItem> | {}) => withNegative || (item as FilterItem).type === FilterItemType.boolean;
+
   return (
     <div className='list'>
-      { items.map(({ key, name }) =>
+      { items.map(({ key, name, ...item }) =>
         <div className="line" key={ key }>
           <Button
             onClick={ () => onChange(key) }
             classes={ selected === key ? { root: '-active' } : {} }
           >
             { name }
-            { !!withNegative &&
+            { !!hasNegative(item) &&
             <span className='positive'>+</span>
             }
           </Button>
-          { !!withNegative &&
+          { !!hasNegative(item) &&
           <Button
             onClick={ () => onChange(key, true) }
             classes={ { root: '-negative' } }

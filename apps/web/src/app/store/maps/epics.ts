@@ -1,5 +1,5 @@
 import { catchError, debounceTime, filter, map, Observable, of, switchMap, withLatestFrom } from "rxjs";
-import { set } from './store';
+import { setList } from './store';
 import { RootState } from "../store";
 import { mapsApiService } from "../../services/maps-api-service";
 
@@ -13,13 +13,13 @@ export function mapsEpic(action$: Observable<{ type: string }>, store$: Observab
       return { list, filter }
     })),
     map(response => {
-      return set({
+      return setList({
         list: response.list,
         isMerge: response.filter.page > 1
       });
     }),
     catchError(() => {
-      const res = set({
+      const res = setList({
         list: [],
         isMerge: false,
       })

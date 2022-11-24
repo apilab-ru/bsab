@@ -36,6 +36,12 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
     type: FilterItemType.write,
     filterFunc: () => true,
     unique: true,
+  },
+  showed: {
+    name: 'Showed',
+    type: FilterItemType.boolean,
+    filterFunc: () => true,
+    unique: true,
   }
 };
 
@@ -49,10 +55,11 @@ export function prepareFilterRequest(items: SearchValue[]): FilterRequest {
   const tagsNegative = items
     .filter(it => it.key === FilterKey.tags && it.not)
     .map(item => +item.value);
-  const search = findValueByKey(items, FilterKey.search);
-  const npsFrom = findValueByKey(items, FilterKey.npsFrom);
-  const npsTo = findValueByKey(items, FilterKey.npsTo);
-  const dateFrom = findValueByKey(items, FilterKey.dateFrom);
+  const search = findValueByKey<string>(items, FilterKey.search);
+  const npsFrom = findValueByKey<string>(items, FilterKey.npsFrom);
+  const npsTo = findValueByKey<string>(items, FilterKey.npsTo);
+  const dateFrom = findValueByKey<string>(items, FilterKey.dateFrom);
+  const showed = findValueByKey<boolean>(items, FilterKey.showed);
   return {
     tagsPositive,
     tagsNegative,
@@ -60,11 +67,12 @@ export function prepareFilterRequest(items: SearchValue[]): FilterRequest {
     npsFrom,
     npsTo,
     dateFrom,
+    showed
   }
 }
 
-function findValueByKey(items: SearchValue[], key: FilterKey): string | undefined {
-  return items.find(it => it.key === key)?.value;
+function findValueByKey<T>(items: SearchValue[], key: FilterKey): T | undefined {
+  return items.find(it => it.key === key)?.value as T | undefined;
 }
 
 export const ORDER_FIELDS = [
