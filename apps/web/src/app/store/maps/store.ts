@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FilterState } from "../filter/store";
-import { Map, Tag } from "../../api";
+import { Tag } from "../../api";
+import { IMap } from '@bsab/api/map/map';
 
 const initialState = {
-  list: [] as Map[],
+  list: [] as IMap[],
   isLoading: false,
   tags: [] as Tag[],
+  openedId: null as string | null,
 };
 
 export type MapsState = typeof initialState;
 
 interface SetPayload {
   isMerge: boolean;
-  list: Map[];
+  list: IMap[];
 }
 
 export const mapsSlice = createSlice({
@@ -22,6 +24,7 @@ export const mapsSlice = createSlice({
     load: (state, { payload }: { payload: FilterState }) => {
       state.isLoading = true;
     },
+
     set: (state, { payload }: { payload: SetPayload }) => {
       if (payload.isMerge) {
         state.list = [
@@ -35,8 +38,12 @@ export const mapsSlice = createSlice({
       }
       state.isLoading = false;
     },
+
+    setOpened: (state, { payload }: { payload: string | null }) => {
+      state.openedId = payload;
+    }
   }
 });
 
-export const { load, set } = mapsSlice.actions;
+export const { load, set, setOpened } = mapsSlice.actions;
 export const mapsReducer = mapsSlice.reducer;

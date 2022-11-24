@@ -25,7 +25,7 @@ export interface MapStat {
   score: number;
 }
 
-export interface Map {
+/*export interface Map {
   id: string;
   name: string;
   description: string;
@@ -50,7 +50,7 @@ export interface Map {
   downloadURL: string;
   coverURL: string;
   soundURL: string;
-}
+}*/
 
 export enum FilterKey {
   dateFrom = 'dateFrom',

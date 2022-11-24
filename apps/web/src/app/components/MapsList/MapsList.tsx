@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
 import './MapsList.scss';
-import { Map } from "../../api";
 
 import chunk from "lodash/chunk";
-import MapListItem from "../MapListItem/MapListItem";
+import { IMapItem, MapListItem } from '@bsab/ui-kit/map-list-item';
 
 interface MapsListProps {
-  list: Map[];
+  list: IMapItem[];
+  handleClick: (itemId: string) => void;
 }
 
-const MapsList: FC<MapsListProps> = ({ list }) => {
+const MapsList: FC<MapsListProps> = ({ list, handleClick }) => {
   const rows = chunk(list, 2);
 
   return (
@@ -17,7 +17,7 @@ const MapsList: FC<MapsListProps> = ({ list }) => {
       { rows.map(row =>
         <div className="row" key={ row[0].id }>
           { row.map(item =>
-            <MapListItem item={ item } key={ item.id }/>
+            <MapListItem item={ item } key={ item.id } click={ () => handleClick(item.id) }/>
           ) }
         </div>
       ) }

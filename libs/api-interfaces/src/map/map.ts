@@ -18,6 +18,11 @@ export interface IMap {
 
   duration: number;
   difficultMap: MapDifficultList[];
+
+  sourceUrl: string;
+
+  soundURL?: string;
+  downloadURL?: string;
 }
 
 export interface MapDiffiDetail {

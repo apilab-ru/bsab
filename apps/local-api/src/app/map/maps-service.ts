@@ -140,6 +140,7 @@ export class MapsService {
       bpm: rav._beatsPerMinute,
       songFilename: this.getSongFile(id, rav._songFilename),
       coverURL: this.getImageFile(id, rav._coverImageFilename),
+      sourceUrl: environment.host + `proxy/source/?name=` + id,
       author: rav._levelAuthorName,
       songAuthorName: rav._songAuthorName,
       difficultMap: this.convertDifficultMap(rav._difficultyBeatmapSets),

@@ -4,9 +4,9 @@ import { RootState } from "../../../store/store";
 import { MapsState, open } from "../../../store/maps/store";
 import MapsList from '../maps-list/maps-list';
 import React from "react";
-import { Dialog } from "@mui/material";
-import { proxyApiService } from "../../../services/proxy-api";
 import { router } from "../../../services/router";
+import { MapPlayer } from '@bsab/ui-kit/map-player';
+import { IMap } from '@bsab/api/map/map';
 
 interface QueryParams {
   openedId: string;
@@ -26,17 +26,13 @@ export function MapsPage() {
     dispatch(open(openedId));
   }
 
-  const getLink = (openedId: string | null) => {
-    if (!openedId) {
-      return '';
-    }
-
-    return proxyApiService.getPlayerLink(openedId);
-  }
-
   const { openedId: queryOpenedId } = router.getQueryParams<QueryParams>();
   if (queryOpenedId && queryOpenedId !== openedId) {
     openItem(queryOpenedId);
+  }
+
+  const getSourceOpenedItem = (openedId: string | null, list: IMap[]) => {
+    return list?.find(item => item.id === openedId)?.sourceUrl || null;
   }
 
   return (
@@ -47,9 +43,11 @@ export function MapsPage() {
           open={ openItem }
         />
       </div>
-      <Dialog onClose={ handleClose } open={ !!openedId } maxWidth={false}>
-        <iframe className={ styles.playerFrame } src={ getLink(openedId) }/>
-      </Dialog>
+      <MapPlayer
+        handleClose={ handleClose }
+        isOpened={ !!openedId }
+        sourceUrl={ getSourceOpenedItem(openedId, list) }
+      ></MapPlayer>
     </>
   );
 }

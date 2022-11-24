@@ -9,8 +9,6 @@ export interface MapsListProps {
   open: (id: string) => void;
 }
 
-// coverFilename
-
 export function MapsList(props: MapsListProps) {
   return (
     <div className="mapsList">

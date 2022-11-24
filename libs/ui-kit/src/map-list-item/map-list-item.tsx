@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 import './map-list-item.scss';
 import { format, parseISO } from "date-fns";
-import { IMap } from "@bsab/api/map/map";
-
+import { IMapItem } from './interface';
 
 interface MapListItemProps {
-  item: IMap;
+  item: IMapItem;
   click?: () => void;
 }
 
@@ -20,7 +19,7 @@ const DIFFICULT_MAP: Record<string, string> = {
 export const MapListItem: FC<MapListItemProps> = ({ item, click }) => {
   const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd HH:mm')
   const round = (nps: number) => Math.round(nps * 100) / 100
-  const makeName = (item: IMap) => item.songName
+  const makeName = (item: IMapItem) => item.songName
     + (item.songSubName ? ' / ' + item.songSubName : '')
     + (item.songAuthorName ? ' / ' + item.songAuthorName : '');
 
