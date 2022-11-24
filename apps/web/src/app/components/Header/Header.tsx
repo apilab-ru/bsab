@@ -21,7 +21,9 @@ const Header: FC<{}> = () => {
         />
         <OrderControl
           orderField={ orderField }
+          orderDirection={ orderDirection }
           orderFieldChange={ orderField => dispatch(set({ orderField })) }
+          orderDirectionChange={ orderDirection => dispatch(set({ orderDirection })) }
         />
       </div>
     </div>

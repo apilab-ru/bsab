@@ -26,10 +26,10 @@ export const filterSlice = createSlice({
       state.page = 1;
     },
     set: (state, { payload }: { payload: Partial<FilterState> }) => {
-      state = {
-        ...state,
-        ...payload,
-      };
+      Object.entries(payload).forEach(([key, value]) => {
+        // @ts-ignore
+        state[key] = value;
+      })
     },
     nextPage: (state) => {
       state.page = state.page + 1;

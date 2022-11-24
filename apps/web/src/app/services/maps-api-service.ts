@@ -15,6 +15,8 @@ class MapsApiService {
       limit: MAPS_LIMIT,
       offset: ((filter.page - 1) * MAPS_LIMIT),
       ...request,
+      orderField: filter.orderField,
+      orderDirection: filter.orderDirection,
     });
     return fetch(environment.api + '/maps/list?' + params)
       .then(res => res.json())

@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import './map-list-item.scss';
 import { format, parseISO } from "date-fns";
 import { IMapItem } from './interface';
+import { MapDiffiDetail } from '@bsab/api/map/map';
 
 interface MapListItemProps {
   item: IMapItem;
@@ -40,6 +41,7 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click }) => {
             <span
               className={ 'difficult -' + dif.difficulty }
               key={ dif.difficulty }
+              title={ JSON.stringify(dif) }
             >
               <b>{ round(dif.nps) }</b>
               { DIFFICULT_MAP[dif.difficulty] }
