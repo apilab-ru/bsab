@@ -25,6 +25,16 @@ export class MapsService {
     return this.cache.map(({ rav, ...item }) => item);
   }
 
+  getBeatSaverIds(list: IMap[]): string[] {
+    const exp = new RegExp(/([0-9a-z]{4,}) .+/g);
+
+    return list.map(({ id }) => {
+      const res = exp.exec(id);
+
+      return res ? res[1] : null;
+    }).filter(it => !!it);
+  }
+
   async installPreparedMaps(withDelete = false): Promise<number> {
     const list = await fs.promises.readdir(environment.installPath);
 

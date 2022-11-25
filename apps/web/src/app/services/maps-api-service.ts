@@ -39,6 +39,16 @@ class MapsApiService {
     }).then(res => res.json());
   }
 
+  markAsShowedList(ids: string[]): Promise<void> {
+    return fetch(environment.api + '/maps/showed-list', {
+      method: 'POST',
+      body: JSON.stringify({ ids }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(res => res.json());
+  }
+
   loadTags() {
     return fetch(environment.api + '/maps/tags').then(res => res.json())
   }

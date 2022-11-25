@@ -11,6 +11,7 @@ interface FilterProps {
    values: SearchValue[];
    onDeleteValue: (index: number) => void;
    onAddValue: (value: SearchValue) => void;
+   className?: string;
 }
 
 const initialState = {
@@ -256,7 +257,7 @@ class Filter extends React.Component<FilterProps> {
 
    render() {
       return (
-        <div className="Filter">
+        <div className={'Filter ' + this.props.className }>
            <div className="params-box">
               <div className="chips">
                  { this.state.values.map((item, index) =>

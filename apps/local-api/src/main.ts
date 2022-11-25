@@ -26,6 +26,7 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/maps', mapsController.getListMaps.bind(mapsController));
+app.get('/maps/ids', mapsController.getIdsMaps.bind(mapsController));
 app.get('/maps/install', () => mapsController.installPreparedMap(true));
 
 app.get('/playlists', playlistController.getPlaylists.bind(playlistController));

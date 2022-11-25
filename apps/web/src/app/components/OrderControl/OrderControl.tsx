@@ -10,9 +10,10 @@ interface OrderControlProps {
   orderDirection: OrderDirection;
   orderFieldChange: (field: OrderField) => void;
   orderDirectionChange: (direction: OrderDirection) => void;
+  className?: string;
 }
 
-const OrderControl: FC<OrderControlProps> = ({orderDirection, ...props}) => {
+const OrderControl: FC<OrderControlProps> = ({orderDirection, className, ...props}) => {
   const updateOrder = (event: string) => props.orderFieldChange(event as OrderField);
   const toggleDirection = () => {
     const direction = orderDirection === OrderDirection.desc ? OrderDirection.asc : OrderDirection.desc;
@@ -20,7 +21,7 @@ const OrderControl: FC<OrderControlProps> = ({orderDirection, ...props}) => {
   };
 
   return (
-    <div className="OrderControl">
+    <div className={ 'OrderControl ' + className }>
       <Select
         labelId="order-field"
         id="order-field-select"
