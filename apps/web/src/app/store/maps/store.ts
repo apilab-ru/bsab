@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { FilterState } from "../filter/store";
 import { Tag } from "../../api";
-import { IMap } from '@bsab/api/map/map';
 import { mapsApiService } from '../../services/maps-api-service';
+import { MapDetail } from '@bsab/api/map/map-detail';
 
 const initialState = {
-  list: [] as IMap[],
+  list: [] as MapDetail[],
   isLoading: false,
   tags: [] as Tag[],
   showed: [] as string[],
@@ -16,7 +16,7 @@ export type MapsState = typeof initialState;
 
 interface SetPayload {
   isMerge: boolean;
-  list: IMap[];
+  list: MapDetail[];
 }
 
 export const mapsSlice = createSlice({

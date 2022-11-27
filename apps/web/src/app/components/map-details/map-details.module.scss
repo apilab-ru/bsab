@@ -1,3 +1,26 @@
 .mapDetails {
-  margin-left: 30px;
+  padding: 14px;
+  width: 350px;
+  background: var(--color-background);
+}
+
+.pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.detailName {
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.description {
+  max-height: 220px;
+  overflow: auto;
+}
+
+.detailLine {
+  & + & {
+    margin-top: 8px;
+  }
 }

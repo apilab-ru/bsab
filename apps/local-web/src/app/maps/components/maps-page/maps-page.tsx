@@ -6,7 +6,7 @@ import MapsList from '../maps-list/maps-list';
 import React from "react";
 import { router } from "../../../services/router";
 import { MapPlayer } from '@bsab/ui-kit/map-player';
-import { IMap } from '@bsab/api/map/map';
+import { LocalMap } from '@bsab/api/map/map';
 
 interface QueryParams {
   openedId: string;
@@ -31,7 +31,7 @@ export function MapsPage() {
     openItem(queryOpenedId);
   }
 
-  const getSourceOpenedItem = (openedId: string | null, list: IMap[]) => {
+  const getSourceOpenedItem = (openedId: string | null, list: LocalMap[]) => {
     return list?.find(item => item.id === openedId)?.sourceUrl || null;
   }
 

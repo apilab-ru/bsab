@@ -1,26 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import './map-list-item.scss';
 import { format, parseISO } from "date-fns";
 import { IMapItem } from './interface';
-import { MapDiffiDetail } from '@bsab/api/map/map';
+import MapDifficult from '../map-difficult/map-difficult';
+import { formatDuration } from '@bsab/ui-kit/date-utils/duration';
 
 interface MapListItemProps {
   item: IMapItem;
   click?: () => void;
   className?: string;
+  children?: ReactNode;
 }
 
-const DIFFICULT_MAP: Record<string, string> = {
-  'easy': 'Easy',
-  'expert': 'Expert',
-  'expertPlus': 'Expert+',
-  'hard': 'Hard',
-  'normal': 'Normal',
-};
-
-export const MapListItem: FC<MapListItemProps> = ({ item, click, className }) => {
-  const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd HH:mm')
-  const round = (nps: number) => Math.round(nps * 100) / 100
+export const MapListItem: FC<MapListItemProps> = ({ item, click, className, children }) => {
+  const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd')
   const makeName = (item: IMapItem) => item.songName
     + (item.songSubName ? ' / ' + item.songSubName : '')
     + (item.songAuthorName ? ' / ' + item.songAuthorName : '');
@@ -33,25 +26,19 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click, className }) =>
       </div>
       <div className="row">
         <div className="line -title">{ makeName(item) }</div>
-        <div className="line">
-          <span className="author">{ item.author } </span>
-          <span className="date">{ dateFormat(item.createdAt) }</span>
+        <div className="line -date">
+          { dateFormat(item.createdAt) } / <b className={'duration'}>{ formatDuration(item.duration) }</b>
         </div>
-        <div className="line">
-          { item.difsDetails.map(dif =>
-            <span
-              className={ 'difficult -' + dif.difficulty }
-              key={ dif.difficulty }
-              title={ JSON.stringify(dif) }
-            >
-              <b>{ round(dif.nps) }</b>
-              { DIFFICULT_MAP[dif.difficulty] }
-            </span>
-          ) }
-        </div>
-      </div>
-      <div className="row">
-        <div className="line">{ item.id }</div>
+        <MapDifficult
+          details={item.difsDetails}
+          className="line"
+        ></MapDifficult>
+
+        { !children ? '' :
+          <div className={"line"}>
+            { children }
+          </div>
+        }
       </div>
     </div>
   )

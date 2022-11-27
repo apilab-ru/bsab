@@ -52,7 +52,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "local-web:build",
-        "hmr": true
+        "hmr": true,
+        "port": 4212
       },
       "configurations": {
         "development": {

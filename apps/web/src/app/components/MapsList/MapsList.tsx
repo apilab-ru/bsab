@@ -2,10 +2,12 @@ import React, { FC } from 'react';
 import './MapsList.scss';
 
 import chunk from "lodash/chunk";
-import { IMapItem, MapListItem } from '@bsab/ui-kit/map-list-item';
+import { MapListItem } from '@bsab/ui-kit/map-list-item';
+import Tags from '../tags/tags';
+import { MapDetail } from '@bsab/api/map/map-detail';
 
 interface MapsListProps {
-  list: IMapItem[];
+  list: MapDetail[];
   showed: string[];
   handleClick: (itemId: string) => void;
 }
@@ -23,7 +25,11 @@ const MapsList: FC<MapsListProps> = ({ list, handleClick, showed }) => {
               item={ item }
               key={ item.id }
               click={ () => handleClick(item.id) }
-            />
+            >
+              { !item.tags?.length ? '' :
+                <Tags tags={item.tags}></Tags>
+              }
+            </MapListItem>
           ) }
         </div>
       ) }

@@ -53,6 +53,8 @@ export interface MapStat {
 }*/
 
 export enum FilterKey {
+  bpmFrom = 'bpmFrom',
+  bpmTo = 'bpmTo',
   dateFrom = 'dateFrom',
   npsFrom = 'npsFrom',
   npsTo = 'npsTo',
@@ -68,7 +70,7 @@ export interface FilterRequest {
   npsFrom?: string;
   npsTo?: string;
   dateFrom?: string;
-  showed?: boolean;
+  showed?: string;
 }
 
 export interface Tag {

@@ -1,0 +1,43 @@
+.difficultRoot {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+
+  .difficult + .difficult {
+    margin-left: 4px;
+  }
+
+  .difficult {
+    background: #1f1f21;
+    border-radius: 100px;
+    color: var(--color-primary-inverted, #fff);
+    display: inline-block;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    min-width: 26px;
+    padding: 1px 6px 2px 8px;
+    vertical-align: bottom;
+
+    b {
+      font-weight: 500;
+      margin-right: 4px;
+    }
+
+    &.-easy {
+      background: #1268a1;
+    }
+
+    &.-hard {
+      background: #bd5500;
+    }
+
+    &.-expert {
+      background: #b52a1c;
+    }
+
+    &.-expertPlus {
+      background: #454088;
+    }
+  }
+}

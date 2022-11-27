@@ -1,6 +1,6 @@
-import { IMap, MapMode } from '@bsab/api/map/map';
+import { LocalMap, MapMode } from '@bsab/api/map/map';
 
-export interface MapCache extends IMap {
+export interface MapCache extends LocalMap {
   rav: MapRav;
 }
 

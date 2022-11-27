@@ -2,13 +2,13 @@ import { FilterState } from "../store/filter/store";
 
 import { prepareFilterRequest } from "../models/filter-items";
 import { environment } from "../../environments/environment";
-import { IMap } from '@bsab/api/map/map';
+import { MapDetail } from '@bsab/api/map/map-detail';
 
 
 const MAPS_LIMIT = 30;
 
 class MapsApiService {
-  loadList(filter: FilterState): Promise<IMap[]> {
+  loadList(filter: FilterState): Promise<MapDetail[]> {
     const request = prepareFilterRequest(filter.values);
 
     const params = this.convertParams({
@@ -20,12 +20,10 @@ class MapsApiService {
     });
     return fetch(environment.api + '/maps/list?' + params)
       .then(res => res.json())
-      .then((list: IMap[]) => list.map(item => ({
+      .then((list: MapDetail[]) => list.map(item => ({
         ...item,
-        author: item.author + '', // todo fix
         coverURL: this.fileProxy(item.coverURL),
         soundURL: this.fileProxy(item.soundURL!),
-        downloadURL: this.fileProxy(item.downloadURL!),
       })))
   }
 

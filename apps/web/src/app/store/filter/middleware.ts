@@ -1,5 +1,6 @@
 import { load } from '../maps/store';
 import { FILER_INIT_STATE } from "./store";
+import { prepareUrlParams } from '../../helpers/url';
 
 interface QueryParams {
   filter?: string;
@@ -26,9 +27,7 @@ export const filterQueryUpdater = store => next => action => {
     if (page && page !== 1) {
       params.page = page;
     }
-    const stringValues = Object.entries(params)
-      .map(([key, value]) => `${ key }=${ value }`)
-      .join('&');
+    const stringValues = prepareUrlParams(params);
     window.history.pushState(
       { page: "main" },
       '',

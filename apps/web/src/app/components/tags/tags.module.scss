@@ -1,0 +1,19 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  column-gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tag {
+  text-decoration: none;
+  color: var(--color-primary);
+
+  & + & {
+    &:before {
+      content: ',';
+    }
+  }
+}

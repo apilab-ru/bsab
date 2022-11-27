@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DataStatus } from "../../models/status";
-import { IMap } from "@bsab/api/map/map";
+import { LocalMap } from "@bsab/api/map/map";
 import { Payload } from "../../models/payload";
 
 const MAPS_INIT_STATE = {
-  list: [] as IMap[],
+  list: [] as LocalMap[],
   openedId: null as null | string,
   stats: DataStatus.empty as DataStatus,
 };

@@ -1,6 +1,6 @@
 import { Difficulty } from "./difficulty";
 
-export interface IMap {
+export interface LocalMap {
   id: string;
   coverURL: string;
   songName: string;

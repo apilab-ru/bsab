@@ -7,9 +7,10 @@ import { IconButton } from "@mui/material";
 interface FilterChipProps {
     item: SearchValue;
     onDelete: () => void;
+    onEdit: () => void;
 }
 
-const FilterChip: FC<FilterChipProps> = ({ item, onDelete }) => {
+const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit }) => {
     const detail = FILTER_ITEMS_MAP[item.key];
     let title = item.value;
 
@@ -19,10 +20,10 @@ const FilterChip: FC<FilterChipProps> = ({ item, onDelete }) => {
 
     return (
         <div className={'FilterChip' + (item.not ? ' -not' : '')  }>
-            <div className="name">
+            <div className="name" onClick={ onEdit }>
                 { detail.name }
             </div>
-            <div className="value">
+            <div className="value" onClick={ onEdit }>
                 { item.not &&
                     <span>Not </span>
                 }

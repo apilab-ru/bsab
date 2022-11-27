@@ -1,7 +1,7 @@
 import { MAP_MODE_CONVERT, MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetailV2 } from "./map";
 import { environment } from "../../environments/environment";
 import { DIFFICULTY_MAP } from "@bsab/api/map/difficulty";
-import { IMap, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
+import { LocalMap, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
 import * as JSZip from 'jszip';
 import { readMapDifficultDetail } from './map-parser';
 const fs = require('fs');
@@ -13,7 +13,7 @@ export class MapsService {
   private lastChange: string;
   private cache: MapCache[];
 
-  async loadMaps(): Promise<IMap[]> {
+  async loadMaps(): Promise<LocalMap[]> {
     const { mtime } = await fs.promises.stat(environment.levelsPath);
 
     if (!this.cache || mtime === this.lastChange) {
@@ -25,7 +25,7 @@ export class MapsService {
     return this.cache.map(({ rav, ...item }) => item);
   }
 
-  getBeatSaverIds(list: IMap[]): string[] {
+  getBeatSaverIds(list: LocalMap[]): string[] {
     const exp = new RegExp(/([0-9a-z]{4,}) .+/g);
 
     return list.map(({ id }) => {

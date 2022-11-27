@@ -10,7 +10,7 @@ import MapDetails from '../map-details/map-details';
 const MapsPage: FC<{}> = () => {
   const dispatch = useDispatch();
   const { list, openedId, showed } = useSelector<RootState, MapsState>((state) => state.maps);
-  const openedSourceUrl = list?.find(it => it.id === openedId)?.sourceUrl || null;
+  const openedItem = list?.find(it => it.id === openedId) || null;
 
   const closeMap = () => {
     dispatch(setOpened(null));
@@ -32,9 +32,11 @@ const MapsPage: FC<{}> = () => {
       <MapPlayer
         isOpened={ !!openedId }
         handleClose={ closeMap }
-        sourceUrl={ openedSourceUrl }
+        sourceUrl={ openedItem?.sourceUrl || null }
       >
-        <MapDetails id={ openedId || '' }></MapDetails>
+        {(!openedItem) ? '' :
+          <MapDetails item={ openedItem }></MapDetails>
+        }
       </MapPlayer>
     </div>
   )

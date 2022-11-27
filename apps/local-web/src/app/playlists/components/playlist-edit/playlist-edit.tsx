@@ -6,19 +6,19 @@ import ReactCrop, { centerCrop, Crop, makeAspectCrop } from 'react-image-crop';
 import React from "react";
 import { TextField } from "@mui/material";
 import { canvasPreview } from "@bsab/api/utils/canvas-preview";
-import { IMap } from "@bsab/api/map/map";
+import { LocalMap } from "@bsab/api/map/map";
 import { MapListItem } from "@bsab/ui-kit/map-list-item";
 
 interface PlaylistEditProps {
   close: () => void;
   playlist: Playlist | undefined;
   save: (playlist: Playlist) => void;
-  maps: IMap[];
+  maps: LocalMap[];
 }
 
 interface SongItem {
   song: Song;
-  map: IMap;
+  map: LocalMap;
 }
 
 const initialState = {
@@ -131,7 +131,7 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
     }
   }
 
-  getMapData(hash: string): IMap | undefined {
+  getMapData(hash: string): LocalMap | undefined {
     return this.props.maps?.find(item => item.hash === hash);
   }
 

@@ -5,58 +5,35 @@
   box-sizing: border-box;
   color: #000000de;
   display: flex;
-  padding: 8px;
   position: relative;
   text-align: left;
   transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 16px;
 
   .album {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     display: block;
-    border-radius: 2px;
+    border-radius: 4px 0 0 4px;
   }
 
   .row + .row {
-    margin-left: 8px;
+    padding: 8px;
   }
 
-  .difficult + .difficult {
+  .line {
+    display: flex;
+
+    & + .line {
+      margin-top: 4px;
+    }
+
+    &.-date {
+      font-size: 12px;
+    }
+  }
+
+  .duration {
     margin-left: 4px;
-  }
-
-  .difficult {
-    background: #1f1f21;
-    border-radius: 100px;
-    color: var(--color-primary-inverted, #fff);
-    display: inline-block;
-    font-size: 12px;
-    height: 18px;
-    line-height: 18px;
-    margin-top: 8px;
-    min-width: 26px;
-    padding: 1px 6px 2px 8px;
-    vertical-align: bottom;
-
-    b {
-      font-weight: 500;
-      margin-right: 4px;
-    }
-
-    &.-easy {
-      background: #1268a1;
-    }
-
-    &.-hard {
-      background: #bd5500;
-    }
-
-    &.-expert {
-      background: #b52a1c;
-    }
-
-    &.-expertPlus {
-      background: #454088;
-    }
   }
 }
