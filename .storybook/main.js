@@ -8,4 +8,11 @@ module.exports = {
   //   // Return the altered config
   //   return config;
   // },
+  framework: "@storybook/react",
+  core: {
+    builder: "@storybook/builder-webpack5",
+  },
+  features: {
+    interactionsDebugger: true,
+  },
 };

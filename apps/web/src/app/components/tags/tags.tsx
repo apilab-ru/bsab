@@ -11,13 +11,13 @@ export function Tags({ tags, className }: TagsProps) {
   const tagsMeta = TAGS;
 
   const getLink = (id: number) => '/?' + prepareUrlParams({
-    filter: JSON.stringify([{ key: 'tags', value: id }])
+    filter: JSON.stringify([{ key: 'tags', value: id+`` }])
   });
 
   return (
     <span className={styles.tag + ' ' + className} >
       { tags.map(id => tagsMeta.find(it => it.id === id)).filter(it => !!it).map(tag =>
-        <a className={styles.tag} href={ getLink(tag!.id) } target='_blank'>{ tag!.name }</a>
+        <a key={tag!.id} className={styles.tag} href={ getLink(tag!.id) } target='_blank'>{ tag!.name }</a>
       )}
     </span>
   );

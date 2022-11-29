@@ -16,11 +16,15 @@ const DIFFICULT_MAP: Record<string, string> = {
 };
 
 export function MapDifficult({ details, className }: MapDifficultProps) {
-  const round = (nps: number) => Math.round(nps * 100) / 100
+  const round = (nps: number) => Math.round(nps * 100) / 100;
+
+  const uniqList = details.filter(
+    (it, index) => index === details.findIndex(orig => orig.difficulty === it.difficulty)
+  );
 
   return (
     <div className={"difficultRoot " + className}>
-    { details.map(dif =>
+    { uniqList.map(dif =>
         <span
           className={ 'difficult -' + dif.difficulty }
           key={ dif.difficulty }

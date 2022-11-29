@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import './MapsPage.scss';
+import styles from './maps-page.module.scss';
 import { useDispatch, useSelector } from "react-redux";
-import MapsList from '../MapsList/MapsList';
+import MapsList from '../maps-list/maps-list';
 import { RootState } from "../../store/store";
 import { MapsState, setOpened, addToShowed } from '../../store/maps/store';
 import { MapPlayer } from '@bsab/ui-kit/map-player';
@@ -21,12 +21,18 @@ const MapsPage: FC<{}> = () => {
     dispatch(addToShowed(id));
   }
 
+  const changePage = (item: number) => {
+    location.hash = '#' + item;
+    console.log('xxx item', item);
+  }
+
   return (
-    <div className="MapsPage">
+    <div className={styles.page}>
       <MapsList
         list={ list }
         showed={ showed }
         handleClick={ id => openMap(id) }
+        changePage={ changePage }
       />
 
       <MapPlayer
