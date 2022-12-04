@@ -39,4 +39,12 @@
       display: none;
     }
   }
+
+  .button + .button {
+    margin-left: 6px;
+  }
+
+  .rect-crop {
+    max-width: 450px;
+  }
 }

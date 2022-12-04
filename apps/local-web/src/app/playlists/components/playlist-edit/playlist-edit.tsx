@@ -11,8 +11,9 @@ import { MapListItem } from "@bsab/ui-kit/map-list-item";
 
 interface PlaylistEditProps {
   close: () => void;
-  playlist: Playlist | undefined;
   save: (playlist: Playlist) => void;
+  remove: () => void;
+  playlist: Playlist;
   maps: LocalMap[];
 }
 
@@ -141,8 +142,9 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
         { !!this.props.playlist &&
         <form>
           <div className="line -top">
-            <Button onClick={ this.save }>Save</Button>
-            <Button onClick={ this.props.close }>Close</Button>
+            <Button className="button" variant="contained" color="error" onClick={ this.props.remove }>Remove</Button>
+            <Button className="button" variant="contained" onClick={ this.save }>Save</Button>
+            <Button className="button" variant="contained" onClick={ this.props.close }>Close</Button>
           </div>
           <div className="line -title">
             <TextField
@@ -162,7 +164,7 @@ export class PlaylistEdit extends React.Component<PlaylistEditProps> {
               />
               <div>Click for replace image</div>
             </label>
-            <ReactCrop crop={ this.state.crop } onChange={ this.setCrop } aspect={ 1 }>
+            <ReactCrop className={"rect-crop"} crop={ this.state.crop } onChange={ this.setCrop } aspect={ 1 }>
               <img
                 ref={ this.imageRef }
                 src={ this.state.image }

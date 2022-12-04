@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { open, PlaylistsState, updatePlaylist } from "../../../store/playlists/store";
+import { open, PlaylistsState, updatePlaylist, removePlaylist } from "../../../store/playlists/store";
 import { router } from "../../../services/router";
 import { PlaylistContainer } from "../playlist-container/playlist-container";
 import { PlaylistEdit } from "../playlist-edit/playlist-edit";
@@ -38,17 +38,25 @@ export function PlaylistPage() {
     openPlaylist(queryOpenedId);
   }
 
+  const callRemovePlaylist = (id: string) => {
+    closePlaylist();
+    dispatch(removePlaylist(id));
+  }
+
   return (
     <div className={styles.playlistPage}>
       <PlaylistContainer
         openPlaylist={ openPlaylist }
       />
-      <PlaylistEdit
-        maps= { maps }
-        close={ closePlaylist }
-        playlist={ playlist }
-        save={ savePlaylist }
-      />
+      { !playlist ? '' :
+        <PlaylistEdit
+          maps= { maps }
+          playlist={ playlist }
+          close={ closePlaylist }
+          save={ savePlaylist }
+          remove={ () => callRemovePlaylist(playlist.id) }
+        />
+      }
     </div>
   )
 }

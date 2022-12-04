@@ -31,15 +31,16 @@ app.get('/maps/install', () => mapsController.installPreparedMap(true));
 
 app.get('/playlists', playlistController.getPlaylists.bind(playlistController));
 app.post('/playlist/:id', playlistController.updatePlaylist.bind(playlistController));
+app.delete('/playlist/:id', playlistController.removePlaylist.bind(playlistController));
 
 app.get('/proxy/song', proxyController.proxySong.bind(proxyController))
 app.get('/proxy/source', proxyController.proxySource.bind(proxyController))
 
-mapsController.installPreparedMap();
+// mapsController.installPreparedMap();
 
 const port = environment.port;
 const server = app.listen(port, () => {
-  console.log('Listening at ' + environment.host + '/api');
+  console.log('Listening at ' + environment.host + 'api');
 });
 server.on('error', console.error);
 

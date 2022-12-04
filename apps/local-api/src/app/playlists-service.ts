@@ -35,6 +35,10 @@ export class PlaylistsService {
     await fs.promises.writeFile(this.path + id, data);
   }
 
+  async removePlaylist(id: string): Promise<void> {
+     await fs.promises.unlink(this.path + id);
+  }
+
   private async parserPlaylist(path: string): Promise<Playlist> {
     const data = await fs.promises.readFile(this.path + path);
     const item: Playlist = JSON.parse(data);

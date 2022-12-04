@@ -1,11 +1,11 @@
 const gamePath = 'S:\\Games\\Steam\\steamapps\\common\\Beat Saber\\';
-const port = 3333;
-const portHttps = 3433;
+const port = 3433;
+const portHttps = 3333;
 
 export const environment = {
   port,
   portHttps,
-  host: 'http://localhost:' + port + '/',
+  host: 'https://localhost:' + portHttps + '/',
   production: false,
   levelsPath: gamePath + 'Beat Saber_Data/CustomLevels/',
   playlistsPath: gamePath + 'Playlists/',

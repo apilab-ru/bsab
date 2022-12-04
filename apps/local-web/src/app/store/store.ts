@@ -3,7 +3,7 @@ import { mapsReducer, MapsState } from "./maps/store";
 import { playlistsReducer, PlaylistsState } from "./playlists/store";
 import { createEpicMiddleware } from "redux-observable";
 import { mapsLoadEpic } from "./maps/epic";
-import { playlistsEpics, updatePlaylist } from "./playlists/epic";
+import { playlistsEpics, removePlaylist, updatePlaylist } from "./playlists/epic";
 
 const epicMiddleware = createEpicMiddleware();
 
@@ -18,11 +18,11 @@ export interface RootState {
 }
 
 export const AppStore = createStore(
-  combineReducers({
-    playlists: playlistsReducer,
-    maps: mapsReducer,
-  }),
-  applyMiddleware(epicMiddleware),
+   combineReducers({
+      playlists: playlistsReducer,
+      maps: mapsReducer,
+   }),
+   applyMiddleware(epicMiddleware),
 )
 
 // @ts-ignore
@@ -31,4 +31,5 @@ epicMiddleware.run(mapsLoadEpic);
 epicMiddleware.run(playlistsEpics);
 // @ts-ignore
 epicMiddleware.run(updatePlaylist);
-
+// @ts-ignore
+epicMiddleware.run(removePlaylist);

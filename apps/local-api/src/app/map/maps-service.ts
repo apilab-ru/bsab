@@ -25,14 +25,24 @@ export class MapsService {
     return this.cache.map(({ rav, ...item }) => item);
   }
 
-  getBeatSaverIds(list: LocalMap[]): string[] {
-    const exp = new RegExp(/([0-9a-z]{4,}) .+/g);
+  getBeatSaverIds(list: LocalMap[]) {
+    const notFound = [];
 
-    return list.map(({ id }) => {
-      const res = exp.exec(id);
+    const ids = list.map(item => {
+      const res = item.id.split(' (');
 
-      return res ? res[1] : null;
+      if (res.length > 1 && !item.id.includes('Beat Sage') && res[0].length < 8) {
+         return res[0]
+      }
+
+      notFound.push(item.id);
+      return null;
     }).filter(it => !!it);
+
+    return {
+       ids,
+       notFound
+    }
   }
 
   async installPreparedMaps(withDelete = false): Promise<number> {

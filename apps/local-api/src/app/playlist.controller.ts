@@ -15,4 +15,10 @@ export class PlaylistController {
 
     res.send({ status: 'ok' });
   }
+
+   async removePlaylist(req: Request, res: Response) {
+      await this.playlistsService.removePlaylist(req.params.id);
+
+      res.send({ status: 'ok' });
+   }
 }

@@ -3,6 +3,5 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:3333/',
-  apiHttps: 'http://localhost:3433/',
+  api: 'https://localhost:3333/',
 };
