@@ -3,8 +3,9 @@ import { MapDetail } from '@bsab/api/map/map-detail';
 import MapDifficult from '@bsab/ui-kit/map-difficult/map-difficult';
 import { format, parseISO } from 'date-fns';
 import { formatDuration } from '@bsab/ui-kit/date-utils/duration';
-import { TAGS } from '../../models/tags';
 import Tags from '../tags/tags';
+import Button from '@mui/material/Button';
+
 
 export interface MapDetailsProps {
   item: MapDetail;
@@ -22,6 +23,11 @@ export function MapDetails({ item }: MapDetailsProps) {
 
   return (
     <div className={styles.mapDetails}>
+      <div className={styles.detailLine}>
+        <span className={styles.detailName}>Id:</span>
+        <span>{ item.id }</span>
+      </div>
+
       <div className={styles.detailLine}>
         <span className={styles.detailName}>Date:</span>
         <span>{ dateFormat(item.createdAt) }</span>
@@ -56,8 +62,8 @@ export function MapDetails({ item }: MapDetailsProps) {
       </div>
 
       <div className={styles.detailLine}>
-        <a href={'beatsaver://' + item.id}>
-          <button>Install</button>
+        <a className={styles.button} href={'beatsaver://' + item.id}>
+          <Button variant="contained">Install</Button>
         </a>
       </div>
     </div>

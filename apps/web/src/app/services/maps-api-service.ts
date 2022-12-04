@@ -1,11 +1,8 @@
 import { FilterState } from "../store/filter/store";
-
 import { prepareFilterRequest } from "../models/filter-items";
 import { environment } from "../../environments/environment";
 import { MapDetail } from '@bsab/api/map/map-detail';
-
-
-const MAPS_LIMIT = 30;
+import { MAPS_LIMIT } from './const';
 
 class MapsApiService {
   loadList(filter: FilterState): Promise<MapDetail[]> {
@@ -13,7 +10,7 @@ class MapsApiService {
 
     const params = this.convertParams({
       limit: MAPS_LIMIT,
-      offset: ((filter.page - 1) * MAPS_LIMIT),
+      offset: filter.offset || 0,
       ...request,
       orderField: filter.orderField,
       orderDirection: filter.orderDirection,

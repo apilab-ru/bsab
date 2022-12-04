@@ -18,6 +18,11 @@ const DIFFICULT_MAP: Record<string, string> = {
 export function MapDifficult({ details, className }: MapDifficultProps) {
   const round = (nps: number) => Math.round(nps * 100) / 100;
 
+  if (!details) {
+    console.trace('details');
+    return (<></>);
+  }
+
   const uniqList = details.filter(
     (it, index) => index === details.findIndex(orig => orig.difficulty === it.difficulty)
   );

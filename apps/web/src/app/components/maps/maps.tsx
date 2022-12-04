@@ -1,5 +1,5 @@
 import styles from './maps.module.scss';
-import Header from '../Header/Header';
+import Header from '../header/header';
 import MapsPage from '../MapsPage/MapsPage';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,19 +40,19 @@ export function MapsRoot() {
   const dispatch = useDispatch();
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries()) as {
-    page: string;
     orderField: OrderField;
     orderDirection: OrderDirection;
     filter: string;
   };
 
   const baseFilterValues = params.filter ? JSON.parse(params.filter) : [];
-  const { page, orderField, orderDirection } = params;
+  const { orderField, orderDirection } = params;
+  const offset = parseInt(location.hash.substr(1));
 
   const setParams: Partial<FilterState> = {};
   setParams.values = baseFilterValues;
-  if (page) {
-    setParams.page = +page;
+  if (!isNaN(offset)) {
+    setParams.offset = offset;
   }
   if (orderField) {
     setParams.orderField = orderField;

@@ -1,30 +1,37 @@
-import { catchError, debounceTime, filter, map, Observable, of, switchMap, withLatestFrom } from "rxjs";
-import { setList } from './store';
-import { RootState } from "../store";
-import { mapsApiService } from "../../services/maps-api-service";
+import { catchError, debounceTime, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { MapsLoadPayload, setList, SetMapsPayload } from './store';
+import { mapsApiService } from '../../services/maps-api-service';
+import { MAPS_LIMIT } from '../../services/const';
 
-export function mapsEpic(action$: Observable<{ type: string }>, store$: Observable<RootState>) {
-  return action$.pipe(
-    filter(({ type }) => type === 'maps/load'),
-    debounceTime(100),
-    withLatestFrom(store$),
-    map(([_, { filter }]) => filter),
-    switchMap(filter => mapsApiService.loadList(filter).then(list => {
-      return { list, filter }
-    })),
-    map(response => {
-      return setList({
-        list: response.list,
-        isMerge: response.filter.page > 1
-      });
-    }),
-    catchError(() => {
-      const res = setList({
-        list: [],
-        isMerge: false,
+export function mapsEpic(action$: Observable<{ type: string, payload: MapsLoadPayload }>) {
+   return action$.pipe(
+      filter(({ type }) => type === 'maps/load'),
+      debounceTime(100),
+      map(({ payload }) => payload),
+      switchMap(payload => mapsApiService.loadList(payload).then(list => {
+         return { list, payload };
+      })),
+      map(({ payload, list }) => {
+         let params: Partial<SetMapsPayload> = {};
+         if (payload.strategy === 'future') {
+            params.hasMore = list.length >= MAPS_LIMIT;
+         }
+
+         return setList({
+            list: list,
+            isMerge: payload.offset! > 1,
+            strategy: payload.strategy,
+            ...params,
+         });
+      }),
+      catchError(() => {
+         const res = setList({
+            list: [],
+            isMerge: false,
+            strategy: 'future',
+         });
+
+         return of(res);
       })
-
-      return of(res)
-    })
-  )
+   );
 }

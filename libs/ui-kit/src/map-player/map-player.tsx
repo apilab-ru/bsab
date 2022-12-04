@@ -11,6 +11,9 @@ interface MapPlayerProps {
   children?: ReactNode;
 }
 
+// v3 map 28579, 27d5b
+// off editor 27a13
+
 export const MapPlayer: FC<MapPlayerProps> = ({ isOpened, handleClose, sourceUrl, children }) => {
 
   const getLink = (openedId: string | null) => {

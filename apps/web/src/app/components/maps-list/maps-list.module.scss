@@ -1,11 +1,15 @@
 .mapsList {
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .row {
   display: flex;
-  column-gap: 6px;
-  margin-bottom: 6px;
+  column-gap: 10px;
+  margin-bottom: 10px;
 }
 
 .container {

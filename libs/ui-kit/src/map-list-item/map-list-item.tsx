@@ -10,19 +10,31 @@ interface MapListItemProps {
   click?: () => void;
   className?: string;
   children?: ReactNode;
+  row?: ReactNode;
 }
 
-export const MapListItem: FC<MapListItemProps> = ({ item, click, className, children }) => {
-  const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd')
+export const MapListItem: FC<MapListItemProps> = ({ item, click, className, children, row }) => {
+  const dateFormat = (date: string) => {
+    return !date ? '' : format(parseISO(date), 'yyyy-MM-dd')
+  }
   const makeName = (item: IMapItem) => item.songName
     + (item.songSubName ? ' / ' + item.songSubName : '')
     + (item.songAuthorName ? ' / ' + item.songAuthorName : '');
+
+  const statRound = (score: number) => (score * 100).toFixed(2)
 
   return (
     <div className={'MapListItem ' + className} title={ item.id } onClick={ click }>
       <div className="color"></div>
       <div className="row">
         <img className="album" src={ item.coverURL }/>
+        { !item?.stats ? '' :
+          <div className="stat">
+            <span className="down"></span>
+            <span className="up" style={{ width: statRound(item.stats.score) + '%' }}></span>
+            <span className="score">{ statRound(item.stats.score) }</span>
+          </div>
+        }
       </div>
       <div className="row">
         <div className="line -title">{ makeName(item) }</div>
@@ -40,6 +52,11 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click, className, chil
           </div>
         }
       </div>
+      { !row ? '' :
+        <div className="row">
+          { row }
+        </div>
+      }
     </div>
   )
 };

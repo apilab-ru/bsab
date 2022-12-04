@@ -6,10 +6,12 @@ import { RootState } from "../../store/store";
 import { MapsState, setOpened, addToShowed } from '../../store/maps/store';
 import { MapPlayer } from '@bsab/ui-kit/map-player';
 import MapDetails from '../map-details/map-details';
+import { FilterState, setOffset } from '../../store/filter/store';
 
 const MapsPage: FC<{}> = () => {
   const dispatch = useDispatch();
   const { list, openedId, showed } = useSelector<RootState, MapsState>((state) => state.maps);
+  const { offset } = useSelector<RootState, FilterState>((state) => state.filter);
   const openedItem = list?.find(it => it.id === openedId) || null;
 
   const closeMap = () => {
@@ -21,9 +23,8 @@ const MapsPage: FC<{}> = () => {
     dispatch(addToShowed(id));
   }
 
-  const changePage = (item: number) => {
-    location.hash = '#' + item;
-    console.log('xxx item', item);
+  const changeOffset = (item: number) => {
+    dispatch(setOffset(item))
   }
 
   return (
@@ -32,7 +33,8 @@ const MapsPage: FC<{}> = () => {
         list={ list }
         showed={ showed }
         handleClick={ id => openMap(id) }
-        changePage={ changePage }
+        offset={ offset }
+        changeOffset={ changeOffset }
       />
 
       <MapPlayer

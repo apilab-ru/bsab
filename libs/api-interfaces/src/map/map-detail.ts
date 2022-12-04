@@ -1,5 +1,5 @@
 import { Difficulty } from '@bsab/api/map/difficulty';
-import { IMapItem } from '@bsab/ui-kit/map-list-item';
+import { IMapItem } from '@bsab/ui-kit/map-list-item/interface';
 
 export interface DifficultyDetail {
   difficulty: Difficulty;

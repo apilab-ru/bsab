@@ -11,12 +11,13 @@ interface MapsListProps {
   list: MapDetail[];
   showed: string[];
   handleClick: (itemId: string) => void;
-  changePage: (item: number) => void;
+  changeOffset: (item: number) => void;
+  offset?: number;
 }
 
-const oneRowHeight = 126;
+const oneRowHeight = 130;
 
-const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changePage }) => {
+const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changeOffset, offset }) => {
   const rows = chunk(list, 2);
 
   const listInnerRef = React.createRef<HTMLDivElement>();
@@ -24,7 +25,10 @@ const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changePage }) 
     if (listInnerRef.current) {
       const { scrollTop } = listInnerRef.current;
       const currentItem = Math.ceil(scrollTop / oneRowHeight) * 2 + 1;
-      changePage(currentItem);
+
+      if (offset !== currentItem) {
+        changeOffset(currentItem);
+      }
     }
   }, 15);
 

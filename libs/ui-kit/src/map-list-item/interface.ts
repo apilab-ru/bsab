@@ -1,4 +1,5 @@
 import { MapDiffiDetail } from '@bsab/api/map/map';
+import { MapStat } from '@bsab/api/map/map-detail';
 
 export interface IMapItem {
    songName: string;
@@ -10,4 +11,6 @@ export interface IMapItem {
    createdAt: string;
    duration: number;
    difsDetails: MapDiffiDetail[];
+
+   stats?: MapStat;
 }

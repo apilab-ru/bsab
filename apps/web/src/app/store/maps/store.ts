@@ -1,55 +1,70 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { FilterState } from "../filter/store";
-import { Tag } from "../../api";
+import { createSlice } from '@reduxjs/toolkit';
+import { FilterState } from '../filter/store';
+import { Tag } from '../../api';
 import { mapsApiService } from '../../services/maps-api-service';
 import { MapDetail } from '@bsab/api/map/map-detail';
+import { StorePayload } from '@bsab/api/store/payload';
 
 const initialState = {
-  list: [] as MapDetail[],
-  isLoading: false,
-  tags: [] as Tag[],
-  showed: [] as string[],
-  openedId: null as string | null,
+   list: [] as MapDetail[],
+   isLoading: false,
+   tags: [] as Tag[],
+   showed: [] as string[],
+   openedId: null as string | null,
+   hasMore: true,
+   hasPrevent: false,
 };
 
 export type MapsState = typeof initialState;
 
-interface SetPayload {
-  isMerge: boolean;
-  list: MapDetail[];
+export interface SetMapsPayload {
+   isMerge: boolean;
+   list: MapDetail[];
+   strategy: 'future' | 'past';
+   hasMore?: boolean;
+   hasPrevent?: boolean;
+}
+
+export interface MapsLoadPayload extends FilterState {
+   strategy: 'future' | 'past';
 }
 
 export const mapsSlice = createSlice({
-  name: 'maps',
-  initialState,
-  reducers: {
-    load: (state, { payload }: { payload: FilterState }) => {
-      state.isLoading = true;
-    },
+   name: 'maps',
+   initialState,
+   reducers: {
+      load: (state, { payload }: StorePayload<MapsLoadPayload>) => {
+         state.isLoading = true;
+      },
 
-    setList: (state, { payload }: { payload: SetPayload }) => {
-      if (payload.isMerge) {
-        state.list = [
-          // @ts-ignore
-          ...state.list,
-          // @ts-ignore
-          payload.list
-        ];
-      } else {
-        state.list = payload.list;
-      }
-      state.isLoading = false;
-    },
+      setList: (state: MapsState, { payload }: StorePayload<SetMapsPayload>) => {
+         const { isMerge, list, ...params } = payload;
+         if (isMerge) {
+            state.list = [
+               ...state.list,
+               ...list
+            ];
+         } else {
+            state.list = list;
+         }
+         state.isLoading = false;
 
-    setOpened: (state, { payload }: { payload: string | null }) => {
-      state.openedId = payload;
-    },
+         Object.entries(params).forEach(([key, value]) => {
+            // @ts-ignore
+            state[key] = value;
+         })
+      },
 
-    addToShowed: (state, { payload }: { payload: string }) => {
-      state.showed.push(payload);
-      mapsApiService.markAsShowed(payload);
-    },
-  }
+      setOpened: (state, { payload }: { payload: string | null }) => {
+         state.openedId = payload;
+      },
+
+      addToShowed: (state, { payload }: { payload: string }) => {
+         state.showed.push(payload);
+         mapsApiService.markAsShowed(payload);
+      },
+   },
+
 });
 
 export const { load, setList, setOpened, addToShowed } = mapsSlice.actions;

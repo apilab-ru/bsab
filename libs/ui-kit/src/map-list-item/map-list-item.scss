@@ -11,14 +11,54 @@
   font-size: 16px;
 
   .album {
-    width: 120px;
-    height: 120px;
+    width: 106px;
+    height: 106px;
     display: block;
-    border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 0;
+  }
+
+  .row {
+    position: relative;
   }
 
   .row + .row {
     padding: 8px;
+    flex: 1;
+  }
+
+  .stat {
+    height: 14px;
+    top: 0;
+    right: 0;
+    border-radius: 0 0 0 4px;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .down {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    background: #f39c12;
+  }
+
+  .up {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    background: #17a222;
+  }
+
+  .score {
+    line-height: 13px;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
   }
 
   .line {
