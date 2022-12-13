@@ -6,6 +6,7 @@
     "local-api": "apps/local-api",
     "local-web": "apps/local-web",
     "maps-api": "apps/maps-api",
+    "server-utils": "libs/server-utils",
     "ui-kit": "libs/ui-kit",
     "web": "apps/web"
   }
