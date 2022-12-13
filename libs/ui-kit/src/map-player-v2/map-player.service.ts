@@ -24,7 +24,6 @@ export class MapPlayerService {
       const [diff] = Object.keys(data.diffs);
       this.setDiff(diff);
       this.sceneService.moveCamera(this.steps);
-      this.sceneService.render();
    }
 
    setTime(time: number): void {
@@ -34,10 +33,6 @@ export class MapPlayerService {
 
    setDiff(diff: string): void {
       this.sceneService.clearScene();
-
-      //this.sceneService.renderNote(this.steps - 2, 0xff0000); // красный
-      //this.sceneService.renderNote(0, 0x3575c9);
-      console.log('xxx steps', this.steps);
 
       this.data.diffs[diff].notes.forEach(note => {
          this.sceneService.renderNote(this.steps - note.time, this.env.colors[note.type], note.lineCell, note.lineRow);

@@ -5,7 +5,14 @@ import {
    Scene as ThreeScene,
    WebGLRenderer,
    Color,
-   BoxGeometry, DirectionalLight, AmbientLight, MeshLambertMaterial, TextureLoader,
+   BoxGeometry,
+   DirectionalLight,
+   AmbientLight,
+   MeshLambertMaterial,
+   TextureLoader,
+   AddOperation,
+   DoubleSide,
+   MeshPhongMaterial,
 } from 'three';
 import { Renderer } from "three/src/renderers/WebGLRenderer";
 import { Scene } from "three/src/scenes/Scene";
@@ -25,6 +32,7 @@ const LINE_MAP_ROW: Record<MapLineRow, number> = {
    1: 0,
    2: 0.3,
 };
+const triangle = require('./images/triangle.png');
 
 export class SceneService {
    private container: HTMLElement;
@@ -63,10 +71,12 @@ export class SceneService {
 
       const baseMaterial = new MeshBasicMaterial({
          color,
+         side: DoubleSide,
       });
-      const faceMaterial = new MeshLambertMaterial({
-         // map: new TextureLoader().load("https://threejs.org/examples/textures/uv_grid_opengl.jpg"),
-         color
+      const faceMaterial = new MeshBasicMaterial({
+         map: new TextureLoader().load(triangle),
+         color: 'white',
+         transparent: true,
       });
 
       const materials = [
@@ -99,7 +109,7 @@ export class SceneService {
       // Задаём цвет фона
       this.scene.background = new Color("black");
 
-      let light = new DirectionalLight(0xffffff, 1);
+      const light = new DirectionalLight(0xffffff, 1);
       light.position.setScalar(10);
       this.scene.add(light);
       this.scene.add(new AmbientLight(0xffffff, 0.5));
