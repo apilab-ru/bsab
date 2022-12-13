@@ -22,7 +22,6 @@ export function MapPlayerV2({ sourceUrl, duration }: MapPlayerProps) {
   useEffect(() => {
     mapParserService.fetchData(sourceUrl, duration).then(data => {
       setSourceData(data);
-      console.log('xxx data', data);
     })
   }, [sourceUrl, duration]);
 
