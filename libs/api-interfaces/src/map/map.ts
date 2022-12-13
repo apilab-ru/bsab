@@ -40,6 +40,16 @@ export enum MapMode {
   standard = 'standard',
 }
 
+export const MAP_MODE_CONVERT = {
+   '90Degree': MapMode.degree90,
+   '360Degree': MapMode.degree360,
+   'Lawless': MapMode.lawless,
+   'Lightshow': MapMode.lightShow,
+   'NoArrows': MapMode.noArrows,
+   'OneSaber': MapMode.oneSaber,
+   'Standard': MapMode.standard
+};
+
 export interface MapDifficultList {
   mode: MapMode;
   list: MapDifficultInfo[];

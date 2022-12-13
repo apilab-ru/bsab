@@ -1,7 +1,7 @@
-import { MAP_MODE_CONVERT, MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetailV2 } from "./map";
+import { MapCache, MapDifficultDetail, MapRav, RavMapDifficultDetailV2 } from "./map";
 import { environment } from "../../environments/environment";
 import { DIFFICULTY_MAP } from "@bsab/api/map/difficulty";
-import { LocalMap, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
+import { LocalMap, MAP_MODE_CONVERT, MapDifficultList, MapDiffiDetail, MapMode } from "@bsab/api/map/map";
 import * as JSZip from 'jszip';
 import { readMapDifficultDetail } from './map-parser';
 const fs = require('fs');

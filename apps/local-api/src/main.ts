@@ -36,7 +36,7 @@ app.delete('/playlist/:id', playlistController.removePlaylist.bind(playlistContr
 app.get('/proxy/song', proxyController.proxySong.bind(proxyController))
 app.get('/proxy/source', proxyController.proxySource.bind(proxyController))
 
-// mapsController.installPreparedMap();
+mapsController.installPreparedMap();
 
 const port = environment.port;
 const server = app.listen(port, () => {
