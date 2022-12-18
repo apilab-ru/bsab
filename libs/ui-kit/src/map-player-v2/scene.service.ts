@@ -10,28 +10,37 @@ import {
    AmbientLight,
    MeshLambertMaterial,
    TextureLoader,
-   AddOperation,
    DoubleSide,
    MeshPhongMaterial,
 } from 'three';
 import { Renderer } from "three/src/renderers/WebGLRenderer";
 import { Scene } from "three/src/scenes/Scene";
 import { Camera } from "three/src/cameras/Camera";
-import { MapLineCell, MapLineRow } from "@bsab/api/map/difficulty";
+import { MapLineCell, MapLineRow, MapNoteCutDirection } from "@bsab/api/map/difficulty";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry";
 
 const LINE_MAP_CELL: Record<MapLineCell, number> = {
-   0: -0.3,
-   1: -0.1,
-   2: 0.1,
-   3: 0.3,
+   0: -0.15,
+   1: -0.05,
+   2: 0.05,
+   3: 0.15,
 };
-
 const LINE_MAP_ROW: Record<MapLineRow, number> = {
-   0: -0.3,
+   0: -0.125,
    1: 0,
-   2: 0.3,
+   2: 0.125,
 };
+const NOTE_ROTATION: Record<MapNoteCutDirection, number> = {
+   [MapNoteCutDirection.bottom] : 3.15,
+   [MapNoteCutDirection.top]: 0,
+   [MapNoteCutDirection.topLeft]: -2.5,
+   [MapNoteCutDirection.topRight]: 2.5,
+   [MapNoteCutDirection.left]: -1.57,
+   [MapNoteCutDirection.right]: 1.57,
+   [MapNoteCutDirection.bottomLeft]: -7,
+   [MapNoteCutDirection.bottomRight]: 7,
+}
+
 const triangle = require('./images/triangle.png');
 
 export class SceneService {
@@ -51,6 +60,12 @@ export class SceneService {
       this.initCamera();
 
       this.render();
+
+      /*let controls = new OrbitControls(this.camera, this.renderer.domElement);
+      controls.target.set(0, 0, 0);
+      controls.rotateSpeed = 0.1;
+      controls.update();*/
+      // console.log('xxx controls', controls, this);
    }
 
    clearScene(): void {
@@ -66,7 +81,7 @@ export class SceneService {
       this.render();
    }
 
-   renderNote(z: number, color: number, ceil: MapLineCell, row: MapLineRow): void {
+   renderNote(z: number, color: number, ceil: MapLineCell, row: MapLineRow, cutDirection: MapNoteCutDirection): void {
       const geometry = new RoundedBoxGeometry(0.1, 0.1, 0.1, 1, 0.01);
 
       const baseMaterial = new MeshBasicMaterial({
@@ -93,6 +108,9 @@ export class SceneService {
       cube.rotation.x = 0.1;
       cube.position.x = LINE_MAP_CELL[ceil];
       cube.position.y = LINE_MAP_ROW[row];
+
+      cube.rotation.z = NOTE_ROTATION[cutDirection];
+
       this.scene.add(cube)
    }
 
@@ -103,16 +121,17 @@ export class SceneService {
    }
 
    private initScene(): void {
-      // Создаём объект сцены
       this.scene = new ThreeScene();
-
-      // Задаём цвет фона
       this.scene.background = new Color("black");
 
-      const light = new DirectionalLight(0xffffff, 1);
-      light.position.setScalar(10);
+      // https://r105.threejsfundamentals.org/threejs/lessons/threejs-lights.html
+      const light = new DirectionalLight(0xffffff, 10000);
+      light.position.setScalar(0).normalize();
+      light.target.position.set(0, 0, 10);
+
       this.scene.add(light);
-      this.scene.add(new AmbientLight(0xffffff, 0.5));
+      this.scene.add(light.target);
+      this.scene.add(new AmbientLight(0xffffff, 1));
    }
 
    private initRenderer(canvasContainer: HTMLElement, width: number, height: number): void {

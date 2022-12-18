@@ -42,7 +42,16 @@ export interface MapDifficulty {
 export type MapLineCell = 0 | 1 | 2 | 3;
 export type MapLineRow = 0 | 1 | 2;
 export type MapNoteType = 0 | 1;
-export type MapNoteCutDirection = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export enum MapNoteCutDirection {
+   bottom = 0,
+   top = 1,
+   left = 2,
+   right = 3,
+   topLeft = 4,
+   topRight = 5,
+   bottomLeft = 6,
+   bottomRight = 7,
+}
 export type MapEventType = 0 | 2 | 3 | 4 | 12 | 13;
 export type MApEventValue = 3 | 4 | 7;
 

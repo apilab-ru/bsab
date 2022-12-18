@@ -8,7 +8,7 @@ export class MapPlayerService {
    private steps: number;
    private duration: number;
    private env = {
-      colors: [0xff0000, 0x3575c9]
+      colors: [0xff0000, 0x3575c9, 0xffff00]
    };
 
    constructor(
@@ -34,8 +34,17 @@ export class MapPlayerService {
    setDiff(diff: string): void {
       this.sceneService.clearScene();
 
+      // temp start note
+      // this.sceneService.renderNote(this.steps - 2, this.env.colors[2], 1, 1, MapNoteCutDirection.topRight)
+
       this.data.diffs[diff].notes.forEach(note => {
-         this.sceneService.renderNote(this.steps - note.time, this.env.colors[note.type], note.lineCell, note.lineRow);
+         this.sceneService.renderNote(
+            this.steps - note.time,
+            this.env.colors[note.type],
+            note.lineCell,
+            note.lineRow,
+            note.cutDirection,
+         );
       })
    }
 
