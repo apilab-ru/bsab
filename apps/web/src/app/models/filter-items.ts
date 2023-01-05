@@ -43,6 +43,12 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
       filterFunc: () => true,
       unique: true
    },
+   recommended: {
+      name: 'Recommended',
+      type: FilterItemType.boolean,
+      filterFunc: () => true,
+      unique: true
+   },
    bpmFrom: {
       name: 'BPM From',
       type: FilterItemType.write,
