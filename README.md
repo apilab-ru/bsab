@@ -1,5 +1,3 @@
-
-
 # Bsab
 
 This project was generated using [Nx](https://nx.dev).
@@ -8,28 +6,16 @@ This project was generated using [Nx](https://nx.dev).
 
 🔎 **Smart, Fast and Extensible Build System**
 
-## Adding capabilities to your workspace
+## Run applications
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+nx serve web
+nx serve maps-api
+nx serve local-api
+nx serve local-web
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+nx storybook ui-kit
 
-Below are our core plugins:
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
 
 ## Generate an application
 

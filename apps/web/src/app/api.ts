@@ -2,12 +2,15 @@ export enum FilterKey {
    bpmFrom = 'bpmFrom',
    bpmTo = 'bpmTo',
    dateFrom = 'dateFrom',
+   durationFrom = 'durationFrom',
+   durationTo = 'durationTo',
    npsFrom = 'npsFrom',
    npsTo = 'npsTo',
+   recommended = 'recommended',
+   scoreFrom = 'scoreFrom',
    search = 'search',
-   tags = 'tags',
    showed = 'showed',
-   recommended = 'recommended'
+   tags = 'tags',
 }
 
 export interface FilterRequest {

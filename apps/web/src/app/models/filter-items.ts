@@ -60,7 +60,25 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
       type: FilterItemType.write,
       filterFunc: () => true,
       unique: true
-   }
+   },
+   durationFrom: {
+      name: 'Duration from',
+      type: FilterItemType.write,
+      filterFunc: () => true,
+      unique: true
+   },
+   durationTo: {
+      name: 'Duration to',
+      type: FilterItemType.write,
+      filterFunc: () => true,
+      unique: true
+   },
+   scoreFrom: {
+      name: 'Score from',
+      type: FilterItemType.write,
+      filterFunc: () => true,
+      unique: true
+   },
 };
 
 export const FILTER_ITEMS: FilterItem[] = Object.entries(FILTER_ITEMS_MAP)
