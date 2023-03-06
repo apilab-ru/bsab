@@ -1,0 +1,3 @@
+[submodule "libs/bsab-models"]
+	path = libs/bsab-models
+	url = https://github.com/apilab-ru/bsab-models.git

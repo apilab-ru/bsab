@@ -1,16 +1,33 @@
-import { catchError, debounceTime, filter, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, debounceTime, filter, map, Observable, of, switchMap, withLatestFrom } from 'rxjs';
 import { MapsLoadPayload, setList, SetMapsPayload } from './store';
 import { mapsApiService } from '../../services/maps-api-service';
 import { MAPS_LIMIT } from '../../services/const';
+import { StateObservable } from "redux-observable";
+import { RootState } from "../store";
 
-export function mapsEpic(action$: Observable<{ type: string, payload: MapsLoadPayload }>) {
+export function mapsLoadEpic(action$: Observable<{ type: string, payload: MapsLoadPayload }>, state: StateObservable<RootState>) {
+
+   const userData$ = state.pipe(
+      // @ts-ignore
+      map(data => data.user),
+      filter(user => user.user !== undefined),
+   )
+
    return action$.pipe(
       filter(({ type }) => type === 'maps/load'),
       debounceTime(100),
       map(({ payload }) => payload),
-      switchMap(payload => mapsApiService.loadList(payload).then(list => {
-         return { list, payload };
-      })),
+      // @ts-ignore
+      withLatestFrom(userData$),
+      switchMap(([payload, userData]) => {
+         return mapsApiService.loadList(
+            payload,
+            userData.user?.token,
+            userData.config?.localApi
+         ).then(list => {
+            return { list, payload };
+         })
+      }),
       map(({ payload, list }) => {
          let params: Partial<SetMapsPayload> = {};
          if (payload.strategy === 'future') {

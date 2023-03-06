@@ -2,11 +2,11 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "api-interfaces": "libs/api-interfaces",
+    "bsab-models": "libs/bsab-models",
     "local-api": "apps/local-api",
     "local-web": "apps/local-web",
-    "maps-api": "apps/maps-api",
     "server-utils": "libs/server-utils",
+    "shared": "libs/shared",
     "ui-kit": "libs/ui-kit",
     "web": "apps/web"
   }

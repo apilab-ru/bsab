@@ -1,29 +1,38 @@
-import { applyMiddleware, combineReducers, createStore } from '@reduxjs/toolkit';
+import { applyMiddleware, combineReducers, configureStore, createStore } from '@reduxjs/toolkit';
 import { filterReducer, FilterState } from "./filter/store";
 import { filterQueryUpdater } from "./filter/middleware";
 import { createEpicMiddleware } from 'redux-observable';
-import { mapsEpic } from "./maps/epics";
+import { mapsLoadEpic } from "./maps/epics";
 import { mapsReducer, MapsState } from "./maps/store";
+import { userReducer, UserState } from "./user/store";
+import thunkMiddleware from 'redux-thunk'
 
 const epicMiddleware = createEpicMiddleware();
 
 declare module 'react-redux' {
-  interface DefaultRootState extends RootState {
-  }
+   interface DefaultRootState extends RootState {
+   }
 }
 
 export interface RootState {
-  filter: FilterState
-  maps: MapsState;
+   filter: FilterState
+   maps: MapsState;
+   user: UserState;
 }
 
-export const AppStore = createStore(
-  combineReducers({
-    filter: filterReducer,
-    maps: mapsReducer,
-  }),
-  applyMiddleware(filterQueryUpdater, epicMiddleware)
-)
+export const AppStore = configureStore({
+   reducer: {
+      filter: filterReducer,
+      maps: mapsReducer,
+      user: userReducer,
+   },
+   middleware: [
+      thunkMiddleware,
+      filterQueryUpdater,
+      epicMiddleware
+   ],
+})
+
 
 // @ts-ignore
-epicMiddleware.run(mapsEpic);
+epicMiddleware.run(mapsLoadEpic);

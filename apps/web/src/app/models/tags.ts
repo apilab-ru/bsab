@@ -1,25 +1,5 @@
-import { Tag } from "../api";
+import { Tag } from "@bsab/api/request/request";
 import { FilterItemValue } from "../interfaces/filter";
-
-const test = [{
-  "me": false,
-  "ne": false,
-  "njs": 10,
-  "nps": 2.422,
-  "bombs": 28,
-  "notes": 337,
-  "stars": 2.81,
-  "chroma": false,
-  "cinema": false,
-  "events": 81,
-  "length": 185.5,
-  "offset": 0,
-  "seconds": 69.563,
-  "obstacles": 11,
-  "difficulty": "hard",
-  "paritySummary": { "warns": 57, "errors": 45, "resets": 1 },
-  "characteristic": "Standard"
-}]
 
 export const TAGS: Tag[] = [
   { "id": 1, "name": "Accuracy" },

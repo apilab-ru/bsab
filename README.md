@@ -9,7 +9,6 @@ This project was generated using [Nx](https://nx.dev).
 ## Run applications
 
 nx serve web
-nx serve maps-api
 nx serve local-api
 nx serve local-web
 

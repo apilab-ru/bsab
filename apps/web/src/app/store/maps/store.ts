@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FilterState } from '../filter/store';
-import { Tag } from '../../api';
+import { Tag } from '@bsab/api/request/request';
 import { mapsApiService } from '../../services/maps-api-service';
 import { MapDetail } from '@bsab/api/map/map-detail';
-import { StorePayload } from '@bsab/api/store/payload';
+import { StorePayload } from '@shared/store/payload';
 
 const initialState = {
    list: [] as MapDetail[],
@@ -61,7 +61,6 @@ export const mapsSlice = createSlice({
 
       addToShowed: (state, { payload }: { payload: string }) => {
          state.showed.push(payload);
-         mapsApiService.markAsShowed(payload);
       },
    },
 

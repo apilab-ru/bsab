@@ -1,4 +1,4 @@
-import { FilterKey } from "../api";
+import { FilterKey } from '@bsab/api/request/request';
 
 export type FilterItem = ListFilterItem | WriteFilterItem | BooleanFilterItem;
 
@@ -15,6 +15,7 @@ interface BaseFilterItem {
   default?: boolean;
   unique?: boolean;
   filterFunc?: (value: string) => boolean;
+  userRequired?: boolean;
 }
 
 interface ListFilterItem extends BaseFilterItem {

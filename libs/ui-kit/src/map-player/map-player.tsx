@@ -4,6 +4,10 @@ import './map-player.scss';
 
 const player = 'https://skystudioapps.com/bs-viewer/?noProxy=true&url=';
 
+const playerById = 'https://skystudioapps.com/bs-viewer/?id=';
+
+const regExpId = /^([0-9A-Za-z]+)$/;
+
 interface MapPlayerProps {
   isOpened: boolean;
   sourceUrl: string | null;
@@ -19,6 +23,10 @@ export const MapPlayer: FC<MapPlayerProps> = ({ isOpened, handleClose, sourceUrl
   const getLink = (openedId: string | null) => {
     if (!openedId) {
       return '';
+    }
+
+    if (regExpId.test(sourceUrl!)) {
+      return playerById + openedId;
     }
 
     return player + sourceUrl;

@@ -1,5 +1,5 @@
 import { FilterItem, FilterItemType, SearchValue } from '../interfaces/filter';
-import { FilterKey, FilterRequest } from '../api';
+import { FilterKey, FilterRequest } from '@bsab/api/request/request';
 import { TAGS_LIST } from './tags';
 
 type DistributiveOmit<T, K extends keyof any> = T extends any
@@ -41,13 +41,15 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
       name: 'Showed',
       type: FilterItemType.boolean,
       filterFunc: () => true,
-      unique: true
+      unique: true,
+      userRequired: true,
    },
    recommended: {
       name: 'Recommended',
       type: FilterItemType.boolean,
       filterFunc: () => true,
-      unique: true
+      unique: true,
+      userRequired: true,
    },
    bpmFrom: {
       name: 'BPM From',

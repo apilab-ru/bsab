@@ -1,0 +1,50 @@
+.mapDetails {
+  padding: 14px;
+  width: 350px;
+  background: var(--color-background);
+}
+
+.pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.detailName {
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.description {
+  max-height: 220px;
+  overflow: auto;
+}
+
+.rows {
+  display: flex;
+}
+
+.row {
+  flex: 1;
+}
+
+.cover {
+  width: 56px;
+  border-radius: 4px;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(4) translate(-45%, 45%);
+  }
+}
+
+.detailLine {
+  & + & {
+    margin-top: 8px;
+  }
+}
+
+.button {
+  text-decoration: none;
+  margin: 12px 0 0 0;
+  display: inline-block;
+}

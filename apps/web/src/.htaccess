@@ -1,0 +1,13 @@
+AddDefaultCharset utf-8
+
+RewriteEngine on 
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteRule ^(.*)$ /index.html [NC,L,QSA]
+
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+
+ErrorDocument 404 /cache/404.html

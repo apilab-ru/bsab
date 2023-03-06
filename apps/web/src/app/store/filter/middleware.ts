@@ -51,5 +51,9 @@ export const filterQueryUpdater: Middleware<RootState> = (store: MiddlewareAPI<D
      }
   }
 
+  if (action.type === 'user/set') {
+     console.log('xxx new user');
+  }
+
   return result
 }

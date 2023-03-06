@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SearchValue } from '../../interfaces/filter';
-import { OrderDirection, OrderField } from '../../api';
-import { StorePayload } from '@bsab/api/store/payload';
+import { OrderDirection, OrderField } from '@bsab/api/request/request';
+import { StorePayload } from '../../../../../../libs/shared/src/store/payload';
 
 // https://redux-toolkit.js.org/usage/usage-guide
 
