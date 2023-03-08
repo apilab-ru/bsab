@@ -276,6 +276,7 @@ class Filter extends React.Component<FilterProps> {
           <div className="chips">
             {this.state.values.map((item, index) =>
               <FilterChip
+                className={'chipItem'}
                 key={index}
                 item={item}
                 onDelete={() => this.handleDeleteGroup(index)}

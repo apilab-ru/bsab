@@ -8,9 +8,10 @@ interface FilterChipProps {
     item: SearchValue;
     onDelete: () => void;
     onEdit: () => void;
+    className: string;
 }
 
-const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit }) => {
+const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit, className }) => {
     const detail = FILTER_ITEMS_MAP[item.key];
     let title = item.value;
 
@@ -19,7 +20,7 @@ const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit }) => {
     }
 
     return (
-        <div className={'FilterChip' + (item.not ? ' -not' : '')  }>
+        <div className={'FilterChip' + (item.not ? ' -not' : '') + (' ' + className)  }>
             <div className="name" onClick={ onEdit }>
                 { detail.name }
             </div>
