@@ -11,9 +11,11 @@
   text-decoration: none;
   color: var(--color-primary);
 
-  & + & {
-    &:before {
-      content: ',';
-    }
+  &:after {
+    content: ',';
+  }
+
+  &:last-of-type:after {
+    display: none;
   }
 }

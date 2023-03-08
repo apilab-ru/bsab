@@ -8,6 +8,10 @@ import Button from '@mui/material/Button';
 import { mapsApiService } from "../../../services/maps-api-service";
 import { addNotification } from "../../../store/user/store";
 import { useAppDispatch } from "../../../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { MapsState } from "../../../store/maps/store";
+import { FilterState } from "../../../store/filter/store";
 
 export interface MapDetailsProps {
   item: MapDetail;
@@ -15,6 +19,7 @@ export interface MapDetailsProps {
 
 export function MapDetails({ item }: MapDetailsProps) {
   const dispatch = useAppDispatch();
+  const filter = useSelector<RootState, FilterState>((state) => state.filter);
 
   const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd HH:mm');
 
@@ -53,7 +58,7 @@ export function MapDetails({ item }: MapDetailsProps) {
       </div>
 
 
-      <MapDifficult details={ item.difsDetails } className={styles.detailLine}></MapDifficult>
+      <MapDifficult details={ item.difsDetails } className={styles.detailLine}/>
 
       <div className={styles.detailLine}>
         <span className={styles.detailName}>BPM / duration:</span>

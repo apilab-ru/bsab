@@ -1,18 +1,28 @@
 import styles from './tags.module.scss';
 import { TAGS } from '../../../models/tags';
-import { prepareUrlParams } from '../../../helpers/url';
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { FilterState } from "../../../store/filter/store";
+import { FilterKey } from "@bsab/api/request/request";
+import { filterService } from "../../../services/filter.service";
+import cloneDeep from 'lodash/cloneDeep';
 
 export interface TagsProps {
   tags: number[];
   className?: string;
 }
 
-export function Tags({ tags, className }: TagsProps) {
+export function Tags({ tags, className,  }: TagsProps) {
   const tagsMeta = TAGS;
 
-  const getLink = (id: number) => '/?' + prepareUrlParams({
-    filter: JSON.stringify([{ key: 'tags', value: id+`` }])
-  });
+  const filter = useSelector<RootState, FilterState>((state) => state.filter);
+
+  const getLink = (id: number) => {
+    const state = cloneDeep(filter);
+    state.values.push({ key: FilterKey.tags, value: id.toString() })
+
+    return filterService.buildQuery(state);
+  }
 
   return (
     <span className={styles.tags + ' ' + className} >

@@ -20,6 +20,8 @@ export function mapsLoadEpic(action$: Observable<{ type: string, payload: MapsLo
       // @ts-ignore
       withLatestFrom(userData$),
       switchMap(([payload, userData]) => {
+
+
          return mapsApiService.loadList(
             payload,
             userData.user?.token,

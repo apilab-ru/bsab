@@ -1,41 +1,28 @@
 import { load } from '../maps/store';
-import { FILER_INIT_STATE } from './store';
-import { prepareUrlParams } from '../../helpers/url';
 import { RootState } from '../store';
 import { Dispatch, Middleware, MiddlewareAPI } from 'redux';
 import { LOAD_NEXT_OFFSET } from '../../services/const';
-
-interface QueryParams {
-  filter?: string;
-  page?: string;
-  orderField?: string;
-  orderDirection?: string;
-}
+import { filterService } from "../../services/filter.service";
 
 export const filterQueryUpdater: Middleware<RootState> = (store: MiddlewareAPI<Dispatch, RootState>) => next => action => {
   const result = next(action);
 
-  if (action.type.includes('filter/') && action.type !== 'filter/setOffset') {
-    const { values, offset, orderField, orderDirection } = store.getState().filter;
-    const params: QueryParams = {};
-    if (values.length) {
-      params.filter = JSON.stringify(values)
-    }
-    if (orderField !== FILER_INIT_STATE.orderField) {
-      params.orderField = orderField;
-    }
-    if (orderDirection !== FILER_INIT_STATE.orderDirection) {
-      params.orderDirection = orderDirection;
-    }
+  if ((action.type.includes('filter/') && action.type !== 'filter/setOffset') || (action.type === 'user/set')) {
 
-    const stringValues = prepareUrlParams(params);
+    const state = store.getState().filter;
+
+    const url = filterService.buildQuery(state);
+
     window.history.pushState(
       { page: "main" },
       '',
-      "/?" + stringValues
+       url
     );
 
-    location.hash = offset ? ('#' + offset) : '';
+    const offset = 0;
+    const { values, orderField, orderDirection } = state;
+
+    location.hash = '';
 
     store.dispatch(load({ values, offset, orderField, orderDirection, strategy: 'future' }))
   }
@@ -44,15 +31,12 @@ export const filterQueryUpdater: Middleware<RootState> = (store: MiddlewareAPI<D
      const offset = store.getState().filter.offset || 0;
      const { values, orderField, orderDirection } = store.getState().filter;
      const { list, isLoading, hasMore } = store.getState().maps;
+
      location.hash = offset ? ('#' + offset) : '';
 
      if (!isLoading && hasMore && offset + LOAD_NEXT_OFFSET > list.length) {
         store.dispatch(load({ values, offset: list.length + 1, orderField, orderDirection, strategy: 'future' }))
      }
-  }
-
-  if (action.type === 'user/set') {
-     console.log('xxx new user');
   }
 
   return result
