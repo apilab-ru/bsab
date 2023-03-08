@@ -28,7 +28,7 @@ export const filterSlice = createSlice({
          state.offset = 0;
       },
 
-      set: (state, { payload }: StorePayload<Partial<FilterState>>) => {
+      filterSet: (state, { payload }: StorePayload<Partial<FilterState>>) => {
          Object.entries(payload).forEach(([key, value]) => {
             // @ts-ignore
             state[key] = value;
@@ -41,5 +41,5 @@ export const filterSlice = createSlice({
    }
 });
 
-export const { add, remove, set, setOffset } = filterSlice.actions;
+export const { add, remove, filterSet, setOffset } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;

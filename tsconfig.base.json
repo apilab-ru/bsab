@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@bsab/api/*": ["libs/bsab-models/src/*"],
-      "@shared/*": ["libs/shared/src/*"],
-      "@bsab/ui-kit/*": ["libs/ui-kit/src/*"]
+      "@bsab/ui-kit/*": ["libs/ui-kit/src/*"],
+      "@shared/*": ["libs/shared/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

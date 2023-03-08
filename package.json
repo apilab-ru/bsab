@@ -37,6 +37,7 @@
     "jszip": "^3.10.0",
     "lodash": "^4.17.21",
     "mysql": "^2.18.1",
+    "notistack": "^3.0.0",
     "passport": "0.6.0",
     "passport-http-bearer": "1.0.1",
     "passport-local": "1.0.0",

@@ -24,11 +24,13 @@ export function mapsLoadEpic(action$: Observable<{ type: string, payload: MapsLo
             payload,
             userData.user?.token,
             userData.config?.localApi
-         ).then(list => {
-            return { list, payload };
+         ).then(result => {
+            return { result, payload };
          })
       }),
-      map(({ payload, list }) => {
+      map(({ payload, result }) => {
+         const list = result.list;
+
          let params: Partial<SetMapsPayload> = {};
          if (payload.strategy === 'future') {
             params.hasMore = list.length >= MAPS_LIMIT;
@@ -38,6 +40,7 @@ export function mapsLoadEpic(action$: Observable<{ type: string, payload: MapsLo
             list: list,
             isMerge: payload.offset! > 1,
             strategy: payload.strategy,
+            total: result.total,
             ...params,
          });
       }),
@@ -46,6 +49,7 @@ export function mapsLoadEpic(action$: Observable<{ type: string, payload: MapsLo
             list: [],
             isMerge: false,
             strategy: 'future',
+            total: 0,
          });
 
          return of(res);

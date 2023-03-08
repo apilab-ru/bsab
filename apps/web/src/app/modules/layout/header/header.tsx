@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { UserState } from "../../../store/user/store";
 import Button from "@mui/material/Button";
-import { Auth, AuthProps } from "../../user/auth/auth";
+import { Auth } from "../../user/auth/auth";
 
 interface HeaderProps {
   children?: ReactNode;
@@ -41,7 +41,7 @@ const Header: FC<HeaderProps> = ({ children }) => {
           </Button>
         }
       </div>
-      <Auth isOpened={isAuthOpen} handleClose={closeLogin}></Auth>
+      <Auth isOpened={isAuthOpen} handleClose={closeLogin}/>
     </div>
   );
 };

@@ -38,9 +38,20 @@
 }
 
 .detailLine {
+
   & + & {
     margin-top: 8px;
   }
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.last {
+  margin-left: auto !important;
 }
 
 .button {

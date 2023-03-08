@@ -11,6 +11,8 @@ const initialState = {
    tags: [] as Tag[],
    showed: [] as string[],
    openedId: null as string | null,
+   total: null as number | null,
+   offset: null as number | null,
    hasMore: true,
    hasPrevent: false,
 };
@@ -23,6 +25,7 @@ export interface SetMapsPayload {
    strategy: 'future' | 'past';
    hasMore?: boolean;
    hasPrevent?: boolean;
+   total?: number;
 }
 
 export interface MapsLoadPayload extends FilterState {

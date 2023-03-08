@@ -4,6 +4,7 @@ import { environment } from "../../environments/environment";
 import { MapDetail, MapDetailRaw } from '@bsab/api/map/map-detail';
 import { MAPS_LIMIT } from './const';
 import axios from 'axios';
+import { PageResponse } from "@bsab/api/map/page";
 
 class MapsApiService {
    constructor(
@@ -11,7 +12,7 @@ class MapsApiService {
    ) {
    }
 
-   loadList(filter: FilterState, userToken?: string, localApi?: string): Promise<MapDetail[]> {
+   loadList(filter: FilterState, userToken?: string, localApi?: string): Promise<PageResponse<MapDetail>> {
       const request = prepareFilterRequest(filter.values);
 
       const params = this.convertParams({
@@ -27,12 +28,15 @@ class MapsApiService {
          }
       })
          .then(res => res.json())
-         .then((list: MapDetailRaw[]) => list.map(item => ({
-            ...item,
-            downloadURL: this.buildFileUrl(item.id, item.downloadURL, localApi),
-            coverURL: this.buildFileUrl(item.originalCoverURL, item.coverURL, localApi),
-            soundURL: this.buildFileUrl(item.originalSoundURL, item.soundURL, localApi),
-         })))
+         .then((res: PageResponse<MapDetailRaw>) => ({
+            ...res,
+            list: res.list.map(item => ({
+               ...item,
+               downloadURL: this.buildFileUrl(item.id, item.downloadURL, localApi),
+               coverURL: this.buildFileUrl(item.originalCoverURL, item.coverURL, localApi),
+               soundURL: this.buildFileUrl(item.originalSoundURL, item.soundURL, localApi),
+            }))
+         }))
    }
 
    markAsShowed(id: string, userToken: string): Promise<void> {

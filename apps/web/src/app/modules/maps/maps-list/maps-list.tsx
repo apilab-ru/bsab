@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 import { MapListItem } from '@bsab/ui-kit/map-list-item';
 import Tags from '../tags/tags';
 import { MapDetail } from '@bsab/api/map/map-detail';
+import { Skeleton } from "@mui/material";
 
 interface MapsListProps {
   list: MapDetail[];
@@ -16,6 +17,7 @@ interface MapsListProps {
 }
 
 const oneRowHeight = 130;
+const preloadList = new Array(6).fill(null).map((i, index) => 'preload_' + index);
 
 const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changeOffset, offset }) => {
   const rows = chunk(list, 2);
@@ -32,6 +34,14 @@ const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changeOffset, 
     }
   }, 15);
 
+  if (offset === 0) {
+    setTimeout(() => {
+      if (listInnerRef.current) {
+        listInnerRef.current.scrollTop = 0;
+      }
+    })
+  }
+
   return (
     <div
       className={styles.mapsList}
@@ -39,6 +49,13 @@ const MapsList: FC<MapsListProps> = ({ list, handleClick, showed, changeOffset, 
       ref={listInnerRef}
     >
       <div className={styles.container}>
+        { !list?.length && preloadList.map(id =>
+          <div className={styles.row + ' js-row'} key={ id }>
+            <Skeleton width={'100%'} height={120} />
+            <Skeleton width={'100%'} height={120} />
+          </div>
+        ) }
+
         { rows.map(row =>
           <div className={styles.row + ' js-row'} key={ row[0].id }>
             { row.map(item =>

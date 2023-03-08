@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { OrderDirection, OrderField } from "@bsab/api/request/request";
-import { FilterState, set } from "../../../store/filter/store";
+import { FilterState, filterSet } from "../../../store/filter/store";
 import { Maps } from "../maps/maps";
 
 export function MapsRoot() {
@@ -28,7 +28,7 @@ export function MapsRoot() {
       setParams.orderDirection = orderDirection;
    }
 
-   dispatch(set(setParams));
+   dispatch(filterSet(setParams));
 
    return (
       <Maps/>

@@ -15,7 +15,7 @@ export function Tags({ tags, className }: TagsProps) {
   });
 
   return (
-    <span className={styles.tag + ' ' + className} >
+    <span className={styles.tags + ' ' + className} >
       { tags.map(id => tagsMeta.find(it => it.id === id)).filter(it => !!it).map(tag =>
         <a key={tag!.id} className={styles.tag} href={ getLink(tag!.id) } target='_blank'>{ tag!.name }</a>
       )}

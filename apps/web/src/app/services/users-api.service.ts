@@ -2,6 +2,7 @@ import { environment } from "../../environments/environment";
 import { User, UserAuthParams, UserRegParams } from "@bsab/api/user/user";
 import axios from 'axios';
 import { UserConfig } from "../models/user-config";
+import { NotificationParam } from "../models/notification";
 
 const KEY_STORE_USER = 'bsabUser';
 const KEY_STORE_CONFIG = 'bsabConfig';

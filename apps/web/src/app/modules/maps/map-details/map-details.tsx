@@ -6,12 +6,16 @@ import { formatDuration } from '@bsab/ui-kit/date-utils/duration';
 import Tags from '../tags/tags';
 import Button from '@mui/material/Button';
 import { mapsApiService } from "../../../services/maps-api-service";
+import { addNotification } from "../../../store/user/store";
+import { useAppDispatch } from "../../../store";
 
 export interface MapDetailsProps {
   item: MapDetail;
 }
 
 export function MapDetails({ item }: MapDetailsProps) {
+  const dispatch = useAppDispatch();
+
   const dateFormat = (date: string) => format(parseISO(date), 'yyyy-MM-dd HH:mm');
 
   const linkReplaceExp = new RegExp(/(https{0,1}:\/\/([a-z\.]*)[a-zA-z\.\/0-9?\-=]*)/g);
@@ -22,7 +26,12 @@ export function MapDetails({ item }: MapDetailsProps) {
   );
 
   const markNotWorking = () => {
-    mapsApiService.markAsNotWorking(item.id);
+    mapsApiService.markAsNotWorking(item.id).then(() => {
+      dispatch(addNotification({
+        message: 'Map marked',
+        type: 'success',
+      }))
+    });
   }
 
   return (
@@ -72,15 +81,20 @@ export function MapDetails({ item }: MapDetailsProps) {
         <span>{ item.songName } { item. songSubName } { item.songAuthorName }</span>
       </div>
 
-      <div className={styles.detailLine}>
+      <div className={styles.detailLine + ' ' + styles.flex}>
         <a className={styles.button} href={'beatsaver://' + item.id}>
           <Button variant="contained">Install</Button>
         </a>
+
+        <a className={ styles.last + ' ' + styles.button }>
+          <Button
+            variant="contained"
+            color="warning"
+            onClick={ markNotWorking }
+          >Mark as V3</Button>
+        </a>
       </div>
 
-      <div className={styles.detailLine}>
-         <Button variant="contained" onClick={ markNotWorking }>Mark map as not working</Button>
-      </div>
     </div>
   );
 }

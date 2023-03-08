@@ -26,7 +26,8 @@
         "uiFramework": "@storybook/react",
         "port": 4400,
         "config": {
-          "configFolder": "libs/ui-kit/.storybook"
+          "configFolder": "libs/ui-kit/.storybook",
+          "assets": "libs/ui-kit/src/map-player-reverse/assets"
         }
       },
       "configurations": {
