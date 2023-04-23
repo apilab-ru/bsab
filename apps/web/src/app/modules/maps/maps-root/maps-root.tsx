@@ -1,38 +1,44 @@
 import { useDispatch } from "react-redux";
 import { OrderDirection, OrderField } from "@bsab/api/request/request";
-import { FilterState, filterSet } from "../../../store/filter/store";
+import { FilterState, filterSetFromLocation } from "../../../store/filter/store";
+import { useLocation } from 'react-router-dom';
 import { Maps } from "../maps/maps";
+import { useEffect } from "react";
 
 export function MapsRoot() {
-   const dispatch = useDispatch();
-   const urlSearchParams = new URLSearchParams(window.location.search);
-   const params = Object.fromEntries(urlSearchParams.entries()) as {
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  useEffect(() => {
+    const urlSearchParams = new URLSearchParams(location.search);
+    const params = Object.fromEntries(urlSearchParams.entries()) as {
       orderField: OrderField;
       orderDirection: OrderDirection;
       filter: string;
-   };
+    };
 
-   const baseFilterValues = params.filter ? JSON.parse(params.filter) : [];
-   const { orderField, orderDirection } = params;
-   const offset = parseInt(location.hash.substr(1));
+    const baseFilterValues = params.filter ? JSON.parse(params.filter) : [];
+    const { orderField, orderDirection } = params;
+    const offset = parseInt(location.hash.substr(1));
 
-   const setParams: Partial<FilterState> = {};
-   setParams.values = baseFilterValues;
-   if (!isNaN(offset)) {
+    const setParams: Partial<FilterState> = {};
+    setParams.values = baseFilterValues;
+    if (!isNaN(offset)) {
       setParams.offset = offset;
-   }
-   if (orderField) {
+    }
+    if (orderField) {
       setParams.orderField = orderField;
-   }
-   if (orderDirection) {
+    }
+    if (orderDirection) {
       setParams.orderDirection = orderDirection;
-   }
+    }
 
-   dispatch(filterSet(setParams));
+    dispatch(filterSetFromLocation(setParams));
+  }, [])
 
-   return (
-      <Maps/>
-   );
+  return (
+    <Maps/>
+  );
 }
 
 export default MapsRoot;

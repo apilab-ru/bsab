@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import './filter-chip.scss';
-import { FilterItemType, SearchValue } from "../../../interfaces/filter";
+import { FilterItemType, SearchValue } from "../../../models/filter";
 import { FILTER_ITEMS_MAP } from "../../../models/filter-items";
 import { IconButton } from "@mui/material";
 

@@ -36,7 +36,7 @@ export const mapsSlice = createSlice({
    name: 'maps',
    initialState,
    reducers: {
-      load: (state, { payload }: StorePayload<MapsLoadPayload>) => {
+      load: (state, { payload }: StorePayload<Partial<MapsLoadPayload>>) => {
          state.isLoading = true;
       },
 

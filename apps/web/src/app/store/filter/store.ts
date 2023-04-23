@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SearchValue } from '../../interfaces/filter';
+import { SearchValue } from '../../models/filter';
 import { OrderDirection, OrderField } from '@bsab/api/request/request';
 import { StorePayload } from '@shared/store/payload';
 
@@ -9,7 +9,8 @@ export const FILER_INIT_STATE = {
    values: [] as SearchValue[],
    orderField: OrderField.createdAt,
    orderDirection: OrderDirection.desc,
-   offset: undefined as number | undefined
+   offset: undefined as number | undefined,
+   baseOffset: 0,
 };
 
 export type FilterState = typeof FILER_INIT_STATE;
@@ -28,6 +29,15 @@ export const filterSlice = createSlice({
          state.offset = 0;
       },
 
+      filterSetFromLocation: (state, { payload }: StorePayload<Partial<FilterState>>) => {
+         state.baseOffset = payload.offset || 0;
+
+         Object.entries(payload).forEach(([key, value]) => {
+            // @ts-ignore
+            state[key] = value;
+         });
+      },
+
       filterSet: (state, { payload }: StorePayload<Partial<FilterState>>) => {
          Object.entries(payload).forEach(([key, value]) => {
             // @ts-ignore
@@ -41,5 +51,5 @@ export const filterSlice = createSlice({
    }
 });
 
-export const { add, remove, filterSet, setOffset } = filterSlice.actions;
+export const { add, remove, filterSet, setOffset, filterSetFromLocation } = filterSlice.actions;
 export const filterReducer = filterSlice.reducer;

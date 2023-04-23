@@ -1,4 +1,4 @@
-import { FilterItem, FilterItemType, SearchValue } from '../interfaces/filter';
+import { FilterItem, FilterItemType, SearchValue } from './filter';
 import { FilterKey, FilterRequest } from '@bsab/api/request/request';
 import { TAGS_LIST } from './tags';
 

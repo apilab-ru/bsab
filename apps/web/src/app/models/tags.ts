@@ -1,5 +1,5 @@
 import { Tag } from "@bsab/api/request/request";
-import { FilterItemValue } from "../interfaces/filter";
+import { FilterItemValue } from "./filter";
 
 export const TAGS: Tag[] = [
   { "id": 1, "name": "Accuracy" },

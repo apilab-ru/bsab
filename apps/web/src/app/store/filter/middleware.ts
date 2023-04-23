@@ -7,7 +7,16 @@ import { filterService } from "../../services/filter.service";
 export const filterQueryUpdater: Middleware<RootState> = (store: MiddlewareAPI<Dispatch, RootState>) => next => action => {
   const result = next(action);
 
-  if ((action.type.includes('filter/') && action.type !== 'filter/setOffset') || (action.type === 'user/set')) {
+  if (action.type === 'filter/filterSetFromLocation') {
+     const state = store.getState().filter;
+     const { values, orderField, orderDirection, offset } = state;
+
+     store.dispatch(load({ values, offset, orderField, orderDirection, strategy: 'future' }))
+  }
+
+  if ((action.type.includes('filter/')
+     && !['filter/filterSetFromLocation', 'filter/setOffset'].includes(action.type)
+  ) || (action.type === 'user/set')) {
 
     const state = store.getState().filter;
 

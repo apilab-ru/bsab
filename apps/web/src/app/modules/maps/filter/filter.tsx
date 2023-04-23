@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import './filter.scss';
 import FilterDropdown from '../filter-dropdown/filter-dropdown';
-import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from '../../../interfaces/filter';
+import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from '../../../models/filter';
 import Popover from '@mui/material/Popover';
 import { FILTER_ITEMS, FILTER_ITEMS_MAP } from '../../../models/filter-items';
 import FilterChip from '../filter-chip/filter-chip';

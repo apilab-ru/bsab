@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import './filter-dropdown.scss';
-import { FilterItem, FilterItemType, FilterItemValue } from '../../../interfaces/filter';
+import { FilterItem, FilterItemType, FilterItemValue } from '../../../models/filter';
 import { Button } from '@mui/material';
 import { FilterKey } from "@bsab/api/request/request";
 

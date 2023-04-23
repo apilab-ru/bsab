@@ -13,7 +13,7 @@ import { useAppDispatch } from "../../../store";
 const MapsPage: FC<{}> = () => {
   const dispatch = useAppDispatch();
   const { list, openedId, showed } = useSelector<RootState, MapsState>((state) => state.maps);
-  const { offset } = useSelector<RootState, FilterState>((state) => state.filter);
+  const { offset, baseOffset } = useSelector<RootState, FilterState>((state) => state.filter);
   const openedItem = list?.find(it => it.id === openedId) || null;
 
   const closeMap = () => {
@@ -26,26 +26,26 @@ const MapsPage: FC<{}> = () => {
   }
 
   const changeOffset = (item: number) => {
-    dispatch(setOffset(item))
+    dispatch(setOffset(item + baseOffset))
   }
 
   return (
     <div className={styles.page}>
       <MapsList
-        list={ list }
-        showed={ showed }
-        handleClick={ id => openMap(id) }
-        offset={ offset }
-        changeOffset={ changeOffset }
+        list={list}
+        showed={showed}
+        handleClick={id => openMap(id)}
+        offset={offset}
+        changeOffset={changeOffset}
       />
 
       <MapPlayer
-        isOpened={ !!openedId }
-        handleClose={ closeMap }
-        sourceUrl={ openedItem?.downloadURL || null }
+        isOpened={!!openedId}
+        handleClose={closeMap}
+        sourceUrl={openedItem?.downloadURL || null}
       >
         {(!openedItem) ? '' :
-          <MapDetails item={ openedItem }></MapDetails>
+          <MapDetails item={openedItem}></MapDetails>
         }
       </MapPlayer>
     </div>
