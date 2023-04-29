@@ -63,11 +63,17 @@ export const mapsSlice = createSlice({
       },
 
       addToShowed: (state, { payload }: { payload: string }) => {
-         state.showed.push(payload);
+         if (!state.showed.includes(payload)) {
+            state.showed.push(payload);
+         }
       },
+
+      resetShowed: (state) => {
+         state.showed = [];
+      }
    },
 
 });
 
-export const { load, setList, setOpened, addToShowed } = mapsSlice.actions;
+export const { load, setList, setOpened, addToShowed, resetShowed } = mapsSlice.actions;
 export const mapsReducer = mapsSlice.reducer;

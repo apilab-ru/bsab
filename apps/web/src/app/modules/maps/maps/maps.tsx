@@ -8,11 +8,18 @@ import Filter from '../filter/filter';
 import OrderControl from '../order-control/order-control';
 import { RootState } from '../../../store/store';
 import { UserState } from "../../../store/user/store";
+import { resetShowed } from "../../../store/maps/store";
+import { AnyAction } from "@reduxjs/toolkit";
 
 export function Maps() {
   const dispatch = useDispatch();
   const { values, orderField, orderDirection } = useSelector<RootState, FilterState>((state) => state.filter);
   const { user } = useSelector<RootState, UserState>((state) => state.user);
+
+  function updateFilter(action: AnyAction) {
+    dispatch(resetShowed());
+    dispatch(action);
+  }
 
   return (
     <>
@@ -21,8 +28,8 @@ export function Maps() {
           className={ styles.filter }
           values={values}
           userExist={ !!user }
-          onDeleteValue={(index) => dispatch(remove(index))}
-          onAddValue={(value) => dispatch(add(value))}
+          onDeleteValue={(index) => updateFilter(remove(index))}
+          onAddValue={(value) => updateFilter(add(value))}
         />
         <OrderControl
           orderField={orderField}

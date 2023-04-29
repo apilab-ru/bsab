@@ -5,7 +5,7 @@
   width: 100%;
   z-index: 2;
   display: flex;
-  pointer-events: none;
+  // pointer-events: none;
 }
 
 .loader {
@@ -36,12 +36,21 @@
 
 .counter {
   background: var(--color-secondary-inverted);
-  margin-left: auto;
-  margin-right: 12px;
   margin-bottom: 12px;
   padding: 8px;
   border-radius: 8px;
+
+  &.isRight {
+    margin-left: auto;
+    margin-right: 12px;
+  }
+
+  &.isLeft {
+    margin-left: 12px;
+    margin-right: auto;
+  }
 }
+
 
 @keyframes indeterminate-progress-bar {
   from {

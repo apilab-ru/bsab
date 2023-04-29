@@ -13,7 +13,7 @@ export function Footer() {
   const dispatch = useAppDispatch();
   const { notifications } = useSelector<RootState, UserState>((state) => state.user);
   const { offset } = useSelector<RootState, FilterState>((state) => state.filter);
-  const { isLoading, total } = useSelector<RootState, MapsState>((state) => state.maps);
+  const { isLoading, total, showed } = useSelector<RootState, MapsState>((state) => state.maps);
 
   if (notifications.length) {
     notifications.forEach(notification => {
@@ -31,9 +31,12 @@ export function Footer() {
       { isLoading &&
         <div className={styles.loader}></div>
       }
+      <span className={styles.counter + ' ' + styles.isLeft} title="Showed count">
+        { showed.length || 0 }
+      </span>
       {
         total !== null &&
-        <span className={styles.counter}>
+        <span className={styles.counter + ' ' + styles.isRight}>
           { offset || 0 } / { total }
         </span>
       }
