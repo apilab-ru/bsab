@@ -38,13 +38,14 @@ export const filterQueryUpdater: Middleware<RootState> = (store: MiddlewareAPI<D
 
   if (action.type === 'filter/setOffset') {
      const offset = store.getState().filter.offset || 0;
+     const baseOffset = store.getState().filter.baseOffset || 0;
      const { values, orderField, orderDirection } = store.getState().filter;
      const { list, isLoading, hasMore } = store.getState().maps;
 
      location.hash = offset ? ('#' + offset) : '';
 
      if (!isLoading && hasMore && offset + LOAD_NEXT_OFFSET > list.length) {
-        store.dispatch(load({ values, offset: list.length + 1, orderField, orderDirection, strategy: 'future' }))
+        store.dispatch(load({ values, offset: list.length + baseOffset, orderField, orderDirection, strategy: 'future' }))
      }
   }
 
