@@ -1,6 +1,6 @@
 type QueryValue = string | number | null;
 
-class Router {
+export class Router {
   updateQuery(newParams: Record<string, QueryValue>): void {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries()) as Record<string, QueryValue>;

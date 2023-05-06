@@ -1,7 +1,7 @@
 import { environment } from "../../environments/environment";
 import { Playlist } from "@bsab/api/local/playlist";
 
-class PlaylistApiService {
+export class PlaylistApiService {
 
   loadPlaylists(): Promise<{ list: any[] }> {
     return fetch(environment.api + 'playlists').then(res => res.json());

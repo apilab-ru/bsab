@@ -1,7 +1,7 @@
 import { environment } from "../../environments/environment";
 import { LocalMap } from "@bsab/api/map/map";
 
-class MapsApiService {
+export class MapsApiService {
   loadMaps(): Promise<{ maps: LocalMap[] }> {
     return fetch(environment.api + 'maps').then(res => res.json());
   }

@@ -1,21 +1,19 @@
 import styles from './maps-page.module.scss';
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
-import { MapsState, open } from "../../../store/maps/store";
+
 import MapsList from '../maps-list/maps-list';
-import React from "react";
+import React, { useState } from "react";
 import { router } from "../../../services/router";
 import { MapPlayer } from '@bsab/ui-kit/map-player';
 import { LocalMap } from '@bsab/api/map/map';
+import { observer } from "mobx-react";
+import { mapsService } from "../../../store/maps.service";
 
 interface QueryParams {
   openedId: string;
 }
 
-export function MapsPage() {
-  let { list, openedId } = useSelector<RootState, MapsState>((state) => state.maps);
-
-  const dispatch = useDispatch();
+export const MapsPage = () => {
+  const [{ list, openedId }] = useState(mapsService)
 
   const handleClose = () => {
     openItem(null);
@@ -23,7 +21,8 @@ export function MapsPage() {
 
   const openItem = (openedId: string | null) => {
     router.updateQuery({ openedId });
-    dispatch(open(openedId));
+
+    mapsService.setOpenedId(openedId);
   }
 
   const { openedId: queryOpenedId } = router.getQueryParams<QueryParams>();
@@ -37,19 +36,19 @@ export function MapsPage() {
 
   return (
     <>
-      <div className={ styles.mapsPage }>
+      <div className={styles.mapsPage}>
         <MapsList
-          list={ list }
-          open={ openItem }
+          list={list}
+          open={openItem}
         />
       </div>
       <MapPlayer
-        handleClose={ handleClose }
-        isOpened={ !!openedId }
-        sourceUrl={ getSourceOpenedItem(openedId, list) }
+        handleClose={handleClose}
+        isOpened={!!openedId}
+        sourceUrl={getSourceOpenedItem(openedId, list)}
       ></MapPlayer>
     </>
   );
 }
 
-export default MapsPage;
+export default observer(MapsPage);

@@ -1,36 +1,35 @@
-import { useDispatch, useSelector } from "react-redux";
-import { open, PlaylistsState, updatePlaylist, removePlaylist } from "../../../store/playlists/store";
 import { router } from "../../../services/router";
 import { PlaylistContainer } from "../playlist-container/playlist-container";
 import { PlaylistEdit } from "../playlist-edit/playlist-edit";
 import styles from './playlist-page.module.scss';
-import { RootState } from "../../../store/store";
 import { Playlist } from "@bsab/api/local/playlist";
-import { MapsState } from "../../../store/maps/store";
+import { observer } from "mobx-react";
+import { useState } from "react";
+import { mapsService } from "../../../store/maps.service";
+import { playlistsService } from "../../../store/playlists.service";
 
 interface QueryParams {
   openedId: string;
 }
 
 export function PlaylistPage() {
-  let { list, openedId } = useSelector<RootState, PlaylistsState>((state) => state.playlists);
-  let { list: maps } = useSelector<RootState, MapsState>((state) => state.maps);
-  const playlist: Playlist = list.find(item => item.id === openedId)!;
+  const [{ list, openedId }] = useState(playlistsService)
+  const playlist: Playlist = list?.find(item => item.id === openedId)!;
 
-  const dispatch = useDispatch();
+  const [{ list: maps }] = useState(mapsService)
 
   const openPlaylist = (openedId: string) => {
     router.updateQuery({ openedId });
-    dispatch(open(openedId));
+    playlistsService.setOpenedId(openedId);
   };
 
   const closePlaylist = () => {
     router.updateQuery({ openedId: null });
-    dispatch(open(null));
+    playlistsService.setOpenedId(null);
   }
 
   const savePlaylist = (playlist: Playlist) => {
-    dispatch(updatePlaylist({ id: openedId!, playlist }))
+    playlistsService.updatePlayList(playlist);
   }
 
   const { openedId: queryOpenedId } = router.getQueryParams<QueryParams>();
@@ -40,25 +39,25 @@ export function PlaylistPage() {
 
   const callRemovePlaylist = (id: string) => {
     closePlaylist();
-    dispatch(removePlaylist(id));
+    playlistsService.removePlayList(id);
   }
 
   return (
     <div className={styles.playlistPage}>
       <PlaylistContainer
-        openPlaylist={ openPlaylist }
+        openPlaylist={openPlaylist}
       />
-      { !playlist ? '' :
+      {!playlist ? '' :
         <PlaylistEdit
-          maps= { maps }
-          playlist={ playlist }
-          close={ closePlaylist }
-          save={ savePlaylist }
-          remove={ () => callRemovePlaylist(playlist.id) }
+          maps={maps}
+          playlist={playlist}
+          close={closePlaylist}
+          save={savePlaylist}
+          remove={() => callRemovePlaylist(playlist.id)}
         />
       }
     </div>
   )
 }
 
-export default PlaylistPage;
+export default observer(PlaylistPage);
