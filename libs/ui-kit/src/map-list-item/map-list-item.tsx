@@ -27,7 +27,7 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click, className, chil
     <div className={'MapListItem ' + className} title={ item.id } onClick={ click }>
       <div className="color"></div>
       <div className="row">
-        <img className="album" src={ item.coverURL }/>
+        <img loading="lazy" className="album" src={ item.coverURL }/>
         { !item?.stats ? '' :
           <div className="stat">
             <span className="down"></span>

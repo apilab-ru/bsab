@@ -1,6 +1,6 @@
 import styles from './profile.module.scss';
 import Header from '../../layout/header/header';
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { mapsApiService } from '../../../services/maps-api-service';
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,13 +8,18 @@ import { setConfig, UserState } from "../../../store/user/store";
 import { RootState } from "../../../store/store";
 import { buildForm } from "@shared/forms/build-form";
 import { Input } from "@bsab/ui-kit/input/input";
+import { observer } from "mobx-react";
+import { userService } from "../../../store-mobx/user-service";
 
-export function Profile() {
+const Profile = () => {
   const dispatch = useDispatch();
   const idsRef = React.createRef<HTMLTextAreaElement>();
   const configFormRef = React.createRef<HTMLFormElement>();
 
   const { user, config } = useSelector<RootState, UserState>((state) => state.user);
+
+  const [userTest] = useState(() => userService);
+  console.log('xxx userTest', userTest.user);
 
   const importShowedItems = () => {
     const ids = JSON.parse(idsRef.current!.value);
@@ -32,6 +37,10 @@ export function Profile() {
   return (
     <div>
       <Header></Header>
+
+      <p>
+        { JSON.stringify(userTest.user) }
+      </p>
 
       <div className={styles.content}>
         <div className={styles.row}>
@@ -76,4 +85,4 @@ export function Profile() {
   );
 }
 
-export default Profile;
+export default observer(Profile);

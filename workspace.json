@@ -3,7 +3,6 @@
   "version": 2,
   "projects": {
     "bsab-models": "libs/bsab-models",
-    "local-api": "apps/local-api",
     "local-web": "apps/local-web",
     "server-utils": "libs/server-utils",
     "shared": "libs/shared",

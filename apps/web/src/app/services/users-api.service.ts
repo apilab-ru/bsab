@@ -7,7 +7,7 @@ import { NotificationParam } from "../models/notification";
 const KEY_STORE_USER = 'bsabUser';
 const KEY_STORE_CONFIG = 'bsabConfig';
 
-class UsersApiService {
+export class UsersApiService {
    private api: string;
 
    constructor(
