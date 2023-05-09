@@ -1,0 +1,61 @@
+.cinemaContainer {
+  width: 1280px;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  position: relative;
+}
+
+.videoDropdown {
+  flex: 1;
+}
+
+.videoFile {
+  width: 100%;
+}
+
+.videoPlaceholder {
+  min-height: 475px;
+  box-sizing: border-box;
+  border: 2px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videControlBig {
+  padding: 8px 16px !important;
+}
+
+.videoControls {
+  display: flex;
+  align-items: center;
+}
+
+.control {
+  margin-left: 12px !important;
+}
+
+.videoControlsFile {
+  padding-left: 10px;
+  margin-left: auto;
+}
+
+.link {
+  padding: 5px;
+  display: block;
+
+  & + & {
+    margin-top: 2px;
+  }
+}
+
+.loader {
+  position: absolute;
+  bottom: 0;
+}
+
+.details {
+  width: 380px;
+  margin-left: 20px;
+}

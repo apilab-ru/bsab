@@ -20,6 +20,7 @@
         "passWithNoTests": true
       }
     },
+
     "storybook": {
       "executor": "@nrwl/storybook:storybook",
       "options": {
@@ -27,8 +28,11 @@
         "port": 4400,
         "config": {
           "configFolder": "libs/ui-kit/.storybook",
-          "assets": "libs/ui-kit/src/map-player-reverse/assets"
-        }
+          "assets": []
+        },
+        "styles": [
+          "libs/ui-kit/.storybook/global.scss"
+        ]
       },
       "configurations": {
         "ci": {
@@ -44,7 +48,10 @@
         "outputPath": "dist/storybook/ui-kit",
         "config": {
           "configFolder": "libs/ui-kit/.storybook"
-        }
+        },
+        "styles": [
+          "libs/ui-kit/.storybook/global.scss"
+        ]
       },
       "configurations": {
         "ci": {

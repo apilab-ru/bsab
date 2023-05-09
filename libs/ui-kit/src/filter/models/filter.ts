@@ -1,5 +1,3 @@
-import { FilterKey } from '@bsab/api/request/request';
-
 export type FilterItem = ListFilterItem | WriteFilterItem | BooleanFilterItem;
 
 export enum FilterItemType {
@@ -10,7 +8,7 @@ export enum FilterItemType {
 
 interface BaseFilterItem {
   name: string;
-  key: FilterKey;
+  key: string;
   type: FilterItemType;
   default?: boolean;
   unique?: boolean;
@@ -37,7 +35,7 @@ export interface FilterItemValue {
 }
 
 export interface SearchValue {
-  key: FilterKey;
+  key: string;
   value: string;
   not?: boolean;
 }

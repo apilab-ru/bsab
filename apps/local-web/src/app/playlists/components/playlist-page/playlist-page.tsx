@@ -4,9 +4,10 @@ import { PlaylistEdit } from "../playlist-edit/playlist-edit";
 import styles from './playlist-page.module.scss';
 import { Playlist } from "@bsab/api/local/playlist";
 import { observer } from "mobx-react";
-import { useState } from "react";
-import { mapsService } from "../../../store/maps.service";
-import { playlistsService } from "../../../store/playlists.service";
+import React, { useState } from "react";
+import { mapsService } from "../../../maps/services/maps.service";
+import { playlistsService } from "../../services/playlists.service";
+import Header from "../../../layout/components/header/header";
 
 interface QueryParams {
   openedId: string;
@@ -44,6 +45,7 @@ export function PlaylistPage() {
 
   return (
     <div className={styles.playlistPage}>
+      <Header/>
       <PlaylistContainer
         openPlaylist={openPlaylist}
       />

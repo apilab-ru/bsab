@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import './filter-chip.scss';
-import { FilterItemType, SearchValue } from "../../../models/filter";
-import { FILTER_ITEMS_MAP } from "../../../models/filter-items";
+import { FilterItem, FilterItemType, SearchValue } from "../../models/filter";
+
 import { IconButton } from "@mui/material";
 
 interface FilterChipProps {
@@ -9,10 +9,10 @@ interface FilterChipProps {
     onDelete: () => void;
     onEdit: () => void;
     className: string;
+    detail: FilterItem;
 }
 
-const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit, className }) => {
-    const detail = FILTER_ITEMS_MAP[item.key];
+const FilterChip: FC<FilterChipProps> = ({ item, onDelete, onEdit, className, detail }) => {
     let title = item.value;
 
     if (detail.type === FilterItemType.list) {

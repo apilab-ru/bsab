@@ -1,18 +1,18 @@
 import React, { FormEvent } from 'react';
 import './filter.scss';
 import FilterDropdown from '../filter-dropdown/filter-dropdown';
-import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from '../../../models/filter';
+import { FilterItem, FilterItemType, FilterItemValue, SearchValue } from '../../models/filter';
 import Popover from '@mui/material/Popover';
-import { FILTER_ITEMS, FILTER_ITEMS_MAP } from '../../../models/filter-items';
 import FilterChip from '../filter-chip/filter-chip';
 import { FilterKey } from '@bsab/api/request/request';
 
-interface FilterProps {
+export interface FilterProps {
   values: SearchValue[];
+  filterItems: FilterItem[];
   onDeleteValue: (index: number) => void;
   onAddValue: (value: SearchValue) => void;
   className?: string;
-  userExist: boolean;
+  userExist?: boolean;
 }
 
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
   focusValue: null as string | null
 };
 
-class Filter extends React.Component<FilterProps> {
+export class Filter extends React.Component<FilterProps> {
   id = 'filterPopover';
   anchorRef = React.createRef<HTMLInputElement>();
   state = initialState;
@@ -58,6 +58,10 @@ class Filter extends React.Component<FilterProps> {
       focusGroup: this.calcSelected(filterItems)
     });
   };
+
+  getFilterItem(key: string): FilterItem {
+    return this.props.filterItems.find(it => it.key === key)!;
+  }
 
   close = () => {
     this.setState({ isShowDropdown: false, anchorEl: null });
@@ -132,7 +136,7 @@ class Filter extends React.Component<FilterProps> {
     group: FilterKey | null,
     isNot = false
   ): void {
-    const item = FILTER_ITEMS_MAP[group!];
+    const item = group ? this.getFilterItem(group) : null;
 
     if (!item) {
       return;
@@ -165,7 +169,7 @@ class Filter extends React.Component<FilterProps> {
       return this.setState({ group });
     }
 
-    const item = FILTER_ITEMS_MAP[group];
+    const item = this.getFilterItem(group);
 
     if (!item) {
       return;
@@ -202,7 +206,7 @@ class Filter extends React.Component<FilterProps> {
     const filterText = this.state.filterText;
     const values = this.state.values.map(it => it.key);
 
-    return FILTER_ITEMS
+    return this.props.filterItems
       .filter(item => this.props.userExist || !item.userRequired)
       .filter(item => !item.unique || !values.includes(item.key))
       .filter(item => item.type !== FilterItemType.list || this.filterValues(item.key, item.values).length > 0)
@@ -279,6 +283,7 @@ class Filter extends React.Component<FilterProps> {
                 className={'chipItem'}
                 key={index}
                 item={item}
+                detail={this.getFilterItem(item.key)}
                 onDelete={() => this.handleDeleteGroup(index)}
                 onEdit={() => this.handleEditGroup(index)}
               />
@@ -324,5 +329,3 @@ class Filter extends React.Component<FilterProps> {
     );
   }
 }
-
-export default Filter;

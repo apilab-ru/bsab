@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, configureStore, createStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { filterReducer, FilterState } from "./filter/store";
 import { filterQueryUpdater } from "./filter/middleware";
 import { createEpicMiddleware } from 'redux-observable';

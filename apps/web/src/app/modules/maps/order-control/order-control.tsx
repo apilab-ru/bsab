@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import './order-control.scss';
 import { MenuItem, Select } from "@mui/material";
 import { OrderDirection, OrderField } from '@bsab/api/request/request';
-import { ORDER_FIELDS } from "../../../models/filter-items";
+import { ORDER_FIELDS } from "../../../models/search";
 import SortIcon from '@mui/icons-material/Sort';
 
 interface OrderControlProps {

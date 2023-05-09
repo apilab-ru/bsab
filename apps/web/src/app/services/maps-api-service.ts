@@ -1,5 +1,5 @@
 import { FilterState } from "../store/filter/store";
-import { prepareFilterRequest } from "../models/filter-items";
+import { prepareFilterRequest } from "../models/search";
 import { environment } from "../../environments/environment";
 import { MapDetail, MapDetailRaw } from '@bsab/api/map/map-detail';
 import { MAPS_LIMIT } from './const';

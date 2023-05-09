@@ -1,6 +1,6 @@
-import { playlistApiService, PlaylistApiService } from "../services/playlist-api";
+import { playlistApiService, PlaylistApiService } from "./playlist-api";
 import { Playlist } from "@bsab/api/local/playlist";
-import { DataStatus } from "../models/status";
+import { DataStatus } from "../../models/status";
 import { action, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
 
 export class PlaylistsService {

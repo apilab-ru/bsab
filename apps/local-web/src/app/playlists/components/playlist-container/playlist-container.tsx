@@ -2,7 +2,7 @@ import './playlists-container.scss';
 import { Playlist } from "@bsab/api/local/playlist";
 import { observer } from "mobx-react";
 import { useState } from "react";
-import { playlistsService } from "../../../store/playlists.service";
+import { playlistsService } from "../../services/playlists.service";
 
 export interface PlaylistContainerProps {
   openPlaylist: (id: string) => void;

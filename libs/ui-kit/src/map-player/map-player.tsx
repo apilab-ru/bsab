@@ -10,7 +10,7 @@ const regExpId = /^([0-9A-Za-z]+)$/;
 
 interface MapPlayerProps {
   isOpened: boolean;
-  sourceUrl: string | null;
+  sourceUrl: string | null | undefined;
   handleClose: () => void;
   children?: ReactNode;
 }
@@ -20,7 +20,7 @@ interface MapPlayerProps {
 
 export const MapPlayer: FC<MapPlayerProps> = ({ isOpened, handleClose, sourceUrl, children }) => {
 
-  const getLink = (openedId: string | null) => {
+  const getLink = (openedId: string | null | undefined) => {
     if (!openedId) {
       return '';
     }

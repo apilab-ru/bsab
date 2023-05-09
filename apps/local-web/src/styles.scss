@@ -1,11 +1,14 @@
+@import "libs/ui-kit/src/theme/colors.scss";
+
 html {
- font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
   margin: 8px;
   height: calc(100vh - 16px);
   overflow: hidden;
+  @include materialUiColors();
 }
 
 #root {

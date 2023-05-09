@@ -9,6 +9,7 @@ export default {
 const Template: Story<StarsProps> = (args) => <Stars {...args} />;
 
 export const Primary = Template.bind({});
+
 Primary.args = {
   stars: 5
 };

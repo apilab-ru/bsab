@@ -5,33 +5,12 @@
   width: 100%;
   z-index: 2;
   display: flex;
-  // pointer-events: none;
+  pointer-events: none;
 }
 
-.loader {
-  height: 8px;
-  background: var(--color-background);
-  opacity: 0.8;
-  overflow: hidden;
-  width: 100%;
+.footerLoader {
   position: absolute;
   bottom: 0;
-
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 50%;
-    background: var(--color-primary);
-    height: 100%;
-    border-radius: 10px;
-
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-name: indeterminate-progress-bar;
-  }
 }
 
 .counter {
@@ -48,15 +27,5 @@
   &.isLeft {
     margin-left: 12px;
     margin-right: auto;
-  }
-}
-
-
-@keyframes indeterminate-progress-bar {
-  from {
-    left: -50%;
-  }
-  to {
-    left: 100%;
   }
 }

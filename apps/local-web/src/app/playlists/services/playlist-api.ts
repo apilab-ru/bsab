@@ -1,4 +1,4 @@
-import { environment } from "../../environments/environment";
+import { environment } from "../../../environments/environment";
 import { Playlist } from "@bsab/api/local/playlist";
 
 export class PlaylistApiService {

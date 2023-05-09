@@ -7,6 +7,7 @@ import { removeNotifications, UserState } from "../../../store/user/store";
 import { useAppDispatch } from "../../../store";
 import { MapsState } from "../../../store/maps/store";
 import { FilterState } from "../../../store/filter/store";
+import ProgressLoader from "@bsab/ui-kit/progress-loader/progress-loader";
 
 export function Footer() {
   const { enqueueSnackbar } = useSnackbar();
@@ -29,7 +30,7 @@ export function Footer() {
   return (
     <div className={styles.footer}>
       { isLoading &&
-        <div className={styles.loader}></div>
+        <ProgressLoader className={styles.footerLoader}/>
       }
       <span className={styles.counter + ' ' + styles.isLeft} title="Showed count">
         { showed.length || 0 }
