@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import { mapsService } from "../../../maps/services/maps.service";
 import { playlistsService } from "../../services/playlists.service";
 import Header from "../../../layout/components/header/header";
+import { notificationService } from "../../../services/notification.service";
 
 interface QueryParams {
   openedId: string;
@@ -30,7 +31,12 @@ export function PlaylistPage() {
   }
 
   const savePlaylist = (playlist: Playlist) => {
-    playlistsService.updatePlayList(playlist);
+    playlistsService.updatePlayList(playlist).then(() => {
+      notificationService.addNotification({
+        type: 'success',
+        message: 'Successful saved'
+      })
+    });
   }
 
   const { openedId: queryOpenedId } = router.getQueryParams<QueryParams>();
@@ -40,7 +46,12 @@ export function PlaylistPage() {
 
   const callRemovePlaylist = (id: string) => {
     closePlaylist();
-    playlistsService.removePlayList(id);
+    playlistsService.removePlayList(id).then(() => {
+      notificationService.addNotification({
+        type: 'success',
+        message: 'Success removed'
+      })
+    });
   }
 
   return (

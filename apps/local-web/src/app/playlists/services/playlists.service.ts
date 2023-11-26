@@ -1,5 +1,5 @@
 import { playlistApiService, PlaylistApiService } from "./playlist-api";
-import { Playlist } from "@bsab/api/local/playlist";
+import { Playlist, PlaylistData } from "@bsab/api/local/playlist";
 import { DataStatus } from "../../models/status";
 import { action, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
 
@@ -46,7 +46,15 @@ export class PlaylistsService {
    removePlayList(id: string): Promise<void> {
       return this.playlistsApi.removePlaylist(id).then(() => runInAction(() => {
          this.store.list = this.store.list.filter(item => item.id !== id);
-      }))
+      }));
+   }
+
+   createPlaylist(playlist: PlaylistData): Promise<Playlist> {
+      return this.playlistsApi.createPlaylist(playlist).then(response => runInAction(() => {
+         this.store.list.push(response);
+
+         return response;
+      }));
    }
 
    private initPlaylists() {

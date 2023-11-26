@@ -90,14 +90,6 @@ export function MapDetails({ item }: MapDetailsProps) {
         <a className={styles.button} href={'beatsaver://' + item.id}>
           <Button variant="contained">Install</Button>
         </a>
-
-        <a className={ styles.last + ' ' + styles.button }>
-          <Button
-            variant="contained"
-            color="warning"
-            onClick={ markNotWorking }
-          >Mark as V3</Button>
-        </a>
       </div>
 
     </div>

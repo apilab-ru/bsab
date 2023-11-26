@@ -94,6 +94,12 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
       unique: true,
       userRequired: true,
    },
+   ranked: {
+      name: 'Ranked',
+      type: FilterItemType.boolean,
+      filterFunc: () => true,
+      unique: true,
+   },
    recommended: {
       name: 'Recommended',
       type: FilterItemType.boolean,

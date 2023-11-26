@@ -4,7 +4,7 @@ import './map-player.scss';
 
 const player = 'https://skystudioapps.com/bs-viewer/?noProxy=true&url=';
 
-const playerById = 'https://skystudioapps.com/bs-viewer/?id=';
+const playerById = 'https://allpoland.github.io/ArcViewer/?id=';
 
 const regExpId = /^([0-9A-Za-z]+)$/;
 

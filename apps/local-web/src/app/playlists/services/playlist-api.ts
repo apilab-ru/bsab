@@ -1,31 +1,23 @@
 import { environment } from "../../../environments/environment";
-import { Playlist } from "@bsab/api/local/playlist";
+import { Playlist, PlaylistData } from "@bsab/api/local/playlist";
+import axios from 'axios';
 
 export class PlaylistApiService {
 
   loadPlaylists(): Promise<{ list: any[] }> {
-    return fetch(environment.api + 'playlists').then(res => res.json());
+    return axios.get(environment.api + 'playlists').then(res => res.data);
   }
 
   updatePlaylist(id: string, playlist: Playlist): Promise<void> {
-    return fetch(environment.api + 'playlist/' + id, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      body: JSON.stringify(playlist)
-    }).then(res => res.json());
+     return axios.patch(environment.api + 'playlists/' + id, playlist);
   }
 
   removePlaylist(id: string): Promise<void> {
-     return fetch(environment.api + 'playlist/' + id, {
-        headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
-        },
-        method: 'DELETE',
-     }).then(res => res.json());
+     return axios.delete(environment.api + 'playlists/' + id);
+  }
+
+  createPlaylist(data: PlaylistData): Promise<Playlist> {
+      return axios.post(environment.api + 'playlists', data).then(res => res.data);
   }
 }
 

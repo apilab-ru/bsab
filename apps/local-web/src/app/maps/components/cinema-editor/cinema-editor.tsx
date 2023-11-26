@@ -23,8 +23,6 @@ export function CinemaEditor({ cinema, id, ...props }: CinemaEditorProps) {
     return youTubeSearch + encodeURI(title);
   }
 
-  console.log('xxx cinema', cinema);
-
   const makeVideoLink = (cinema: MapCinema | undefined, id: string | null) => {
     if (!id || !cinema?.videoFile) {
       return '';

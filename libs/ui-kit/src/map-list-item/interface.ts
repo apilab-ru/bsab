@@ -13,4 +13,5 @@ export interface IMapItem {
    difsDetails: MapDiffiDetail[];
 
    stats?: MapStat;
+   bpm?: number;
 }

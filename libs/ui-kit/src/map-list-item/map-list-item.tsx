@@ -37,7 +37,12 @@ export const MapListItem: FC<MapListItemProps> = ({ item, click, className, chil
         }
       </div>
       <div className="row">
-        <div className="line -title">{ makeName(item) }</div>
+        <div className="line -title">
+          { makeName(item) }
+          { !item.bpm ? '' :
+            <span className='bpm' title='BPM'>{ item.bpm }</span>
+          }
+        </div>
         <div className="line -date">
           { dateFormat(item.createdAt) } / <b className={'duration'}>{ formatDuration(item.duration) }</b>
         </div>

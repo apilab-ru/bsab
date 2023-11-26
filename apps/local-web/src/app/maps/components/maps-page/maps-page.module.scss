@@ -1,8 +1,24 @@
 .mapsPage {
   height: 100%;
+  position: relative;
 }
 
 .playerFrame {
   width: 1280px;
   height: 720px;
+}
+
+.counter {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  background: var(--color-secondary-inverted);
+  border-radius: 8px;
+  padding: 8px;
+  bottom: 20px;
+  right: 20px;
+}
+
+.counterButton {
+  margin-left: 12px !important;
 }

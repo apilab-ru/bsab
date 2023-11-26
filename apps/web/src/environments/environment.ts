@@ -3,5 +3,5 @@
 
 export const environment = {
   production: false,
-  api: 'https://api2.apilab.ru/bsab',
+  api: 'https://localhost:3000',
 };

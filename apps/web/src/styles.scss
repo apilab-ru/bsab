@@ -1,4 +1,4 @@
-@import "libs/ui-kit/src/theme/colors.scss";
+@import "libs/ui-kit/src/theme/colors";
 @import "./styles/vars";
 
 html {
@@ -14,7 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @include colors();
+  @include materialUiColors();
   @include vars();
 }
 

@@ -3,6 +3,8 @@ import { DataStatus } from "../../models/status";
 import { action, computed, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
 import { mapsApiService, MapsApiService } from "./maps-api";
 import { SearchValue } from "@bsab/ui-kit/filter";
+import { PlaylistsService, playlistsService } from "../../playlists/services/playlists.service";
+import { LocalFilterKey } from "../models/filter-items";
 
 function parseBoolean(value: string): boolean {
    return value === 'true';
@@ -26,6 +28,7 @@ export class MapsService {
 
    constructor(
       private mapsApi: MapsApiService,
+      private playlistService: PlaylistsService
    ) {
       makeAutoObservable(this.store, {}, {
          deep: false
@@ -59,8 +62,14 @@ export class MapsService {
 
    get listByFilter(): LocalMap[] {
       const filter = this.storeDeep.filter;
+      const playlistId = filter.find(item => item.key === 'playlist')?.value;
+      let hashes;
 
-      return !filter.length ? this.store.list : this.listFiltration(this.store.list, filter);
+      if (playlistId) {
+         hashes = this.playlistService.list.find(item => item.id === playlistId)?.songs.map(item => item.hash);
+      }
+
+      return !filter.length ? this.store.list : this.listFiltration(this.store.list, filter, hashes);
    }
 
    updateMapCinema(id: string, cinema: Partial<MapCinema>): Promise<void> {
@@ -81,22 +90,43 @@ export class MapsService {
       })
    })
 
-   private listFiltration(list: LocalMap[], filters: SearchValue[]): LocalMap[] {
+   private listFiltration(list: LocalMap[], filters: SearchValue[], hashes?: string[]): LocalMap[] {
       return list.filter(item => {
          return filters.every(filter => {
             switch (filter.key) {
-               case 'search':
+               case LocalFilterKey.search:
                   return item.songName.toLocaleLowerCase().includes(filter.value)
                      || item.songSubName.toLocaleLowerCase().includes(filter.value);
-               case 'cinema':
+               case LocalFilterKey.cinema:
                   return !!item.cinema;
-               case 'cinemaVideo':
+               case LocalFilterKey.cinemaVideo:
                   return item.cinema && !!item.cinema.videoFile === parseBoolean(filter.value);
+               case LocalFilterKey.playlist:
+                  return hashes?.includes(item.hash!);
+
+               case LocalFilterKey.npsTo:
+                  return Math.min(...item.difsDetails.map(item => item.nps)) <= +filter.value;
+               case LocalFilterKey.npsFrom:
+                  return Math.max(...item.difsDetails.map(item => item.nps)) >= +filter.value;
+
+               case LocalFilterKey.durationFrom:
+                  return item.duration >= +filter.value;
+               case LocalFilterKey.durationTo:
+                  return item.duration <= +filter.value;
+
+               case LocalFilterKey.bpmFrom:
+                  return item.bpm >= +filter.value;
+               case LocalFilterKey.bpmTo:
+                  return item.bpm <= +filter.value;
                default:
                   return true;
             }
          })
       })
+   }
+
+   set filter(filter: SearchValue[]) {
+      this.storeDeep.filter = filter;
    }
 
    get filter(): SearchValue[] {
@@ -147,4 +177,4 @@ export class MapsService {
    }
 }
 
-export const mapsService = new MapsService(mapsApiService);
+export const mapsService = new MapsService(mapsApiService, playlistsService);

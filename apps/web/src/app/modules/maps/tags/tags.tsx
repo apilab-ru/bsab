@@ -1,11 +1,11 @@
 import styles from './tags.module.scss';
-import { TAGS } from '../../../models/tags';
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { FilterState } from "../../../store/filter/store";
 import { FilterKey } from "@bsab/api/request/request";
 import { filterService } from "../../../services/filter.service";
 import cloneDeep from 'lodash/cloneDeep';
+import { TAGS } from "@bsab/ui-kit/filter/models/tags";
 
 export interface TagsProps {
   tags: number[];
