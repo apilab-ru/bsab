@@ -71,6 +71,8 @@ export const MapsPage = () => {
     openCinema(queryCinemaId);
   }*/
 
+  const playlistId = filter.find(({ key }) => key === 'playlist')?.value;
+
   const getItem = (id: string | null, list: LocalMap[]) => {
     return list?.find(item => item.id === id) || null;
   }
@@ -88,6 +90,18 @@ export const MapsPage = () => {
       getFilter().filter((_: SearchValue, i: number) => i !== index)
     )
     mapsService.removeFromFilter(index);
+  }
+
+  const deleteFromPlaylist = (hash: string) => {
+    playlistsService.deleteSongFromPlaylist(playlistId!, hash).then(() => {
+      notificationService.addNotification({
+        type: 'success',
+        message: 'Song deleted from playlist'
+      })
+    }).catch(message => notificationService.addNotification({
+      type: 'error',
+      message
+    }))
   }
 
   const saveAsPlaylist = () => {
@@ -141,6 +155,8 @@ export const MapsPage = () => {
           list={listByFilter}
           open={openItem}
           openCinema={openCinema}
+          withPlaylist={!!playlistId}
+          deleteFromPlaylist={ deleteFromPlaylist }
         />
         <div className={styles.counter}>
           Count: { listByFilter.length }

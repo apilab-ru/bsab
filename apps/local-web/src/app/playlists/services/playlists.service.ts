@@ -1,7 +1,7 @@
 import { playlistApiService, PlaylistApiService } from "./playlist-api";
 import { Playlist, PlaylistData } from "@bsab/api/local/playlist";
 import { DataStatus } from "../../models/status";
-import { action, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
+import { action, makeAutoObservable, onBecomeObserved, runInAction, toJS } from "mobx";
 
 export class PlaylistsService {
    private store = {
@@ -57,8 +57,25 @@ export class PlaylistsService {
       }));
    }
 
+   deleteSongFromPlaylist(playlistId: string, songHash: string): Promise<void> {
+      return runInAction( () => {
+         const playlist = toJS(this.list).find(item => item.id === playlistId);
+
+         if (!playlist) {
+            return Promise.reject('Playlist not found')
+         }
+
+         return this.updatePlayList({
+            ...playlist,
+            songs: playlist.songs.filter(item => item.hash !== songHash)
+         });
+      })
+   }
+
    private initPlaylists() {
       onBecomeObserved(this.store, 'list', () => {
+         console.log('xxx start loading', this.store.stats);
+
          if (this.store.stats !== DataStatus.empty) {
             return;
          }

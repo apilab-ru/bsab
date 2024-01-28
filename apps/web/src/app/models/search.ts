@@ -23,6 +23,10 @@ export const ORDER_FIELDS = [
    {
       name: 'Score',
       key: 'score'
+   },
+   {
+      name: 'BLRankedDate',
+      key: 'bkRankedDate'
    }
 ];
 
@@ -137,6 +141,12 @@ export const FILTER_ITEMS_MAP: Record<keyof typeof FilterKey, DistributiveOmit<F
       filterFunc: () => true,
       unique: true
    },
+   blRanked: {
+      name: 'BL Ranked',
+      type: FilterItemType.boolean,
+      filterFunc: () => true,
+      unique: true
+   }
 };
 
 export const FILTER_ITEMS: FilterItem[] = Object.entries(FILTER_ITEMS_MAP)

@@ -1,0 +1,18 @@
+.container {
+  margin-left: auto;
+}
+
+.button {
+  cursor: pointer;
+  color: #ab003c;
+  transition: 0.3s;
+  border-radius: 3px;
+
+  &:hover {
+    background: #1565c04f;
+  }
+
+  &:active {
+    opacity: 0.7;
+  }
+}
