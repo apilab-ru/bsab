@@ -1,0 +1,8 @@
+@import "./theme/theme";
+
+:root {
+  @include theme();
+
+  background: var(--color-background);
+  color: var(--color-text-primary);
+}

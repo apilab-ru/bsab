@@ -1,0 +1,64 @@
+.country {
+  display: flex;
+  border: 2px solid var(--color-secondary);
+  border-radius: 6px;
+
+  &Info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    // height: 200px;
+  }
+
+  &Icon {
+    width: 100px;
+    margin: -20px auto 0;
+  }
+
+  &ValueIcon {
+    width: 30px;
+  }
+
+  &Select {
+    width: 196px !important;
+    margin-top: auto;
+  }
+
+  &Delete {
+    position: absolute;
+    display: block;
+    top: 3px;
+    right: 3px;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid var(--color-secondary);
+    transition: opacity 0.3s;
+
+    &:hover {
+      background: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+  &Checker {
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+  }
+
+  &Stocks {
+    margin-left: 12px;
+    padding: 6px;
+  }
+
+  &Currency {
+    margin: 8px 0 4px 2px;
+  }
+}

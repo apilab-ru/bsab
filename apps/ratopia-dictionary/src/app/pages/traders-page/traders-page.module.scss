@@ -1,0 +1,12 @@
+.traders {
+
+  &Table {
+    margin-top: 20px;
+  }
+
+  &Line {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+  }
+}

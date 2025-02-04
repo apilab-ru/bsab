@@ -1,0 +1,25 @@
+.stockItem {
+  display: flex;
+  align-items: center;
+
+  &Select {
+    width: 200px;
+  }
+
+  &IconValue {
+    width: 24px;
+  }
+
+  &Icon {
+    width: 40px;
+  }
+
+  &DeleteIcon {
+    cursor: pointer;
+  }
+
+  &Cost {
+    width: 80px;
+    margin-left: 20px;
+  }
+}

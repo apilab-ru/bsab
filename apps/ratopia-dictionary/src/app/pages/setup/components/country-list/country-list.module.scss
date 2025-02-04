@@ -1,0 +1,15 @@
+.CountryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: flex-start;
+
+  &Item {
+
+  }
+
+  &Add {
+    align-self: center;
+  }
+}

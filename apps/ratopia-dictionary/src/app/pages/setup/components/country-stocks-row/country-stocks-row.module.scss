@@ -1,0 +1,22 @@
+.stocksRow {
+  width: 300px;
+
+  &Title {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 24px;
+      margin-right: 2px;
+    }
+  }
+
+  &Item {
+    margin-top: 12px;
+  }
+
+  &Add {
+    width: 100%;
+    margin-top: 12px !important;
+  }
+}
