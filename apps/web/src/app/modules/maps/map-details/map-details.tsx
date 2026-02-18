@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { MapsState } from "../../../store/maps/store";
 import { FilterState } from "../../../store/filter/store";
+import { localApiService } from "../../../services/local-api.service";
 
 export interface MapDetailsProps {
   item: MapDetail;
@@ -37,6 +38,15 @@ export function MapDetails({ item }: MapDetailsProps) {
         type: 'success',
       }))
     });
+  }
+
+  const addToGenericPlaylist = () => {
+    localApiService.addSongToPlaylist(item.id).then(() => {
+      dispatch(addNotification({
+        message: 'Append to playlist',
+        type: 'success',
+      }))
+    })
   }
 
   return (
@@ -89,6 +99,16 @@ export function MapDetails({ item }: MapDetailsProps) {
       <div className={styles.detailLine + ' ' + styles.flex}>
         <a className={styles.button} href={'beatsaver://' + item.id}>
           <Button variant="contained">Install</Button>
+        </a>
+
+        <a className={styles.button} href={item.downloadURL}>
+          <Button variant="contained">Download</Button>
+        </a>
+      </div>
+
+      <div className={styles.detailLine + ' ' + styles.flex}>
+        <a className={styles.button} onClick={addToGenericPlaylist}>
+          <Button variant="contained">To Playlist</Button>
         </a>
       </div>
 

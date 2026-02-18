@@ -32,7 +32,7 @@ class MapsApiService {
             ...res,
             list: res.list.map(item => ({
                ...item,
-               downloadURL: this.buildFileUrl(item.id, item.downloadURL, localApi),
+               downloadURL: this.buildFileUrl(item.originalDownloadURL, item.downloadURL, localApi),
                coverURL: this.buildFileUrl(item.originalCoverURL, item.coverURL, localApi),
                soundURL: this.buildFileUrl(item.originalSoundURL, item.soundURL, localApi),
             }))

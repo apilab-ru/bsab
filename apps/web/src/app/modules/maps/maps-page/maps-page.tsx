@@ -42,10 +42,10 @@ const MapsPage: FC<{}> = () => {
       <MapPlayer
         isOpened={!!openedId}
         handleClose={closeMap}
-        sourceUrl={openedItem?.downloadURL || null}
+        sourceUrl={openedItem?.id || null}
       >
         {(!openedItem) ? '' :
-          <MapDetails item={openedItem}></MapDetails>
+          <MapDetails item={openedItem}/>
         }
       </MapPlayer>
     </div>
