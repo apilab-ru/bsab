@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Static</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <section class="slider">
+      <div class="slider__left">
+        <h2 class="slider__title">Удобный сервис для ПВЗ</h2>
+        <p id="slider-text" class="slider__text">
+          <span class="js-slider-text slider__text-variant active">
+            Переходите на тёмную сторону!<br>
+            В приложении доступна светлая и тёмная тема<br>
+            Можно настроить приложение под себя
+          </span>
+          <span class="js-slider-text slider__text-variant">TExt 2</span>
+          <span class="js-slider-text slider__text-variant">TExt 3</span>
+        </p>
+      </div>
+      <div class="slider__right" onclick="slider.stop()">
+        <div id="slider-slide-box">
+          <div class="js-slide slider__slide active cmp-slider js-cmp-slider">
+            <img class="cmp-slider__item" src="./assets/img/dark.jpg" alt="Dark">
+            <img class="cmp-slider__item last" src="./assets/img/light.jpg" alt="Light">
+            <div class="cmp-slider__handle js-cmp-slider-handle">
+              <div class="cmp-slider__handle-button"></div>
+            </div>
+          </div>
+
+          <video class="js-slide slider__slide" muted autoplay>
+            <source src="./assets/slide-video.mp4" type="video/mp4" />
+          </video>
+
+          <video class="js-slide slider__slide" muted autoplay>
+            <source src="./assets/slide-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <div id="slider-progress" class="slider__progress" onclick="slider.resume(); event.stopPropagation()">
+          <div class="slider__progress-item active js-slider-progress">
+            <span class="slider__progress-item-fill js-slider-fill"></span>
+          </div>
+          <div class="slider__progress-item js-slider-progress">
+            <span class="slider__progress-item-fill js-slider-fill"></span>
+          </div>
+          <div class="slider__progress-item js-slider-progress">
+            <span class="slider__progress-item-fill js-slider-fill"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

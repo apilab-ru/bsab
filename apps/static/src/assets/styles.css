@@ -1,0 +1,149 @@
+body {
+    padding: 50px;
+    background: #F8F4FE;;
+}
+
+.slider {
+    display: flex;
+    max-width: 1360px;
+    column-gap: 52px;
+    margin: 0 auto;
+}
+
+.slider__left {
+    width: 577px;
+}
+
+.slider__right {
+    flex: 1;
+}
+
+.slider__progress {
+    display: flex;
+    margin: 32px auto 0;
+    column-gap: 16px;
+    justify-content: center;
+}
+
+.slider__progress-item {
+    background: #fff;
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 8px;
+    transition: 0.15s;
+    position: relative;
+}
+
+.slider__progress-item.active {
+    width: 124px;
+}
+
+.slider__progress-item-fill {
+    border-radius: 8px;
+    transition: 0.2s;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #965EEB;
+}
+
+.slider__title {
+    color: #000;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+}
+
+.slider__text {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    margin-top: 28px;
+}
+
+.slider__text-variant {
+    display: none;
+}
+
+.slider__text-variant.active {
+    display: block;
+}
+
+.slider__slide {
+    height: 420px;
+    width: 737px;
+    display: none;
+    user-select: none;
+}
+
+.slider__slide.active {
+    display: block;
+}
+
+/* cmp-slider */
+.cmp-slider {
+    position: relative;
+    overflow: hidden;
+}
+
+.cmp-slider__item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.cmp-slider__item.last {
+    clip: rect(0px, 620px, 420px, 0px);
+}
+
+.cmp-slider__handle {
+    position: absolute;
+    top: 0;
+    left: 620px;
+    width: 4px;
+    height: 100%;
+    background-color: #965EEB;
+    cursor: ew-resize;
+}
+
+.cmp-slider__handle-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    border-radius: 100px;
+    background: #FFF;
+    box-shadow: 0 0 20px 0 rgba(156, 156, 156, 0.28);
+    padding: 12px 8px;
+    width: 64px;
+    height: 44px;
+    box-sizing: border-box;
+    left: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cmp-slider__handle-button:before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(/assets/img/arrow.svg);
+    background-size: cover;
+    transform: rotate(180deg);
+}
+
+.cmp-slider__handle-button:after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(/assets/img/arrow.svg);
+    background-size: cover;
+}

@@ -1,0 +1,68 @@
+{
+  "name": "static",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/static/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/static",
+        "compiler": "babel",
+        "main": "apps/static/src/main.ts",
+        "tsConfig": "apps/static/tsconfig.app.json",
+        "assets": ["apps/static/src/favicon.ico", "apps/static/src/assets"],
+        "index": "apps/static/src/index.html",
+        "baseHref": "/",
+        "polyfills": "apps/static/src/polyfills.ts",
+        "styles": ["apps/static/src/assets/styles.css"],
+        "scripts": ["apps/static/src/assets/slider.js"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/static/src/environments/environment.ts",
+              "with": "apps/static/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "options": {
+        "buildTarget": "static:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "static:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/static/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/static/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
