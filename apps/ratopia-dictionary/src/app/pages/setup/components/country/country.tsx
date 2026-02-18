@@ -1,7 +1,7 @@
 import styles from './country.module.scss';
 import { CurrencyType, ICountry } from "../../../../services/game-store";
 import { Autocomplete, Box, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import { Countries, getCountryIcon } from "../../../../services/countries";
+import { getCountryIcon } from "../../../../services/countries";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { toJS } from "mobx";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +10,7 @@ import { CurrencySwitcher } from '../currency-switcher/currency-switcher';
 
 export interface CountryProps {
   country: ICountry;
-  countries: Countries[];
+  countries: string[];
   update: (country: ICountry) => void;
   delete: () => void;
 }
@@ -22,7 +22,7 @@ export function Country({country, countries, update, ...props}: CountryProps) {
     setExpended(event.target.checked);
   };
 
-  const countryChange = (item: Countries | null) => {
+  const countryChange = (item: string | null) => {
     if (item) {
       update({
         ...toJS(country),

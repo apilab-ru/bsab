@@ -42,7 +42,7 @@ export class TradersStore {
       }
 
       if (pass && !!filter.resource) {
-        pass = item.resource.toLowerCase().includes( filter.resource );
+        pass = item.resourceTag.includes( filter.resource.toLowerCase() );
       }
 
       if (pass && filter.direction !== 'all') {

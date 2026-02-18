@@ -1,15 +1,15 @@
-import { action, makeAutoObservable, observable, reaction, runInAction, toJS } from "mobx";
-import { Countries } from "./countries";
-import { Resources } from "../conts/res-list";
+import { action, makeAutoObservable, reaction, toJS } from "mobx";
+import { dictionaryService, DictionaryService } from "./dictionary-service";
 
 interface IGameData {
   currency?: number;
   countries: ICountry[];
+  connected: boolean;
 }
 
 export interface IResource {
   count?: number;
-  resource: Resources;
+  resource: string;
   cost: number;
 }
 
@@ -19,7 +19,8 @@ export enum CurrencyType {
 }
 
 export interface ICountry {
-  country: Countries;
+  country: string;
+  countryName: string;
   type: CurrencyType;
   export: IResource[];
   import: IResource[];
@@ -31,7 +32,10 @@ export enum TradeDirection {
 }
 
 export interface ITradeResource extends IResource {
-  country: Countries;
+  country: string;
+  countryName: string;
+  resourceName: string;
+  resourceTag: string;
   type: CurrencyType;
   direction: TradeDirection;
   costGold: number;
@@ -39,11 +43,15 @@ export interface ITradeResource extends IResource {
 
 export class GameStore {
   store: IGameData = {
+    connected : false,
     currency: 1000,
     countries: []
   }
 
-  constructor(baseData?: IGameData) {
+  constructor(
+    private readonly dictionaryService: DictionaryService,
+    baseData?: IGameData
+  ) {
     if (baseData) {
       this.store = {
         ...this.store,
@@ -60,6 +68,10 @@ export class GameStore {
     })
   }
 
+  setConnected = action((isConnected: boolean) => {
+    this.store.connected = isConnected;
+  })
+
   setCountries = action((list: ICountry[]) => {
     this.store.countries = list;
   })
@@ -68,46 +80,54 @@ export class GameStore {
       this.store.currency = currency;
   });
 
-  addCountry = action((country: Countries) => {
+  addCountry = action((country: string) => {
     this.store.countries.push({
       country: country,
+      countryName: '',
       type: CurrencyType.gold,
       import: [],
       export: []
     })
   })
 
-  updateCountry = action((country: ICountry, key: Countries) => {
+  updateCountry = action((country: ICountry, key: string) => {
     const index = this.store.countries.findIndex(it => it.country === key);
     this.store.countries[index] = country;
   })
 
-  deleteCountry = action((key: Countries) => {
+  deleteCountry = action((key: string) => {
     const index = this.store.countries.findIndex(it => it.country === key);
     this.store.countries.splice(index, 1);
   })
 
   get traderResources(): ITradeResource[] {
     const currency = this.store.currency;
+    const tiles = this.dictionaryService.tiles;
 
     return this.store.countries.flatMap(country => {
       return [
         ...country.import.map(res => ({
           ...this.mapTradeItem(country, res, currency || 0),
+          resourceName: tiles[res.resource],
+          resourceTag: (tiles[res.resource] || '').toLowerCase() + res.resource.toLowerCase(),
           direction: TradeDirection.import,
         })),
         ...country.export.map(res => ({
           ...this.mapTradeItem(country, res, currency || 0),
+          resourceName: tiles[res.resource],
+          resourceTag: (tiles[res.resource] || '').toLowerCase() + res.resource.toLowerCase(),
           direction: TradeDirection.export,
         })),
       ]
     })
   }
 
-  private mapTradeItem(country: ICountry, item: IResource, currency: number): Omit<ITradeResource, 'direction'> {
+  private mapTradeItem(country: ICountry, item: IResource, currency: number)
+    : Omit<ITradeResource, 'direction' | 'resourceName' | 'resourceTag'> {
     return {
       ...item,
       country: country.country,
+      countryName: country.countryName,
       type: country.type,
       costGold: country.type === CurrencyType.gold ? item.cost : Math.ceil(item.cost * currency / 100)
     }
@@ -126,4 +146,4 @@ try {
   console.log('Not found saved data');
 }
 
-export const gameStore = new GameStore(data);
+export const gameStore = new GameStore(dictionaryService, data);

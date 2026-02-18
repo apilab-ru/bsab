@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { useState } from "react";
 import { gameStore, ICountry } from "../../../../services/game-store";
 import Country from "../country/country";
-import { Countries, COUNTRIES_LIST } from "../../../../services/countries";
+import { COUNTRIES_LIST } from "../../../../services/countries";
 import { Button } from "@mui/material";
 
 function CountryList() {
@@ -16,13 +16,13 @@ function CountryList() {
     gameStore.addCountry(firstNewCountry!);
   }
 
-  const filterList = (country: Countries) => COUNTRIES_LIST.filter(it => it === country || !existedCountries.includes(it));
+  const filterList = (country: string) => COUNTRIES_LIST.filter(it => it === country || !existedCountries.includes(it));
 
-  const countryUpdate = (country: ICountry, key: Countries) => {
+  const countryUpdate = (country: ICountry, key: string) => {
     gameStore.updateCountry(country, key);
   }
 
-  const deleteCountry = (key: Countries) => gameStore.deleteCountry(key);
+  const deleteCountry = (key: string) => gameStore.deleteCountry(key);
 
   return (
     <div className={styles.CountryList}>

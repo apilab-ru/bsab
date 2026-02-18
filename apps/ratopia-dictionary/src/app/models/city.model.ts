@@ -1,11 +1,12 @@
 export interface Trade {
-  resource: number;
+  resource: string;
   price: number;
   package: number;
 }
 
 export interface City {
   key: string;
+  name: string;
   export: Trade[];
   import: Trade[];
   relations: number;

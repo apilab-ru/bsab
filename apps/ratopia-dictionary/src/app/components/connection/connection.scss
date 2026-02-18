@@ -1,0 +1,91 @@
+.connection {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px 9px 9px;
+  border-radius: 8px;
+  background: url(/assets/struct/BG_3.png);
+  background-repeat: repeat-x;
+  background-size: 105% 125px;
+  background-position-y: -27px;
+  background-position-x: -2px;
+  border: 4px solid #fff;
+  position: relative;
+  height: 80px;
+  box-sizing: border-box;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    display: block;
+    border-radius: 9px;
+    border: 1px solid #000;
+    pointer-events: none;
+    //box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5215686275);
+  }
+
+  &__toggle {
+    background: url("/assets/struct/UI_Re_Pattern2.png");
+    background-size: contain;
+    border: 3px solid white;
+    padding: 6px;
+    border-radius: 6px;
+    box-shadow: 2px 2px #000;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+
+    &:after {
+      content: "";
+      pointer-events: none;
+      display: block;
+      position: absolute;
+      left: -4px;
+      top: -4px;
+      width: calc(100% + 6px);
+      height: calc(100% + 6px);
+      border: 1px solid #000;
+      border-radius: 6px;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.85);
+    }
+
+    img {
+      width: 30px;
+      display: block;
+    }
+  }
+
+  &__status {
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000;
+    margin-left: 12px;
+    transition: color 0.2s;
+
+    &.-delay {
+      color: #6da6c0;
+    }
+
+    &.-disconnect {
+      color: #da6f6f;
+    }
+
+    &.-connected {
+      color: #8ed67f;
+    }
+  }
+
+  &__action {
+    margin-left: 6px;
+  }
+}
+

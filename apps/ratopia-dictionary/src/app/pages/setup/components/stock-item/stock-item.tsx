@@ -1,20 +1,20 @@
 import styles from './stock-item.module.scss';
 import { IResource } from "../../../../services/game-store";
 import { Autocomplete, Box, TextField } from "@mui/material";
-import { getResourceIcon, Resources } from "../../../../conts/res-list";
+import { getResourceIcon } from "../../../../models/res-list";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useChangeInput } from "@shared/forms/use-change-input";
 
 export interface StockItemProps {
   resource: IResource;
-  resources: Resources[];
+  resources: string[];
   className?: string;
   updateResource: (resource: IResource) => void;
   deleteResource: () => void;
 }
 
 export function StockItem({resource, resources, className, updateResource, deleteResource}: StockItemProps) {
-  const resourceChange = (id: Resources | null) => {
+  const resourceChange = (id: string | null) => {
     if (id) {
       updateResource({
         ...resource,

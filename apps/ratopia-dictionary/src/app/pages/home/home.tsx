@@ -1,10 +1,10 @@
 import styles from './home.module.scss';
 import {Button} from "@mui/material";
-import {commandService} from "../../services/command-service";
+import {apiService} from "../../services/api-service";
 
 export function Home() {
   const refreshCitizens = () => {
-    commandService.refreshRate().then(() => console.log('command send'));
+    apiService.refreshRate().then(() => console.log('command send'));
   }
 
   return (

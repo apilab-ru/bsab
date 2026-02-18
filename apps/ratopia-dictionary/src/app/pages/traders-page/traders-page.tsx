@@ -14,9 +14,9 @@ function TradersPage() {
     <TradersContext.Provider value={tradersStore}>
       <div className={styles.traders}>
         <div className={styles.tradersLine}>
-          <Currency />
-
           <Connection />
+
+          <Currency />
         </div>
 
 

@@ -1,4 +1,4 @@
-import styles from './connection.module.scss';
+import './connection.scss';
 import { useState } from "react";
 import { Button } from "@mui/material";
 import { connectionService, ConnectStatus } from "../../services/connection-service";
@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 export function Connection() {
   const status = useState(connectionService)[0].status;
 
-  const startConnect = () => {
+  const toggleConnect = () => {
     if (status === ConnectStatus.connected) {
       connectionService.disconnect();
     } else {
@@ -15,12 +15,31 @@ export function Connection() {
     }
   };
 
+  const statusMap: Record<ConnectStatus, string> = {
+    connected: 'Подключено',
+    delay: 'Подключаемся',
+    disconnect: 'Отключено'
+  };
+
+  const actionMap: Record<ConnectStatus, string> = {
+    connected: '- Отключится',
+    delay: '',
+    disconnect: '- Подключится'
+  }
+
   return (
-    <div className={styles.connection}>
-      <span>{ status }</span>
-      <Button variant="contained" onClick={() => startConnect()} color={status !== ConnectStatus.connected ? 'secondary' : 'primary'}>
-        { status === ConnectStatus.connected ? 'Отключится' : 'Подключится' }
-      </Button>
+    <div className="connection">
+      <button className="connection__toggle" onClick={toggleConnect}>
+        <img src="/assets/struct/PlayAndPause.png"/>
+      </button>
+
+      <span className={"connection__status -" + status}>
+        { statusMap[status] }
+      </span>
+
+      <span className={"connection__action -" + status}>
+        { actionMap[status] }
+      </span>
     </div>
   );
 }

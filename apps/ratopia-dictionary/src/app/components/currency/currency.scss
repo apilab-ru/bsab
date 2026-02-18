@@ -1,0 +1,50 @@
+.currency {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px;
+  border-radius: 9px;
+  background: url(/assets/struct/BG_3.png);
+  background-repeat: repeat-x;
+  background-size: 105% 150px;
+  background-position-y: -30px;
+  background-position-x: -2px;
+  border: 4px solid #fff;
+  position: relative;
+  height: 80px;
+  box-sizing: border-box;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    display: block;
+    border-radius: 9px;
+    border: 1px solid #000;
+    pointer-events: none;
+    //box-shadow: 2px 2px 0px #00000085;
+  }
+
+  &__line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-shadow: 1px 1px #000;
+
+    & + & {
+      margin-top: 4px;
+    }
+  }
+
+  &__input {
+    width: 70px;
+  }
+
+  &__icon {
+    width: 24px;
+    display: inline-flex;
+  }
+}

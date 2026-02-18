@@ -47,7 +47,7 @@ function TradersTable({ className }: TradersTableProps) {
   const handleCellClick = (param: GridCellParams) => {
     if (param.field === 'resource') {
       context.updateFilter({
-        resource: param.row.resource.toLowerCase(),
+        resource: param.row.resourceName.toLowerCase(),
       })
     }
   }

@@ -1,7 +1,7 @@
 import styles from './country-stocks-row.module.scss';
 import { ReactNode } from "react";
 import { IResource } from "../../../../services/game-store";
-import { ALL_RES_LIST, Resources } from "../../../../conts/res-list";
+import { ALL_RES_LIST } from "../../../../models/res-list";
 import StockItem from "../stock-item/stock-item";
 import { Button } from "@mui/material";
 
@@ -24,17 +24,17 @@ export function CountryStocksRow({children, resources, updateList}: CountryStock
     ])
   }
 
-  const updateResource = (key: Resources, res: IResource) => {
+  const updateResource = (key: string, res: IResource) => {
     updateList(
       resources.map(it => it.resource === key ? res : it)
     )
   }
 
-  const deleteResource = (key: Resources) => updateList(
+  const deleteResource = (key: string) => updateList(
     resources.filter(it => it.resource !== key)
   )
 
-  const getAvailableResources = (key: Resources) => ALL_RES_LIST.filter(it => it === key || !existed.includes(it));
+  const getAvailableResources = (key: string) => ALL_RES_LIST.filter(it => it === key || !existed.includes(it));
 
   return (
     <div className={ styles.stocksRow }>

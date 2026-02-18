@@ -1,41 +1,26 @@
-import Home from "./pages/home/home";
 import { ReactNode } from "react";
 import * as React from "react";
-import Resources from "./pages/resources/resources";
-import SetupPage from "./pages/setup/setupPage";
 import TradersPage from "./pages/traders-page/traders-page";
-import ConnectPage from "./pages/connect-page/connect-page";
+import StatisticPage from "./pages/statistic-page/statistic-page";
 
 interface Route {
   element: ReactNode;
   name: string;
   path: string;
+  icon: string;
 }
 
 export const ROUTES: Route[] = [
   {
-    path: '/',
-    name: 'Home',
-    element: <Home />
-  },
-  {
-    path: '/resources',
-    name: 'Resources',
-    element: <Resources />
-  },
-  {
-    path: '/setup',
-    name: 'Setup',
-    element: <SetupPage />
-  },
-  {
     path: '/traders',
     name: 'Traders',
+    icon: '/assets/struct/Icon_CommercialLaw.png',
     element: <TradersPage />
   },
   {
-    path: '/connect',
-    name: 'Connect',
-    element: <ConnectPage />
+    path: '/statistic',
+    name: 'Statistic',
+    icon: '/assets/struct/Icon_Statistics.png',
+    element: <StatisticPage />
   }
 ];

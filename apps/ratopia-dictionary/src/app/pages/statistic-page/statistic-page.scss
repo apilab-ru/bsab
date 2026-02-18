@@ -1,0 +1,15 @@
+.statistic {
+
+  &__content {
+    margin-top: 12px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__line {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -3,6 +3,16 @@
 :root {
   @include theme();
 
-  background: var(--color-background);
+  //background: var(--color-background);
   color: var(--color-text-primary);
+  background: url(/assets/struct/frame-mono2.jpg);
+  //background: #ffefdc;
+  background-size: 25px;
+}
+
+body {
+  background: url(/assets/struct/trees.png);
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-size: 372px;
 }

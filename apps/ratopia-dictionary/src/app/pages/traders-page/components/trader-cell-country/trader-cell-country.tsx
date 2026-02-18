@@ -9,7 +9,7 @@ export interface TraderCellCountryProps {
 export function TraderCellCountry({ item }: TraderCellCountryProps) {
   return (
     <TraderCellResource
-      name={item.country}
+      name={item.countryName}
       icon={getCountryIcon(item.country)}
     />
   );

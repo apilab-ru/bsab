@@ -3,5 +3,8 @@
 
 export const environment = {
    production: false,
-   api: 'http://localhost:3567'
+   api: 'http://localhost:5000',
+   //api: '/assets/mock',
+   // apiPostfix: '.json',
+   apiPostfix: '',
 };

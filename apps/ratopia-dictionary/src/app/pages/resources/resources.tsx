@@ -1,7 +1,7 @@
 import styles from './resources.module.scss';
 import React from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { RES_LIST } from '../../conts/res-list';
+import { RES_LIST } from '../../models/res-list';
 
 
 /* eslint-disable-next-line */

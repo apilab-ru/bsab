@@ -1,6 +1,6 @@
 import { ITradeResource } from "../../../../services/game-store";
 import TraderCellResource from "../trader-cell-resource/trader-cell-resource";
-import { getResourceIcon } from "../../../../conts/res-list";
+import { getResourceIcon } from "../../../../models/res-list";
 
 export interface TraderCellStockProps {
   item: ITradeResource;
@@ -9,7 +9,7 @@ export interface TraderCellStockProps {
 export function TraderCellStock({ item }: TraderCellStockProps) {
   return (
     <TraderCellResource
-      name={item.resource}
+      name={item.resourceName}
       icon={getResourceIcon(item.resource)}
     />
   );
