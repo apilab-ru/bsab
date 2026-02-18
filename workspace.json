@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "anime-list": "apps/anime-list",
     "bsab-models": "libs/bsab-models",
     "local-web": "apps/local-web",
     "ratopia-dictionary": "apps/ratopia-dictionary",
