@@ -1,6 +1,6 @@
 import { LocalMap, MapCinema } from "@bsab/api/map/map";
 import { DataStatus } from "../../models/status";
-import { action, computed, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
+import { action, makeAutoObservable, onBecomeObserved, runInAction } from "mobx";
 import { mapsApiService, MapsApiService } from "./maps-api";
 import { SearchValue } from "@bsab/ui-kit/filter";
 import { PlaylistsService, playlistsService } from "../../playlists/services/playlists.service";

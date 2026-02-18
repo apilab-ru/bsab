@@ -105,6 +105,7 @@ export const MapsPage = () => {
   }
 
   const saveAsPlaylist = () => {
+    // TODO reuse in playlist service
     const songs: Song[] = listByFilter.map(item => ({
       songName: item.songName,
       levelAuthorName: item.author,
