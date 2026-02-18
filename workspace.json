@@ -6,7 +6,6 @@
     "bsab-models": "libs/bsab-models",
     "local-web": "apps/local-web",
     "ratopia-dictionary": "apps/ratopia-dictionary",
-    "server-utils": "libs/server-utils",
     "shared": "libs/shared",
     "static": "apps/static",
     "ui-kit": "libs/ui-kit",
