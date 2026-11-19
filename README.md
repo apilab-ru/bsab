@@ -1,77 +1,91 @@
 # Bsab
 
-## Run applications
+Nx monorepo (Nx 15, React 18, TypeScript) with tools for **Beat Saber** custom maps, plus a
+companion app for the game **Ratopia**.
 
-nx serve web
-nx serve local-api
-nx serve local-web
+## Projects
 
-nx storybook ui-kit
+| Project | Type | Path | What it is |
+| --- | --- | --- | --- |
+| [`web`](apps/web/README.md) | app | `apps/web` | Public catalogue of Beat Saber maps: search, filter, preview, install. |
+| [`local-web`](apps/local-web/README.md) | app | `apps/local-web` | UI for a local API: manage local maps, playlists and Cinema videos. |
+| [`ratopia-dictionary`](apps/ratopia-dictionary/README.md) | app | `apps/ratopia-dictionary` | Trade helper for Ratopia that reads live game data from a local bridge. |
+| [`ui-kit`](libs/ui-kit/README.md) | lib | `libs/ui-kit` | Shared React components: filter, map card, map players, loaders. |
+| [`shared`](libs/shared/README.md) | lib | `libs/shared` | Small framework-agnostic helpers (forms, Redux helpers, hashing). |
+| [`bsab-models`](libs/bsab-models/README.md) | lib (git submodule) | `libs/bsab-models` | TypeScript models shared with the backend API. |
 
+Dependency graph (run `npx nx graph` for the live version):
 
+```
+web                ──> ui-kit, bsab-models, shared
+local-web          ──> ui-kit, bsab-models
+ratopia-dictionary ──> shared
+ui-kit             ──> bsab-models
+```
 
-## Generate an application
+### Import aliases (`tsconfig.base.json`)
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+| Alias | Points to |
+| --- | --- |
+| `@bsab/api/*` | `libs/bsab-models/src/*` |
+| `@bsab/ui-kit/*` | `libs/ui-kit/src/*` |
+| `@shared/*` | `libs/shared/src/*` |
 
-> You can use any of the plugins above to generate applications as well.
+## Getting started
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+```bash
+git clone --recurse-submodules <repo-url>
+# or, in an existing clone:
+git submodule update --init
 
-## Generate a library
+npm install
+```
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+`libs/bsab-models` is a git submodule. Without it, `web`, `local-web` and `ui-kit` will not compile.
 
-> You can also use any of the plugins above to generate libraries as well.
+## Common commands
 
-Libraries are shareable across libraries and applications. They can be imported from `@bsab/mylib`.
+```bash
+npx nx serve web                  # http://localhost:4200
+npx nx serve local-web            # http://localhost:4212
+npx nx serve ratopia-dictionary   # http://localhost:4200 (default port, clashes with web)
+npx nx storybook ui-kit           # http://localhost:4400
 
-## Generate storybook
-Run `nx generate storybook-configuration project`
-https://nx.dev/packages/react/generators/storybook-configuration
+npx nx build <project>            # production build to dist/apps/<project>
+npx nx test <project>             # Jest unit tests
+npx nx lint <project>             # ESLint
+npx nx affected:test              # test only projects changed vs. master
+```
 
-## Development server
+To run `web` and `ratopia-dictionary` at the same time, pass a port:
+`npx nx serve ratopia-dictionary --port 4201`.
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+## External services
 
-## Code scaffolding
+The apps in this repo are frontends only. The backends they call live elsewhere:
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
+| App | Backend | Configured in |
+| --- | --- | --- |
+| `web` | Remote bsab API `https://api2.apilab.ru/bsab`, plus an optional local API | `apps/web/src/environments/` |
+| `local-web` | Local API at `https://localhost:3333/` (formerly the `local-api` project, no longer in this repo) | `apps/local-web/src/environments/` |
+| `ratopia-dictionary` | Local game bridge at `http://localhost:5000` | `apps/ratopia-dictionary/src/environments/` |
 
-## Build
+## Tooling
 
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- **Nx 15.2** with the `@nrwl/react`, `@nrwl/webpack`, `@nrwl/jest` and `@nrwl/storybook` plugins.
+  The default project is `web`, so `npm start`, `npm run build` and `npm test` use `web`.
+- **Babel** compiles the apps (`compiler: "babel"`). Styles are SCSS, mostly CSS modules (`*.module.scss`).
+- **Jest 28** for tests, **ESLint 8** and **Prettier 2** (single quotes) for code style.
+- **Storybook 6.5** for `ui-kit`.
+- **knip** is installed and can find unused files, exports and dependencies: `npx knip`.
 
-## Running unit tests
+## Generating code
 
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx g @nrwl/react:app my-app                         # new application
+npx nx g @nrwl/react:lib my-lib                         # new library (add an alias to tsconfig.base.json)
+npx nx g @nrwl/react:component my-cmp --project=my-app  # new component
+npx nx g @nrwl/react:storybook-configuration my-lib     # add Storybook to a project
+```
 
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+The generator defaults in `nx.json` use SCSS, Jest and ESLint.
