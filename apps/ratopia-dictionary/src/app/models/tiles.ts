@@ -1,1 +1,0 @@
-export type TileTitles = Record<string, string>;

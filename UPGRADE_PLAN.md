@@ -41,7 +41,6 @@ starting; if a newer major exists, stop and ask the user.
 | typescript | 4.8.4 | **6.0.x** (NOT 7 — `typescript-eslint` supports `<6.1`) |
 | react, react-dom, @types/react(-dom) | 18.2 | 19.x |
 | @mui/material, @mui/icons-material | 5 | 9.x |
-| @mui/x-data-grid | 7 | 9.x |
 | @emotion/react, @emotion/styled | 11.10 | 11.14 |
 | @reduxjs/toolkit / react-redux | 1.9 / 8 | 2.x / 9.x |
 | redux-observable | 2.0 | **remove** (replace with RTK listener middleware) |
@@ -57,10 +56,10 @@ starting; if a newer major exists, stop and ask the user.
 
 ## Project facts the agent needs
 
-- Projects: apps `web`, `local-web`, `ratopia-dictionary`; libs `ui-kit`, `shared`, `bsab-models` (submodule).
+- Projects: apps `web`, `local-web`; libs `ui-kit`, `shared`, `bsab-models` (submodule).
 - Aliases (`tsconfig.base.json`): `@bsab/api/*` → `libs/bsab-models/src/*`, `@bsab/ui-kit/*` → `libs/ui-kit/src/*`, `@shared/*` → `libs/shared/src/*`.
 - Build: `@nrwl/webpack:webpack` with `compiler: "babel"`, SCSS (CSS modules), Jest, Storybook only in `ui-kit`.
-- State: `web` = Redux Toolkit + one redux-observable epic; `local-web` and `ratopia-dictionary` = MobX singletons.
+- State: `web` = Redux Toolkit + one redux-observable epic; `local-web` = MobX singletons.
 - Read the per-project `README.md` files before starting.
 
 ---
@@ -101,7 +100,7 @@ Add a render test for `ui-kit` components `Filter`, `MapListItem`, `MapDifficult
 3. In every `project.json`, change `"$schema": "..\\..\\node_modules\\..."` to `"../../node_modules/nx/schemas/project-schema.json"`.
 4. In `libs/bsab-models/project.json` (submodule): rename `api-interfaces` → `bsab-models`, fix `sourceRoot` and lint paths to `libs/bsab-models/...`. Commit inside the submodule first.
 5. Do **not** remove `core-js`/`regenerator-runtime` yet (handled in Step 4.5).
-**Verify** `npm install` clean, `VERIFY` passes, `npx nx show projects` lists all 6 projects.
+**Verify** `npm install` clean, `VERIFY` passes, `npx nx show projects` lists all 5 projects.
 **Commit** `chore: remove unused dependencies and fix project configs`
 
 ---
@@ -170,7 +169,7 @@ Delete old `.eslintrc.json` files after conversion.
 React 19 requires newer versions of libs that declare React peers, so do these in one step:
 ```bash
 npm i react@19 react-dom@19 \
-  @mui/material@latest @mui/icons-material@latest @mui/x-data-grid@latest \
+  @mui/material@latest @mui/icons-material@latest \
   @emotion/react@latest @emotion/styled@latest \
   notistack@latest mobx@latest mobx-react@latest react-image-crop@latest
 npm i -D @types/react@19 @types/react-dom@19 @testing-library/react@latest @testing-library/dom@latest
@@ -193,18 +192,17 @@ npx types-react-codemod@latest preset-19 apps libs
 1. Read the MUI migration guides v5→v6, v6→v7 and v7→v9 (and v8 if listed). Apply codemods for each:
    `npx @mui/codemod@latest <codemod-name> apps libs` as listed in the guides.
 2. `libs/ui-kit/src/input/input.tsx`: replace deep import `@mui/material/TextField/TextField` with `import { TextFieldProps } from '@mui/material'`. Search for any other deep imports: `grep -rn "@mui/material/[A-Za-z]*/" apps libs`.
-3. `apps/ratopia-dictionary/.../traders-table.tsx`: check `DataGrid`, `GridColDef`, `GridCellParams`, `renderCell` against the x-data-grid v8 and v9 migration guides.
-4. Check MUI `classes={{ root: ... }}` usage in `libs/ui-kit/src/filter/components/filter-dropdown` and `ratopia-dictionary/pages/resources` still compiles.
+3. Check MUI `classes={{ root: ... }}` usage in `libs/ui-kit/src/filter/components/filter-dropdown` still compiles.
 **Verify** `VERIFY` passes. Serve each app and confirm pages render without console errors:
-`web` (`/`, `/profile`, login dialog), `local-web` (`/`, `/maps`, cinema dialog), `ratopia-dictionary` (`/traders`, `/statistic`).
+`web` (`/`, `/profile`, login dialog), `local-web` (`/`, `/maps`, cinema dialog).
 **Commit** `refactor: mui 9 migration`
 
 ### Step 2.4 — MobX 7 / mobx-react 10 code changes
 **Action** Read mobx 7 and mobx-react 10 changelogs. Check every use of `makeAutoObservable`, `onBecomeObserved`,
 `onBecomeUnobserved`, `action`, `runInAction`, `reaction`, `toJS`, `observer`, `useLocalObservable` in
-`apps/local-web`, `apps/ratopia-dictionary`, `apps/web/src/app/store-mobx`. If `mobx-react-lite` is the
+`apps/local-web`, `apps/web/src/app/store-mobx`. If `mobx-react-lite` is the
 recommended package for function components only, switch imports to it.
-**Verify** `VERIFY` passes; `local-web` lists playlists and maps; `ratopia-dictionary` traders page works with mocks.
+**Verify** `VERIFY` passes; `local-web` lists playlists and maps.
 **Commit** `refactor: mobx 7`
 
 ### Step 2.5 — react-image-crop 11
@@ -304,13 +302,12 @@ remove `polyfills` from each `project.json` build options, and `npm uninstall co
 
 Ask the user before starting this phase.
 
-### Step 5.1 — Convert one app at a time (`ratopia-dictionary` first, then `local-web`, then `web`)
+### Step 5.1 — Convert one app at a time (`local-web` first, then `web`)
 **Action**
 - Use `npx nx g @nx/vite:configuration <project>` (or the current Nx equivalent).
 - Replace `fileReplacements` environments with `import.meta.env` (`.env`, `.env.production`) keeping identical values.
 - `web`: port `proxy.conf.json` (`/api` → `http://localhost:3333`) to `server.proxy`; keep `.htaccess` copied to output (`public/`).
 - `local-web`: keep port 4212.
-- `ratopia-dictionary`: delete `webpack.config.js`.
 - Jest → Vitest for the converted project (optional, ask user).
 **Verify** `VERIFY` passes; `nx serve <project>` works with the same ports and routes.
 **Commit** `build(<project>): migrate to vite`

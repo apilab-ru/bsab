@@ -1,7 +1,8 @@
 # Bsab
 
-Nx monorepo (Nx 15, React 18, TypeScript) with tools for **Beat Saber** custom maps, plus a
-companion app for the game **Ratopia**.
+Nx monorepo (Nx 15, React 18, TypeScript) with tools for **Beat Saber** custom maps.
+
+The Ratopia companion app (`ratopia-dictionary`) moved to its own repo, `ratopia-monorepo`, with its git history.
 
 ## Projects
 
@@ -9,7 +10,6 @@ companion app for the game **Ratopia**.
 | --- | --- | --- | --- |
 | [`web`](apps/web/README.md) | app | `apps/web` | Public catalogue of Beat Saber maps: search, filter, preview, install. |
 | [`local-web`](apps/local-web/README.md) | app | `apps/local-web` | UI for a local API: manage local maps, playlists and Cinema videos. |
-| [`ratopia-dictionary`](apps/ratopia-dictionary/README.md) | app | `apps/ratopia-dictionary` | Trade helper for Ratopia that reads live game data from a local bridge. |
 | [`ui-kit`](libs/ui-kit/README.md) | lib | `libs/ui-kit` | Shared React components: filter, map card, map players, loaders. |
 | [`shared`](libs/shared/README.md) | lib | `libs/shared` | Small framework-agnostic helpers (forms, Redux helpers, hashing). |
 | [`bsab-models`](libs/bsab-models/README.md) | lib (git submodule) | `libs/bsab-models` | TypeScript models shared with the backend API. |
@@ -19,7 +19,6 @@ Dependency graph (run `npx nx graph` for the live version):
 ```
 web                ──> ui-kit, bsab-models, shared
 local-web          ──> ui-kit, bsab-models
-ratopia-dictionary ──> shared
 ui-kit             ──> bsab-models
 ```
 
@@ -48,7 +47,6 @@ npm install
 ```bash
 npx nx serve web                  # http://localhost:4200
 npx nx serve local-web            # http://localhost:4212
-npx nx serve ratopia-dictionary   # http://localhost:4200 (default port, clashes with web)
 npx nx storybook ui-kit           # http://localhost:4400
 
 npx nx build <project>            # production build to dist/apps/<project>
@@ -56,9 +54,6 @@ npx nx test <project>             # Jest unit tests
 npx nx lint <project>             # ESLint
 npx nx affected:test              # test only projects changed vs. master
 ```
-
-To run `web` and `ratopia-dictionary` at the same time, pass a port:
-`npx nx serve ratopia-dictionary --port 4201`.
 
 ## External services
 
@@ -68,7 +63,6 @@ The apps in this repo are frontends only. The backends they call live elsewhere:
 | --- | --- | --- |
 | `web` | Remote bsab API `https://api2.apilab.ru/bsab`, plus an optional local API | `apps/web/src/environments/` |
 | `local-web` | Local API at `https://localhost:3333/` (formerly the `local-api` project, no longer in this repo) | `apps/local-web/src/environments/` |
-| `ratopia-dictionary` | Local game bridge at `http://localhost:5000` | `apps/ratopia-dictionary/src/environments/` |
 
 ## Tooling
 

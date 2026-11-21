@@ -4,7 +4,6 @@
   "projects": {
     "bsab-models": "libs/bsab-models",
     "local-web": "apps/local-web",
-    "ratopia-dictionary": "apps/ratopia-dictionary",
     "shared": "libs/shared",
     "ui-kit": "libs/ui-kit",
     "web": "apps/web"
